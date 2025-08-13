@@ -13,7 +13,6 @@ export const Footer = () => {
       links: [
         { label: "About", href: "/about" },
         { label: "Blog", href: "/blog" },
-        { label: "API", href: "/api" },
         { label: "Contact", href: "/contact" },
       ],
     },
@@ -40,7 +39,7 @@ export const Footer = () => {
                 <span className="text-white font-bold text-lg">A</span>
               </div>
               <span className="ml-2 text-xl font-bold text-gray-900 dark:text-white">
-                AdHand
+              Gulshan Ads
               </span>
             </div>
             <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-sm">
@@ -92,7 +91,7 @@ export const Footer = () => {
             <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800 hidden md:block">
               <div className="flex flex-col md:flex-row justify-between items-center">
                 <p className="text-gray-600 dark:text-gray-400 text-sm">
-                  © 2024 AdHand. All rights reserved.
+                  © {new Date().getFullYear()} Gulshan Ads. All rights reserved.
                 </p>
                 
               </div>
@@ -172,7 +171,7 @@ export const Footer = () => {
         <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800 md:hidden block">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-600 dark:text-gray-400 text-sm">
-              © 2024 AdHand. All rights reserved.
+              © {new Date().getFullYear()} Gulshan Ads. All rights reserved.
             </p>
           </div>
         </div>

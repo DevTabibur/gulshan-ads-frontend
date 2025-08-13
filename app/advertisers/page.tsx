@@ -136,17 +136,17 @@ export default function AdvertisersPage() {
 
   const testimonials = [
     {
-      name: "Sarah Chen",
-      role: "UX/UI Designer",
+      name: "Pijus",
+      role: "Digital Marketer",
       avatar: "/placeholder.svg?height=60&width=60",
       content:
-        "AdHand transformed my freelance business. I went from struggling to find clients to having a 3-month waiting list!",
+        "Gulshan Ads transformed my freelance business. I went from struggling to find clients to having a 3-month waiting list!",
       rating: 5,
       revenue: "+400% revenue",
     },
     {
-      name: "Marcus Rodriguez",
-      role: "Digital Marketer",
+      name: "MD Raju",
+      role: "Business Owner",
       avatar: "/placeholder.svg?height=60&width=60",
       content:
         "The ROI is incredible. Every dollar I spend on ads brings back $4-5 in new client revenue. Game changer!",
@@ -154,11 +154,11 @@ export default function AdvertisersPage() {
       revenue: "+250% clients",
     },
     {
-      name: "Emma Thompson",
-      role: "Content Writer",
+      name: "Amir Hossain",
+      role: "Business Owner",
       avatar: "/placeholder.svg?height=60&width=60",
       content:
-        "Finally, I can focus on what I love - writing - while AdHand handles all my marketing. Best decision ever!",
+        "Finally, I can focus on what I love - writing - while Gulshan Ads handles all my marketing. Best decision ever!",
       rating: 5,
       revenue: "+180% income",
     },
@@ -376,7 +376,7 @@ export default function AdvertisersPage() {
                 Why Advertisers Choose
                 <span className="bg-gradient-to-r from-emerald-600 to-cyan-600 bg-clip-text text-transparent">
                   {" "}
-                  AdHand
+                  Gulshan Ads
                 </span>
               </h2>
               <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
@@ -519,7 +519,7 @@ export default function AdvertisersPage() {
                 </span>
               </h2>
               <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
-                See how AdHand has transformed freelance businesses across different industries
+                See how AdHGulshan Ads and has transformed freelance businesses across different industries
               </p>
             </motion.div>
 
@@ -644,7 +644,7 @@ export default function AdvertisersPage() {
               </h2>
 
               <p className="text-xl text-white/90 mb-8 leading-relaxed">
-                Join 10,000+ successful Advertisers who've transformed their business with AdHand. Get your first
+                Join 10,000+ successful Advertisers who've transformed their business with Gulshan Ads. Get your first
                 campaign running in 24 hours with our expert team.
               </p>
 

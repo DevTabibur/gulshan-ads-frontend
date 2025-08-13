@@ -191,7 +191,7 @@ export const PlatformShowcase = () => {
                     <span className="text-white font-bold">AH</span>
                   </div>
                   <div>
-                    <div className="text-sm font-semibold">AdHand Expert</div>
+                    <div className="text-sm font-semibold">Gulshan Ads Expert</div>
                     <div className="text-xs text-gray-400">Campaign Specialist</div>
                   </div>
                 </div>

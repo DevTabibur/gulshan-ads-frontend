@@ -95,7 +95,7 @@ export const HowItWorks = () => {
     return () => clearInterval(interval)
   }, [isInViewport, steps.length])
 
-  const containerVariants = {
+  const containerVariants : any= {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -106,7 +106,7 @@ export const HowItWorks = () => {
     },
   }
 
-  const stepVariants = {
+  const stepVariants : any= {
     hidden: { opacity: 0, y: 50 },
     visible: {
       opacity: 1,
@@ -118,7 +118,7 @@ export const HowItWorks = () => {
     },
   }
 
-  const lineVariants = {
+  const lineVariants : any= {
     hidden: { scaleX: 0 },
     visible: {
       scaleX: 1,
@@ -152,7 +152,7 @@ export const HowItWorks = () => {
               How to Get Started
             </span>
             <br />
-            <span className="text-gray-700 dark:text-gray-300">with AdHand?</span>
+            <span className="text-gray-700 dark:text-gray-300">with Gulshan Ads?</span>
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
             Launch your first multi-platform advertising campaign in just 4 simple steps. Our streamlined process gets
@@ -274,7 +274,7 @@ export const HowItWorks = () => {
           <div className="bg-gradient-to-r from-green-500 to-cyan-500 rounded-3xl p-8 md:p-12 text-white">
             <h3 className="text-3xl font-bold mb-4">Ready to Transform Your Advertising?</h3>
             <p className="text-green-100 text-lg mb-8 max-w-2xl mx-auto">
-              Join thousands of successful businesses and agencies who trust AdHand for their multi-platform advertising
+              Join thousands of successful businesses and agencies who trust Gulshan Ads for their multi-platform advertising
               needs. Start your journey today!
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

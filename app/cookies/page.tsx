@@ -61,7 +61,7 @@ export default function CookiesPage() {
       description: "Required for basic website functionality and security",
       cookies: [
         {
-          name: "adhand_session",
+          name: "Gulshan_Ads_session",
           purpose: "Maintains user session and authentication state",
           duration: "Session (expires when browser closes)",
           type: "First-party",
@@ -99,7 +99,7 @@ export default function CookiesPage() {
           type: "Third-party (Google)",
         },
         {
-          name: "adhand_analytics",
+          name: "Gulshan_Ads_analytics",
           purpose: "Internal analytics for campaign performance tracking",
           duration: "1 year",
           type: "First-party",
@@ -312,7 +312,7 @@ export default function CookiesPage() {
                       </p>
                       <p>
                         We distinguish between first-party cookies (set by
-                        AdHand) and third-party cookies (set by our advertising
+                          Gulshan Ads) and third-party cookies (set by our advertising
                         partners) to give you full transparency about data
                         collection.
                       </p>
@@ -665,7 +665,7 @@ export default function CookiesPage() {
                   className="flex flex-col sm:flex-row gap-4 justify-center"
                 >
                   <motion.a
-                    href="mailto:privacy@adhand.app"
+                    href="mailto:privacy@gulshanads.app"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     className="bg-white text-green-600 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-colors"

@@ -86,7 +86,7 @@ export default function MetaPage() {
       avatar: "SJ",
       rating: 5,
       testimonial:
-        "AdHand's Meta expertise helped us achieve 340% ROAS increase. Their account management is flawless.",
+        "Gulshan Ads's Meta expertise helped us achieve 340% ROAS increase. Their account management is flawless.",
       metrics: { roas: "4.2x", reach: "2.1M", cpa: "-45%" },
     },
     {
@@ -163,7 +163,7 @@ export default function MetaPage() {
 
   const faqs = [
     {
-      question: "What makes AdHand's Meta accounts different?",
+      question: "What makes Gulshan Ads's Meta accounts different?",
       answer:
         "Our Meta accounts are pre-verified, have no spending limits, and come with dedicated support. We maintain direct relationships with Meta to ensure optimal performance and quick issue resolution.",
     },
@@ -233,7 +233,7 @@ export default function MetaPage() {
                   transition={{ duration: 0.6, delay: 0.4 }}
                   className="text-xl text-gray-600 dark:text-gray-400 leading-relaxed max-w-2xl"
                 >
-                  Pay for Instagram and Facebook on favorable terms and run campaigns in reliable AdHand accounts with
+                  Pay for Instagram and Facebook on favorable terms and run campaigns in reliable Gulshan Ads accounts with
                   expert support
                 </motion.p>
               </div>
@@ -349,7 +349,7 @@ export default function MetaPage() {
                 transition={{ duration: 0.5, delay: 1.2 }}
                 className="absolute top-[60%] left-[-10%] bg-white dark:bg-gray-800 rounded-xl p-3 shadow-lg border border-gray-200 dark:border-gray-700"
               >
-                <div className="text-xs font-semibold text-gray-900 dark:text-white">AdHand</div>
+                <div className="text-xs font-semibold text-gray-900 dark:text-white">Gulshan Ads</div>
                 <div className="text-xs text-gray-500 dark:text-gray-400">Expert Support</div>
               </motion.div>
 
@@ -421,7 +421,7 @@ export default function MetaPage() {
 
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
               <span className="bg-gradient-to-r from-green-500 to-cyan-500 bg-clip-text text-transparent">
-                AdHand simplifies working
+              Gulshan Ads simplifies working
               </span>
               <br />
               <span className="text-gray-700 dark:text-gray-300">with Meta at every stage</span>
@@ -521,7 +521,7 @@ export default function MetaPage() {
               >
                 <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Full Control Over Expenses</h3>
                 <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-                  Easily top up your AdHand balance using a card or invoice, and allocate funds across multiple
+                  Easily top up your Gulshan Ads balance using a card or invoice, and allocate funds across multiple
                   campaigns with complete transparency and control.
                 </p>
               </motion.div>
@@ -721,7 +721,7 @@ export default function MetaPage() {
               {/* Progress indicator */}
               <div className="bg-white dark:bg-gray-800 rounded-xl p-4">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-gray-900 dark:text-white">AdHand has completed</span>
+                  <span className="text-sm font-medium text-gray-900 dark:text-white">Gulshan Ads has completed</span>
                   <span className="text-sm font-bold text-pink-600 dark:text-pink-400">22/30</span>
                 </div>
                 <div className="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-2">
@@ -755,7 +755,7 @@ export default function MetaPage() {
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">Support in Difficult Times</h3>
                 <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                  AdHand experts are available in chat to answer questions or provide quick assistance when needed.
+                Gulshan Ads experts are available in chat to answer questions or provide quick assistance when needed.
                 </p>
               </div>
 
@@ -810,7 +810,7 @@ export default function MetaPage() {
                   </div>
                 </div>
                 <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-                  and audiences for targeting, based on AdHand's experience with different types of businesses
+                  and audiences for targeting, based on Gulshan Ads's experience with different types of businesses
                 </p>
               </div>
 
@@ -1004,7 +1004,7 @@ export default function MetaPage() {
               <span className="text-gray-700 dark:text-gray-300">Stories</span>
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-              Real results from businesses that trust AdHand for their Meta advertising campaigns.
+              Real results from businesses that trust Gulshan Ads for their Meta advertising campaigns.
             </p>
           </motion.div>
 
@@ -1214,7 +1214,7 @@ export default function MetaPage() {
         </div>
       </section>
 
-      {/* AdHand × Meta Partnership Section */}
+      {/* Gulshan Ads × Meta Partnership Section */}
       <section className="py-20 bg-gradient-to-br from-gray-900 to-gray-800 dark:from-gray-800 dark:to-gray-900 relative overflow-hidden">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-20 left-20 w-80 h-80 bg-gradient-to-r from-green-400/20 to-cyan-400/20 rounded-full filter blur-3xl"></div>
@@ -1240,7 +1240,7 @@ export default function MetaPage() {
                 </svg>
               </div>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">AdHand × Meta</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">Gulshan Ads × Meta</h2>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">

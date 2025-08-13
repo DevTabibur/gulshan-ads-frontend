@@ -93,7 +93,7 @@ export default function ContactPage() {
   } | null>(null);
 
   const generateCredentials = () => {
-    const username = `adhand_${Math.random().toString(36).substring(2, 8)}`;
+    const username = `Gulshan_Ads${Math.random().toString(36).substring(2, 8)}`;
     const password = Math.random().toString(36).substring(2, 12);
     return { username, password };
   };
@@ -153,7 +153,7 @@ export default function ContactPage() {
                 className="text-lg text-gray-600 dark:text-gray-300 mb-8"
               >
                 We're sending you an auto-generated username and password to get
-                started with AdHand.
+                started with Gulshan Ads.
               </motion.p>
 
               <motion.div

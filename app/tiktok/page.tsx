@@ -65,7 +65,7 @@ export default function TikTokPage() {
       ),
       title: "Easy launch and Management",
       description:
-        "AdHand allows you to launch advertising campaigns quickly and has an easy interface for account management.",
+        "Gulshan Ads allows you to launch advertising campaigns quickly and has an easy interface for account management.",
       color: "from-teal-500 to-cyan-500",
     },
   ]
@@ -75,7 +75,7 @@ export default function TikTokPage() {
       company: "Creative Agency",
       logo: "CA",
       testimonial:
-        "Working with AdHand through AdHand is very effective. The AdHand team assists in placing ads through the platform and constantly offers new ideas on how to make ads more effective in reaching new audiences.",
+        "Working with Gulshan Ads through Gulshan Ads is very effective. The Gulshan Ads team assists in placing ads through the platform and constantly offers new ideas on how to make ads more effective in reaching new audiences.",
       author: "Jessica Smith",
       position: "Marketing Director",
       rating: 5,
@@ -85,7 +85,7 @@ export default function TikTokPage() {
       company: "Digital Solutions",
       logo: "DS",
       testimonial:
-        "AdHand's TikTok advertising platform has transformed our client campaigns. The targeting precision and creative tools have delivered exceptional results across all demographics.",
+        "Gulshan Ads's TikTok advertising platform has transformed our client campaigns. The targeting precision and creative tools have delivered exceptional results across all demographics.",
       author: "Michael Chen",
       position: "Growth Manager",
       rating: 5,
@@ -95,7 +95,7 @@ export default function TikTokPage() {
       company: "Brand Innovators",
       logo: "BI",
       testimonial:
-        "The partnership with AdHand for TikTok advertising has been game-changing. Their expertise in the platform and dedicated support has helped us achieve 300% better ROI.",
+        "The partnership with Gulshan Ads for TikTok advertising has been game-changing. Their expertise in the platform and dedicated support has helped us achieve 300% better ROI.",
       author: "Sarah Johnson",
       position: "CEO",
       rating: 5,
@@ -299,7 +299,7 @@ export default function TikTokPage() {
                         className="absolute bottom-8 left-4 right-16"
                       >
                         <div className="text-white">
-                          <h3 className="font-bold mb-2">@adhand_agency</h3>
+                          <h3 className="font-bold mb-2">@gulshanads_agency</h3>
                           <p className="text-sm opacity-90 mb-3">
                             Boost your business with TikTok advertising! 🚀 #TikTokAds #Marketing
                           </p>
@@ -537,7 +537,7 @@ export default function TikTokPage() {
                       <div className="bg-black/50 rounded-xl p-4">
                         <div className="flex items-center space-x-3 mb-2">
                           <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-cyan-500 rounded-full"></div>
-                          <span className="text-white font-medium">@adhand_official</span>
+                          <span className="text-white font-medium">@gulshanads_official</span>
                         </div>
                         <p className="text-white text-sm">
                           Transform your business with TikTok advertising! 🚀 #BusinessGrowth #TikTokAds
@@ -608,7 +608,7 @@ export default function TikTokPage() {
                 Convenient payment,
               </span>
               <br />
-              <span className="text-gray-700 dark:text-gray-300">with automation from AdHand</span>
+              <span className="text-gray-700 dark:text-gray-300">with automation from Gulshan Ads</span>
             </h2>
 
             {/* Payment Badges */}
@@ -679,7 +679,7 @@ export default function TikTokPage() {
           >
             <p className="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-3xl mx-auto">
               If you manage 10 clients with $500 each, and we charge 15% commission, you can achieve better ROI and ROAS
-              with AdHand.
+              with Gulshan Ads.
             </p>
             <motion.button
               whileHover={{ scale: 1.05 }}
@@ -719,10 +719,10 @@ export default function TikTokPage() {
               </div>
             </div>
 
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">AdHand is a TikTok partner</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Gulshan Ads is a TikTok partner</h2>
             <p className="text-xl text-white/90 mb-8 max-w-3xl mx-auto leading-relaxed">
-              Start working with AdHand and get the opportunity to create TikTok advertising campaigns. Join thousands
-              of successful businesses and agencies that trust AdHand for their advertising needs.
+              Start working with Gulshan Ads and get the opportunity to create TikTok advertising campaigns. Join thousands
+              of successful businesses and agencies that trust Gulshan Ads for their advertising needs.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
@@ -772,7 +772,7 @@ export default function TikTokPage() {
               </span>
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-              Real feedback from businesses that have transformed their advertising with AdHand's TikTok solutions.
+              Real feedback from businesses that have transformed their advertising with Gulshan Ads's TikTok solutions.
             </p>
           </motion.div>
 
@@ -901,7 +901,7 @@ export default function TikTokPage() {
               </svg>
             </div>
 
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Join the AdHand mailing list</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Join the Gulshan Ads mailing list</h2>
             <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
               No spam, just client case studies, automation tips and best practices for TikTok advertising delivered to
               your inbox.

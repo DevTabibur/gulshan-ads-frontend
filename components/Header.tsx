@@ -132,7 +132,7 @@ export const Header = () => {
                 <span className="text-white font-bold text-lg">A</span>
               </div>
               <span className="ml-2 text-xl font-bold text-gray-900 dark:text-white">
-                AdHand
+              Gulshan Ads
               </span>
             </a>
           </div>

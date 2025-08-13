@@ -102,7 +102,7 @@ export default function PrivacyPage() {
                 Privacy Policy
               </h1>
               <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-                Your privacy is our priority. Learn how AdHand protects and
+                Your privacy is our priority. Learn how Gulshan Ads protects and
                 manages your data in our advertising services.
               </p>
               <div className="mt-4 text-sm text-gray-500 dark:text-gray-400">
@@ -152,7 +152,7 @@ export default function PrivacyPage() {
                 </h2>
                 <div className="prose prose-gray dark:prose-invert max-w-none">
                   <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                    AdHand ("we," "our," or "us") is committed to protecting
+                  Gulshan Ads ("we," "our," or "us") is committed to protecting
                     your privacy. This Privacy Policy explains how we collect,
                     use, disclose, and safeguard your information when you use
                     our advertising agency services, including campaign
@@ -495,7 +495,7 @@ export default function PrivacyPage() {
                           Contact Information
                         </h4>
                         <p className="text-gray-600 dark:text-gray-300 text-sm mb-2">
-                          Email: privacy@adhand.app
+                          Email: privacy@gulshanads.app
                         </p>
                         <p className="text-gray-600 dark:text-gray-300 text-sm">
                           Response time: Within 30 days
@@ -612,7 +612,7 @@ export default function PrivacyPage() {
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <motion.a
-                      href="mailto:privacy@adhand.app"
+                      href="mailto:privacy@gulshanads.app"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       className="inline-flex items-center px-6 py-3 bg-white text-green-600 rounded-lg font-medium hover:bg-gray-100 transition-colors"

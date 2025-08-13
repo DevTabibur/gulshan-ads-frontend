@@ -17,7 +17,7 @@ export const Testimonials = () => {
       logo: "TF",
       logoColor: "from-green-500 to-emerald-500",
       testimonial:
-        "AdHand transformed our advertising strategy completely. Their multi-platform approach helped us achieve a 340% increase in qualified leads while reducing our cost per acquisition by 60%. The team's expertise in Telegram advertising opened up entirely new markets for us.",
+        "Gulshan Ads transformed our advertising strategy completely. Their multi-platform approach helped us achieve a 340% increase in qualified leads while reducing our cost per acquisition by 60%. The team's expertise in Telegram advertising opened up entirely new markets for us.",
       author: "Sarah Chen",
       position: "CMO",
       metrics: {
@@ -33,7 +33,7 @@ export const Testimonials = () => {
       logo: "DD",
       logoColor: "from-cyan-500 to-blue-500",
       testimonial:
-        "As a growing agency, AdHand's white-label solutions have been game-changing. We can now offer our clients premium advertising services across Meta, TikTok, and Telegram without the overhead. Their support team feels like an extension of our own.",
+        "As a growing agency, Gulshan Ads's white-label solutions have been game-changing. We can now offer our clients premium advertising services across Meta, TikTok, and Telegram without the overhead. Their support team feels like an extension of our own.",
       author: "Marcus Rodriguez",
       position: "Founder & CEO",
       metrics: {
@@ -49,7 +49,7 @@ export const Testimonials = () => {
       logo: "EV",
       logoColor: "from-teal-500 to-cyan-500",
       testimonial:
-        "The unified dashboard and expert guidance from AdHand made scaling our campaigns effortless. We went from struggling with platform complexity to running successful campaigns across all major social platforms. ROI speaks for itself.",
+        "The unified dashboard and expert guidance from Gulshan Ads made scaling our campaigns effortless. We went from struggling with platform complexity to running successful campaigns across all major social platforms. ROI speaks for itself.",
       author: "Elena Vasquez",
       position: "Performance Marketing Director",
       metrics: {
@@ -65,7 +65,7 @@ export const Testimonials = () => {
       logo: "IL",
       logoColor: "from-blue-500 to-indigo-500",
       testimonial:
-        "AdHand's Telegram advertising expertise helped us tap into markets we never knew existed. Their strategic approach and hands-on support turned our experimental budget into our highest-performing channel. Absolutely recommend for any serious advertiser.",
+        "Gulshan Ads's Telegram advertising expertise helped us tap into markets we never knew existed. Their strategic approach and hands-on support turned our experimental budget into our highest-performing channel. Absolutely recommend for any serious advertiser.",
       author: "David Kim",
       position: "Growth Lead",
       metrics: {
@@ -81,7 +81,7 @@ export const Testimonials = () => {
       logo: "VM",
       logoColor: "from-purple-500 to-pink-500",
       testimonial:
-        "Working with AdHand has elevated our agency's capabilities tremendously. Their platform integration and expert consultation have enabled us to deliver results that consistently exceed client expectations. True partnership in every sense.",
+        "Working with Gulshan Ads has elevated our agency's capabilities tremendously. Their platform integration and expert consultation have enabled us to deliver results that consistently exceed client expectations. True partnership in every sense.",
       author: "Jennifer Walsh",
       position: "Strategy Director",
       metrics: {
@@ -145,7 +145,7 @@ export const Testimonials = () => {
               <span className="text-gray-700 dark:text-gray-300">Stories</span>
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
-              Discover how businesses and agencies worldwide are achieving exceptional results with AdHand's
+              Discover how businesses and agencies worldwide are achieving exceptional results with Gulshan Ads's
               multi-platform advertising solutions.
             </p>
           </motion.div>
@@ -325,7 +325,7 @@ export const Testimonials = () => {
         >
           <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Ready to Join Our Success Stories?</h3>
           <p className="text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
-            Start your journey with AdHand today and discover how our multi-platform advertising solutions can transform
+            Start your journey with Gulshan Ads today and discover how our multi-platform advertising solutions can transform
             your business results.
           </p>
           <button className="bg-gradient-to-r from-green-500 to-cyan-500 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-green-600 hover:to-cyan-600 transition-all duration-300 transform hover:scale-105 hover:shadow-lg">

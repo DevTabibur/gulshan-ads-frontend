@@ -7,7 +7,7 @@ import { TrustedBy } from "../components/TrustedBy"
 import { PlatformShowcase } from "../components/PlatformShowcase"
 import { MetaShowcase } from "../components/MetaShowcase"
 import { TelegramShowcase } from "../components/TelegramShowcase"
-import { AboutAdHand } from "../components/AboutAdHand"
+import {  AboutGulshanAds } from "../components/AboutGulshanAds"
 import { Testimonials } from "../components/Testimonials"
 import { HowItWorks } from "../components/HowItWorks"
 import { useLanguage } from "../hooks/useLanguage"
@@ -18,10 +18,10 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>AdHand - Promote your business in Meta, TikTok and Telegram</title>
+        <title>Gulshan Ads - Promote your business in Meta, TikTok and Telegram</title>
         <meta
           name="description"
-          content="Find clients on booming platforms with AdHand — easy payment and ad launch in one interface"
+          content="Find clients on booming platforms with Gulshan Ads — easy payment and ad launch in one interface"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
@@ -33,7 +33,7 @@ export default function Home() {
         <PlatformShowcase />
         <MetaShowcase />
         <TelegramShowcase />
-        <AboutAdHand />
+        <AboutGulshanAds/>
         <Testimonials />
         <HowItWorks />
       </Layout>
