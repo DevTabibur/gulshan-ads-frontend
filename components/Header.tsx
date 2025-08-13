@@ -1,22 +1,80 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "../hooks/useLanguage";
 import { ThemeToggle } from "./ThemeToggle";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import Link from "next/link";
 
+// Simple Toast component
+function Toast({ message, onClose }: { message: string; onClose: () => void }) {
+  const timer = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    if (message) {
+      timer.current = setTimeout(onClose, 2000);
+    }
+    return () => {
+      if (timer.current) clearTimeout(timer.current);
+    };
+  }, [message, onClose]);
+
+  if (!message) return null;
+  return (
+    <div className="fixed top-6 left-1/2 z-[9999] -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-lg shadow-lg animate-fade-in">
+      {message}
+    </div>
+  );
+}
+
 export const Header = () => {
   const { t, isRTL } = useLanguage();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isPlatformsOpen, setIsPlatformsOpen] = useState(false);
+  const [toast, setToast] = useState<string>("");
 
   const navItems = [
     { key: "Advertisers", href: "advertisers" },
     { key: "Testimonials", href: "#testimonials" },
     { key: "Blog", href: "blog" },
   ];
+
+  // Google color SVG for Google Ads
+  const googleAdsIcon = (
+    <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center border border-gray-200">
+      <svg
+        className="w-7 h-7"
+        viewBox="0 0 48 48"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        {/* Blue bar */}
+        <path
+          d="M9.5 39.5L24 10.5"
+          stroke="#4285F4"
+          strokeWidth="5"
+          strokeLinecap="round"
+        />
+        {/* Yellow bar */}
+        <path
+          d="M24 10.5L38.5 39.5"
+          stroke="#FBBC05"
+          strokeWidth="5"
+          strokeLinecap="round"
+        />
+        {/* Green circle */}
+        <circle
+          cx="24"
+          cy="39"
+          r="4"
+          fill="#34A853"
+          stroke="#34A853"
+          strokeWidth="2"
+        />
+      </svg>
+    </div>
+  );
 
   const platforms = [
     {
@@ -35,6 +93,7 @@ export const Header = () => {
       ),
       href: "/meta",
       stats: "3.8B+ users",
+      isComingSoon: false,
     },
     {
       name: "TikTok",
@@ -68,23 +127,48 @@ export const Header = () => {
         </div>
       ),
       href: "/telegram",
+      isComingSoon: true,
       stats: "900M+ users",
     },
     {
-      name: "Snapchat",
+      name: "Google Ads",
       description: "Reach younger demographics",
       icon: (
         <div className="w-10 h-10 bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-lg flex items-center justify-center">
           <svg
-            className="w-5 h-5 text-white"
-            fill="currentColor"
-            viewBox="0 0 24 24"
+            className="w-5 h-5"
+            viewBox="0 0 48 48"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.097.118.112.221.083.343-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.746-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24.009 12.017 24.009c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641.001.012.001z" />
+            {/* Blue bar */}
+            <path
+              d="M9.5 39.5L24 10.5L38.5 39.5"
+              stroke="#4285F4"
+              strokeWidth="5"
+              strokeLinecap="round"
+            />
+            {/* Green circle */}
+            <circle
+              cx="24"
+              cy="39"
+              r="4"
+              fill="#34A853"
+              stroke="#34A853"
+              strokeWidth="2"
+            />
+            {/* Yellow bar */}
+            <path
+              d="M24 10.5L38.5 39.5"
+              stroke="#FBBC05"
+              strokeWidth="5"
+              strokeLinecap="round"
+            />
           </svg>
         </div>
       ),
       href: "/snapchat",
+      isComingSoon: true,
       stats: "750M+ users",
     },
   ];
@@ -121,8 +205,36 @@ export const Header = () => {
     visible: { opacity: 1, x: 0 },
   };
 
+  // Handler for platform click (desktop)
+  const handlePlatformClick = (platform: any, e: React.MouseEvent) => {
+    if (platform.isComingSoon) {
+      e.preventDefault();
+      setIsPlatformsOpen(false);
+      setToast("Coming soon!");
+    }
+  };
+
+  // Handler for platform click (mobile)
+  const handlePlatformClickMobile = (
+    platform: any,
+    e: React.MouseEvent
+  ) => {
+    if (platform.isComingSoon) {
+      e.preventDefault();
+      setIsPlatformsOpen(false);
+      setIsMobileMenuOpen(false);
+      setToast("Coming soon!");
+    } else {
+      setIsPlatformsOpen(false);
+      setIsMobileMenuOpen(false);
+    }
+  };
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
+      {/* Toast */}
+      <Toast message={toast} onClose={() => setToast("")} />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -132,7 +244,7 @@ export const Header = () => {
                 <span className="text-white font-bold text-lg">A</span>
               </div>
               <span className="ml-2 text-xl font-bold text-gray-900 dark:text-white">
-              Gulshan Ads
+                Gulshan Ads
               </span>
             </a>
           </div>
@@ -187,9 +299,15 @@ export const Header = () => {
                         <motion.a
                           key={platform.name}
                           variants={itemVariants}
-                          href={platform.href}
-                          onClick={() => setIsPlatformsOpen(false)}
-                          className="flex items-center space-x-3 px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 group"
+                          href={platform.isComingSoon ? "#" : platform.href}
+                          onClick={(e) => handlePlatformClick(platform, e)}
+                          className={`flex items-center space-x-3 px-4 py-3 transition-colors duration-200 group ${
+                            platform.isComingSoon
+                              ? "cursor-not-allowed opacity-60"
+                              : "hover:bg-gray-50 dark:hover:bg-gray-700"
+                          }`}
+                          tabIndex={0}
+                          aria-disabled={platform.isComingSoon ? "true" : undefined}
                         >
                           <motion.div
                             whileHover={{ scale: 1.1 }}
@@ -208,6 +326,11 @@ export const Header = () => {
                           <div className="text-xs font-medium text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20 px-2 py-1 rounded-full">
                             {platform.stats}
                           </div>
+                          {/* {platform.isComingSoon && (
+                            <span className="ml-2 text-xs text-yellow-500 font-semibold">
+                              {t?.("common.comingSoon") || "Coming soon"}
+                            </span>
+                          )} */}
                         </motion.a>
                       ))}
                     </div>
@@ -355,15 +478,23 @@ export const Header = () => {
                         {platforms.map((platform) => (
                           <a
                             key={platform.name}
-                            href={platform.href}
-                            onClick={() => {
-                              setIsPlatformsOpen(false);
-                              setIsMobileMenuOpen(false);
-                            }}
-                            className="flex items-center space-x-3 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
+                            href={platform.isComingSoon ? "#" : platform.href}
+                            onClick={(e) => handlePlatformClickMobile(platform, e)}
+                            className={`flex items-center space-x-3 py-2 text-gray-600 bg-black dark:bg-white dark:text-gray-300 transition-colors duration-200 ${
+                              platform.isComingSoon
+                                ? "cursor-not-allowed opacity-60"
+                                : "hover:text-gray-900 dark:hover:text-white"
+                            }`}
+                            tabIndex={0}
+                            aria-disabled={platform.isComingSoon ? "true" : undefined}
                           >
                             <div className="scale-75">{platform.icon}</div>
                             <span className="text-sm">{platform.name}</span>
+                            {platform.isComingSoon && (
+                              <span className="ml-2 text-xs text-yellow-500 font-semibold">
+                                {t?.("common.comingSoon") || "Coming soon"}
+                              </span>
+                            )}
                           </a>
                         ))}
                       </motion.div>

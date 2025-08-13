@@ -77,10 +77,10 @@ export default function AdvertisersPage() {
   // const t = translations[language]
 
   const stats = [
-    { icon: Users, value: "10K+", label: "Active Advertisers", color: "text-emerald-400" },
+    { icon: Users, value: "200+", label: "Active Advertisers", color: "text-emerald-400" },
     { icon: TrendingUp, value: "300%", label: "Average ROI", color: "text-cyan-400" },
     { icon: DollarSign, value: "$2M+", label: "Revenue Generated", color: "text-yellow-400" },
-    { icon: Clock, value: "24/7", label: "Support Available", color: "text-orange-400" },
+    { icon: Clock, value: "12/6", label: "Support Available", color: "text-orange-400" },
   ]
 
   const benefits = [
@@ -115,7 +115,7 @@ export default function AdvertisersPage() {
       icon: Globe,
       title: "Multi-Platform Campaigns",
       description: "Facebook, Instagram, Google, LinkedIn, TikTok - we handle them all",
-      features: ["Cross-platform optimization", "Unified reporting", "Budget allocation"],
+      features: ["Cross-platform optimization", "Weekly reporting", "Unified reporting", "Budget friendly campaign"],
       price: "From $299/mo",
     },
     {
@@ -456,11 +456,10 @@ export default function AdvertisersPage() {
                   )}
 
                   <div
-                    className={`relative bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-lg border-2 ${
-                      index === 1
+                    className={`relative bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-lg border-2 ${index === 1
                         ? "border-emerald-500 dark:border-emerald-400"
                         : "border-slate-200 dark:border-slate-700"
-                    } group-hover:shadow-2xl transition-all duration-300`}
+                      } group-hover:shadow-2xl transition-all duration-300`}
                   >
                     <div className="flex items-center gap-4 mb-6">
                       <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-emerald-500 to-cyan-500 rounded-xl">
@@ -484,11 +483,10 @@ export default function AdvertisersPage() {
                     </ul>
 
                     <motion.button
-                      className={`w-full py-4 rounded-xl font-semibold transition-all duration-300 ${
-                        index === 1
+                      className={`w-full py-4 rounded-xl font-semibold transition-all duration-300 ${index === 1
                           ? "bg-gradient-to-r from-emerald-600 to-cyan-600 text-white shadow-lg hover:shadow-xl"
                           : "border-2 border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700"
-                      }`}
+                        }`}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
@@ -644,8 +642,7 @@ export default function AdvertisersPage() {
               </h2>
 
               <p className="text-xl text-white/90 mb-8 leading-relaxed">
-                Join 10,000+ successful Advertisers who've transformed their business with Gulshan Ads. Get your first
-                campaign running in 24 hours with our expert team.
+                Join 200+ successful Advertisers who've transformed their business with Gulshan Ads. Get your first campaign running in 24 hours with our expert team.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
