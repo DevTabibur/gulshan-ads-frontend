@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Formik, Form, Field, ErrorMessage } from "formik"
@@ -10,13 +9,14 @@ import Link from "next/link"
 import { Eye, EyeOff, Mail, Lock, User, ArrowRight, Sparkles, Zap, Shield, CheckCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
+import { register } from "../api/auth/auth.api"
 
 const SignUpSchema = Yup.object().shape({
   firstName: Yup.string().min(2, "First name must be at least 2 characters").required("First name is required"),
   lastName: Yup.string().min(2, "Last name must be at least 2 characters").required("Last name is required"),
   email: Yup.string().email("Please enter a valid email address").required("Email is required"),
   password: Yup.string()
-    .min(8, "Password must be at least 8 characters")
+    .min(6, "Password must be at least 6 characters")
     .matches(/[a-z]/, "Password must contain at least one lowercase letter")
     .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
     .matches(/\d/, "Password must contain at least one number")
@@ -35,7 +35,7 @@ const floatingElements = [
 ]
 
 const passwordRequirements = [
-  { text: "At least 8 characters", regex: /.{8,}/ },
+  { text: "At least 6 characters", regex: /.{6,}/ },
   { text: "One lowercase letter", regex: /[a-z]/ },
   { text: "One uppercase letter", regex: /[A-Z]/ },
   { text: "One number", regex: /\d/ },
@@ -45,14 +45,24 @@ export default function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [passwordValue, setPasswordValue] = useState("")
 
   const handleSubmit = async (values: any) => {
     setIsLoading(true)
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-    console.log("Sign up:", values)
-    setIsLoading(false)
+    try {
+      // Call the real register API
+      const res = await register({
+        email: values.email,
+        password: values.password,
+        name: `${values.firstName} ${values.lastName}`,
+      })
+      console.log("Sign up successful:", values)
+      // You may want to redirect or show a success message here
+    } catch (error) {
+      console.error("Sign up error:", error)
+      // Optionally handle error (show error message to user)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -130,7 +140,7 @@ export default function SignUpPage() {
               validationSchema={SignUpSchema}
               onSubmit={handleSubmit}
             >
-              {({ errors, touched, isValid, values }) => (
+              {({ errors, touched, isValid, values, handleChange }) => (
                 <Form className="space-y-6">
                   {/* Name Fields */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -147,11 +157,10 @@ export default function SignUpPage() {
                         <Field
                           name="firstName"
                           type="text"
-                          className={`w-full pl-10 pr-4 py-3 bg-white/50 dark:bg-slate-700/50 border-2 rounded-xl focus:outline-none transition-all duration-300 ${
-                            errors.firstName && touched.firstName
-                              ? "border-red-400 focus:border-red-500"
-                              : "border-slate-200 dark:border-slate-600 focus:border-green-400"
-                          }`}
+                          className={`w-full pl-10 pr-4 py-3 bg-white/50 dark:bg-slate-700/50 border-2 rounded-xl focus:outline-none transition-all duration-300 ${errors.firstName && touched.firstName
+                            ? "border-red-400 focus:border-red-500"
+                            : "border-slate-200 dark:border-slate-600 focus:border-green-400"
+                            }`}
                           placeholder="First name"
                         />
                       </div>
@@ -171,11 +180,10 @@ export default function SignUpPage() {
                         <Field
                           name="lastName"
                           type="text"
-                          className={`w-full pl-10 pr-4 py-3 bg-white/50 dark:bg-slate-700/50 border-2 rounded-xl focus:outline-none transition-all duration-300 ${
-                            errors.lastName && touched.lastName
-                              ? "border-red-400 focus:border-red-500"
-                              : "border-slate-200 dark:border-slate-600 focus:border-green-400"
-                          }`}
+                          className={`w-full pl-10 pr-4 py-3 bg-white/50 dark:bg-slate-700/50 border-2 rounded-xl focus:outline-none transition-all duration-300 ${errors.lastName && touched.lastName
+                            ? "border-red-400 focus:border-red-500"
+                            : "border-slate-200 dark:border-slate-600 focus:border-green-400"
+                            }`}
                           placeholder="Last name"
                         />
                       </div>
@@ -197,11 +205,10 @@ export default function SignUpPage() {
                       <Field
                         name="email"
                         type="email"
-                        className={`w-full pl-10 pr-4 py-3 bg-white/50 dark:bg-slate-700/50 border-2 rounded-xl focus:outline-none transition-all duration-300 ${
-                          errors.email && touched.email
-                            ? "border-red-400 focus:border-red-500"
-                            : "border-slate-200 dark:border-slate-600 focus:border-green-400"
-                        }`}
+                        className={`w-full pl-10 pr-4 py-3 bg-white/50 dark:bg-slate-700/50 border-2 rounded-xl focus:outline-none transition-all duration-300 ${errors.email && touched.email
+                          ? "border-red-400 focus:border-red-500"
+                          : "border-slate-200 dark:border-slate-600 focus:border-green-400"
+                          }`}
                         placeholder="Enter your email"
                       />
                     </div>
@@ -222,30 +229,13 @@ export default function SignUpPage() {
                       <Field
                         name="password"
                         type={showPassword ? "text" : "password"}
-                        className={`w-full pl-10 pr-12 py-3 bg-white/50 dark:bg-slate-700/50 border-2 rounded-xl focus:outline-none transition-all duration-300 ${
-                          errors.password && touched.password
-                            ? "border-red-400 focus:border-red-500"
-                            : "border-slate-200 dark:border-slate-600 focus:border-green-400"
-                        }`}
+                        className={`w-full pl-10 pr-12 py-3 bg-white/50 dark:bg-slate-700/50 border-2 rounded-xl focus:outline-none transition-all duration-300 ${errors.password && touched.password
+                          ? "border-red-400 focus:border-red-500"
+                          : "border-slate-200 dark:border-slate-600 focus:border-green-400"
+                          }`}
                         placeholder="Create a password"
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                          setPasswordValue(e.target.value)
-                          // Call Formik's onChange
-                          const event = {
-                            target: {
-                              name: "password",
-                              value: e.target.value,
-                            },
-                          }
-                          // This is a workaround to trigger Formik's onChange
-                          setTimeout(() => {
-                            const formikOnChange = (document.querySelector('input[name="password"]') as any)?._formik
-                              ?.setFieldValue
-                            if (formikOnChange) {
-                              formikOnChange("password", e.target.value)
-                            }
-                          }, 0)
-                        }}
+                        // Use Formik's handleChange directly so the field is editable
+                        onChange={handleChange}
                       />
                       <button
                         type="button"
@@ -270,9 +260,8 @@ export default function SignUpPage() {
                           {passwordRequirements.map((req, index) => (
                             <div key={index} className="flex items-center text-sm">
                               <CheckCircle
-                                className={`w-4 h-4 mr-2 ${
-                                  req.regex.test(values.password) ? "text-green-500" : "text-slate-400"
-                                }`}
+                                className={`w-4 h-4 mr-2 ${req.regex.test(values.password) ? "text-green-500" : "text-slate-400"
+                                  }`}
                               />
                               <span
                                 className={
@@ -306,11 +295,10 @@ export default function SignUpPage() {
                       <Field
                         name="confirmPassword"
                         type={showConfirmPassword ? "text" : "password"}
-                        className={`w-full pl-10 pr-12 py-3 bg-white/50 dark:bg-slate-700/50 border-2 rounded-xl focus:outline-none transition-all duration-300 ${
-                          errors.confirmPassword && touched.confirmPassword
-                            ? "border-red-400 focus:border-red-500"
-                            : "border-slate-200 dark:border-slate-600 focus:border-green-400"
-                        }`}
+                        className={`w-full pl-10 pr-12 py-3 bg-white/50 dark:bg-slate-700/50 border-2 rounded-xl focus:outline-none transition-all duration-300 ${errors.confirmPassword && touched.confirmPassword
+                          ? "border-red-400 focus:border-red-500"
+                          : "border-slate-200 dark:border-slate-600 focus:border-green-400"
+                          }`}
                         placeholder="Confirm your password"
                       />
                       <button

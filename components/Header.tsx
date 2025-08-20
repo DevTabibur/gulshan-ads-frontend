@@ -364,7 +364,7 @@ export const Header = () => {
           {/* Right side controls */}
           <div className="flex items-center space-x-4">
             <ThemeToggle />
-            <LanguageSwitcher />
+            {/* <LanguageSwitcher /> */}
 
             {/* Auth buttons - Desktop */}
             {/* <div className="hidden md:flex items-center space-x-3">
