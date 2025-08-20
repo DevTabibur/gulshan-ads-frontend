@@ -46,13 +46,13 @@ export const sidebarConfig: SidebarItem[] = [
         children: [
             {
                 id: "blog-posts",
-                title: "All Posts",
+                title: "Manage",
                 icon: "FileText",
                 href: "/dashboard/blog",
             },
             {
                 id: "blog-create",
-                title: "Create Post",
+                title: "Create",
                 icon: "PenTool",
                 href: "/dashboard/blog/create",
             },
@@ -61,6 +61,25 @@ export const sidebarConfig: SidebarItem[] = [
                 title: "Categories",
                 icon: "Tag",
                 href: "/dashboard/blog/categories",
+            },
+        ],
+    },
+    {
+        id: "testimonials",
+        title: "Testimonials",
+        icon: "MessageSquare", 
+        children: [
+            {
+                id: "testimonial-posts",
+                title: "Manage",
+                icon: "FileText",
+                href: "/dashboard/testimonials",
+            },
+            {
+                id: "testimonial-create",
+                title: "Create",
+                icon: "PenTool",
+                href: "/dashboard/testimonials/create",
             },
         ],
     },

@@ -24,6 +24,7 @@ import {
   CreditCard,
   Plug,
   ChevronRight,
+  MessageSquare,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -53,6 +54,7 @@ const iconMap = {
   User,
   CreditCard,
   Plug,
+  MessageSquare,
 }
 
 interface SidebarProps {
@@ -149,7 +151,7 @@ function SidebarContent({ onItemClick }: { onItemClick?: () => void }) {
               isCollapsed && level === 0 && "justify-center px-2",
             )}
           >
-            {Icon && <Icon className="h-4 w-4 flex-shrink-0" />}
+            {Icon && <Icon className="h-4 w-4 flex-shrink-0 " />}
             {(!isCollapsed || level > 0) && (
               <>
                 <span className="flex-1 text-black dark:text-white">{item.title}</span>

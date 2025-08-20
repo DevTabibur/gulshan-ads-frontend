@@ -16,11 +16,11 @@ import { DashboardLayout } from "@/components/dashboard/DashboardLayout"
 
 const validationSchema = Yup.object({
   title: Yup.string()
-    .min(10, "Title must be at least 10 characters")
+    .min(5, "Title must be at least 5 characters")
     .max(100, "Title must be less than 100 characters")
     .required("Title is required"),
   excerpt: Yup.string()
-    .min(50, "Excerpt must be at least 50 characters")
+    .min(20, "Excerpt must be at least 20 characters")
     .max(300, "Excerpt must be less than 300 characters")
     .required("Excerpt is required"),
   content: Yup.string().min(100, "Content must be at least 100 characters").required("Content is required"),
@@ -68,7 +68,7 @@ export default function CreateBlogPage() {
 
   return (
     <DashboardLayout>
-      <div className="max-w-4xl mx-auto space-y-6">
+      <div className="mx-auto space-y-6">
         {/* Page Header */}
         <div className="flex items-center justify-between">
           <div>
@@ -99,19 +99,21 @@ export default function CreateBlogPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <Card>
+                    <Card className="border border-gray-200 dark:border-gray-700 shadow-sm bg-white dark:bg-gray-900">
                       <CardHeader>
-                        <CardTitle>Post Title</CardTitle>
-                        <CardDescription>Write a compelling title for your blog post</CardDescription>
+                        <CardTitle className="text-gray-900 dark:text-white">Post Title</CardTitle>
+                        <CardDescription className="text-gray-600 dark:text-gray-400">
+                          Write a compelling title for your blog post
+                        </CardDescription>
                       </CardHeader>
                       <CardContent>
                         <Field
                           as={Input}
                           name="title"
                           placeholder="Enter your blog post title..."
-                          className={errors.title && touched.title ? "border-red-500" : ""}
+                          className={`bg-white dark:bg-gray-900 text-gray-900 dark:text-white border-gray-300 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400 ${errors.title && touched.title ? "border-red-500 dark:border-red-500" : ""}`}
                         />
-                        <ErrorMessage name="title" component="div" className="text-red-500 text-sm mt-1" />
+                        <ErrorMessage name="title" component="div" className="text-red-500 dark:text-red-400 text-sm mt-1" />
                       </CardContent>
                     </Card>
                   </motion.div>
@@ -122,10 +124,12 @@ export default function CreateBlogPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3, delay: 0.1 }}
                   >
-                    <Card>
+                    <Card className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
                       <CardHeader>
-                        <CardTitle>Excerpt</CardTitle>
-                        <CardDescription>A brief summary of your blog post</CardDescription>
+                        <CardTitle className="text-gray-900 dark:text-white">Excerpt</CardTitle>
+                        <CardDescription className="text-gray-600 dark:text-gray-400">
+                          A brief summary of your blog post
+                        </CardDescription>
                       </CardHeader>
                       <CardContent>
                         <Field
@@ -133,9 +137,9 @@ export default function CreateBlogPage() {
                           name="excerpt"
                           placeholder="Write a brief excerpt..."
                           rows={3}
-                          className={errors.excerpt && touched.excerpt ? "border-red-500" : ""}
+                          className={`bg-white dark:bg-gray-900 text-gray-900 dark:text-white border-gray-300 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400 ${errors.excerpt && touched.excerpt ? "border-red-500 dark:border-red-500" : ""}`}
                         />
-                        <ErrorMessage name="excerpt" component="div" className="text-red-500 text-sm mt-1" />
+                        <ErrorMessage name="excerpt" component="div" className="text-red-500 dark:text-red-400 text-sm mt-1" />
                       </CardContent>
                     </Card>
                   </motion.div>
@@ -146,10 +150,12 @@ export default function CreateBlogPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3, delay: 0.2 }}
                   >
-                    <Card>
+                    <Card className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
                       <CardHeader>
-                        <CardTitle>Content</CardTitle>
-                        <CardDescription>Write your full blog post content</CardDescription>
+                        <CardTitle className="text-gray-900 dark:text-white">Content</CardTitle>
+                        <CardDescription className="text-gray-600 dark:text-gray-400">
+                          Write your full blog post content
+                        </CardDescription>
                       </CardHeader>
                       <CardContent>
                         <Field
@@ -157,9 +163,9 @@ export default function CreateBlogPage() {
                           name="content"
                           placeholder="Write your blog post content..."
                           rows={15}
-                          className={errors.content && touched.content ? "border-red-500" : ""}
+                          className={`bg-white dark:bg-gray-900 text-gray-900 dark:text-white border-gray-300 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400 ${errors.content && touched.content ? "border-red-500 dark:border-red-500" : ""}`}
                         />
-                        <ErrorMessage name="content" component="div" className="text-red-500 text-sm mt-1" />
+                        <ErrorMessage name="content" component="div" className="text-red-500 dark:text-red-400 text-sm mt-1" />
                       </CardContent>
                     </Card>
                   </motion.div>
@@ -173,52 +179,52 @@ export default function CreateBlogPage() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.3, delay: 0.3 }}
                   >
-                    <Card>
+                    <Card className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
                       <CardHeader>
-                        <CardTitle>Publish Settings</CardTitle>
+                        <CardTitle className="text-gray-900 dark:text-white">Publish Settings</CardTitle>
                       </CardHeader>
                       <CardContent className="space-y-4">
                         <div>
-                          <label className="text-sm font-medium mb-2 block">Status</label>
+                          <label className="text-sm font-medium mb-2 block text-gray-900 dark:text-gray-200">Status</label>
                           <Select value={values.status} onValueChange={(value) => setFieldValue("status", value)}>
-                            <SelectTrigger>
+                            <SelectTrigger className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white border-gray-300 dark:border-gray-700">
                               <SelectValue />
                             </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="draft">Draft</SelectItem>
-                              <SelectItem value="published">Published</SelectItem>
-                              <SelectItem value="archived">Archived</SelectItem>
+                            <SelectContent className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white border-gray-300 dark:border-gray-700">
+                              <SelectItem value="draft" className="text-gray-900 dark:text-white">Draft</SelectItem>
+                              <SelectItem value="published" className="text-gray-900 dark:text-white">Published</SelectItem>
+                              <SelectItem value="archived" className="text-gray-900 dark:text-white">Archived</SelectItem>
                             </SelectContent>
                           </Select>
                         </div>
 
                         <div>
-                          <label className="text-sm font-medium mb-2 block">Category</label>
+                          <label className="text-sm font-medium mb-2 block text-gray-900 dark:text-gray-200">Category</label>
                           <Select value={values.category} onValueChange={(value) => setFieldValue("category", value)}>
-                            <SelectTrigger>
+                            <SelectTrigger className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white border-gray-300 dark:border-gray-700">
                               <SelectValue placeholder="Select category" />
                             </SelectTrigger>
-                            <SelectContent>
+                            <SelectContent className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white border-gray-300 dark:border-gray-700">
                               {categories.map((category) => (
-                                <SelectItem key={category} value={category}>
+                                <SelectItem key={category} value={category} className="text-gray-900 dark:text-white">
                                   {category}
                                 </SelectItem>
                               ))}
                             </SelectContent>
                           </Select>
-                          <ErrorMessage name="category" component="div" className="text-red-500 text-sm mt-1" />
+                          <ErrorMessage name="category" component="div" className="text-red-500 dark:text-red-400 text-sm mt-1" />
                         </div>
 
                         <div className="flex gap-2">
                           <Button
                             type="submit"
                             disabled={isSubmitting}
-                            className="flex-1 bg-gradient-to-r from-green-500 to-cyan-500 hover:from-green-600 hover:to-cyan-600"
+                            className="flex-1 bg-gradient-to-r from-green-500 to-cyan-500 hover:from-green-600 hover:to-cyan-600 text-white"
                           >
                             <Save className="h-4 w-4 mr-2" />
                             {isSubmitting ? "Saving..." : "Save Post"}
                           </Button>
-                          <Button type="button" variant="outline">
+                          <Button type="button" variant="outline" className="border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white">
                             <Eye className="h-4 w-4" />
                           </Button>
                         </div>
@@ -232,9 +238,9 @@ export default function CreateBlogPage() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.3, delay: 0.4 }}
                   >
-                    <Card>
+                    <Card className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
                       <CardHeader>
-                        <CardTitle>Featured Image</CardTitle>
+                        <CardTitle className="text-gray-900 dark:text-white">Featured Image</CardTitle>
                       </CardHeader>
                       <CardContent>
                         {featuredImage ? (
@@ -255,10 +261,10 @@ export default function CreateBlogPage() {
                             </Button>
                           </div>
                         ) : (
-                          <div className="border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg p-6 text-center">
-                            <ImageIcon className="h-8 w-8 mx-auto text-gray-400 mb-2" />
+                          <div className="border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg p-6 text-center bg-white dark:bg-gray-900">
+                            <ImageIcon className="h-8 w-8 mx-auto text-gray-400 dark:text-gray-500 mb-2" />
                             <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">Upload featured image</p>
-                            <Button type="button" variant="outline" size="sm">
+                            <Button type="button" variant="outline" size="sm" className="border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white">
                               <Upload className="h-4 w-4 mr-2" />
                               Choose Image
                             </Button>
@@ -274,9 +280,9 @@ export default function CreateBlogPage() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.3, delay: 0.5 }}
                   >
-                    <Card>
+                    <Card className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
                       <CardHeader>
-                        <CardTitle>Tags</CardTitle>
+                        <CardTitle className="text-gray-900 dark:text-white">Tags</CardTitle>
                       </CardHeader>
                       <CardContent className="space-y-3">
                         <div className="flex gap-2">
@@ -284,9 +290,10 @@ export default function CreateBlogPage() {
                             value={newTag}
                             onChange={(e) => setNewTag(e.target.value)}
                             placeholder="Add a tag..."
+                            className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white border-gray-300 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400"
                             onKeyPress={(e) => e.key === "Enter" && (e.preventDefault(), addTag())}
                           />
-                          <Button type="button" onClick={addTag} size="sm">
+                          <Button type="button" onClick={addTag} size="sm" className="text-gray-900 dark:text-white">
                             <Plus className="h-4 w-4" />
                           </Button>
                         </div>
@@ -296,7 +303,7 @@ export default function CreateBlogPage() {
                             <Badge
                               key={tag}
                               variant="secondary"
-                              className="cursor-pointer hover:bg-red-100 hover:text-red-800"
+                              className="cursor-pointer hover:bg-red-100 hover:text-red-800 dark:hover:bg-red-900 dark:hover:text-red-300 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
                               onClick={() => removeTag(tag)}
                             >
                               <Tag className="h-3 w-3 mr-1" />

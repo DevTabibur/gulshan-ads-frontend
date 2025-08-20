@@ -79,6 +79,13 @@ export default function BlogCategoriesPage() {
     // Responsive grid: 2 cols on md+, 1 col on mobile
     return (
         <DashboardLayout>
+            {/* Page Header */}
+            <div className="flex items-center justify-between">
+                <div>
+                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Create Categories</h1>
+                    <p className="text-gray-600 dark:text-gray-400 mt-1">Write and publish a new category</p>
+                </div>
+            </div>
             <div className="w-full px-2 py-4 md:py-8">
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
                     {/* Categories Table */}
@@ -88,13 +95,13 @@ export default function BlogCategoriesPage() {
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.3 }}
                     >
-                        <Card>
+                        <Card className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-sm">
                             <CardHeader className="flex flex-row items-center justify-between gap-2">
-                                <CardTitle className="text-lg">Blog Categories</CardTitle>
+                                <CardTitle className="text-lg text-gray-900 dark:text-white">Blog Categories</CardTitle>
                                 <div className="flex items-center gap-2">
                                     <div className="relative">
                                         <Input
-                                            className="pl-9 pr-2 py-1 h-9 w-44 md:w-56"
+                                            className="pl-9 pr-2 py-1 h-9 w-44 md:w-56 text-gray-900 dark:text-white bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400"
                                             placeholder="Search categories..."
                                             value={search}
                                             onChange={(e) => {
@@ -102,14 +109,14 @@ export default function BlogCategoriesPage() {
                                                 setCurrentPage(1)
                                             }}
                                         />
-                                        <Search className="absolute left-2 top-2.5 h-4 w-4 text-gray-400" />
+                                        <Search className="absolute left-2 top-2.5 h-4 w-4 text-gray-400 dark:text-gray-500" />
                                     </div>
                                 </div>
                             </CardHeader>
                             <CardContent className="overflow-x-auto p-0">
                                 <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                                     <thead>
-                                        <tr className="bg-muted">
+                                        <tr className="bg-gray-100 dark:bg-gray-800">
                                             <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">
                                                 Name
                                             </th>
@@ -124,14 +131,14 @@ export default function BlogCategoriesPage() {
                                     <tbody>
                                         {paginatedCategories.length === 0 ? (
                                             <tr>
-                                                <td colSpan={3} className="px-4 py-6 text-center text-gray-400">
+                                                <td colSpan={3} className="px-4 py-6 text-center text-gray-400 dark:text-gray-500">
                                                     No categories found.
                                                 </td>
                                             </tr>
                                         ) : (
                                             paginatedCategories.map((cat) => (
-                                                <tr key={cat.id} className="hover:bg-muted/50 transition">
-                                                    <td className="px-4 py-3 font-medium">{cat.name}</td>
+                                                <tr key={cat.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/60 transition">
+                                                    <td className="px-4 py-3 font-medium text-gray-900 dark:text-white">{cat.name}</td>
                                                     <td className="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">{cat.description}</td>
                                                     <td className="px-4 py-3 text-right">
                                                         <Button
@@ -157,6 +164,7 @@ export default function BlogCategoriesPage() {
                                             size="sm"
                                             disabled={currentPage === 1}
                                             onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                                            className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-700"
                                         >
                                             Previous
                                         </Button>
@@ -168,6 +176,7 @@ export default function BlogCategoriesPage() {
                                             size="sm"
                                             disabled={currentPage === totalPages}
                                             onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                                            className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-700"
                                         >
                                             Next
                                         </Button>
@@ -184,9 +193,9 @@ export default function BlogCategoriesPage() {
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.3, delay: 0.1 }}
                     >
-                        <Card>
+                        <Card className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-sm">
                             <CardHeader>
-                                <CardTitle className="text-lg">Create New Category</CardTitle>
+                                <CardTitle className="text-lg text-gray-900 dark:text-white">Create New Category</CardTitle>
                             </CardHeader>
                             <CardContent>
                                 <Formik
@@ -197,7 +206,7 @@ export default function BlogCategoriesPage() {
                                     {({ isSubmitting }) => (
                                         <Form className="space-y-5">
                                             <div>
-                                                <label htmlFor="name" className="block text-sm font-medium mb-1">
+                                                <label htmlFor="name" className="block text-sm font-medium mb-1 text-gray-900 dark:text-white">
                                                     Category Name
                                                 </label>
                                                 <Field
@@ -205,16 +214,16 @@ export default function BlogCategoriesPage() {
                                                     name="name"
                                                     id="name"
                                                     placeholder="Enter category name"
-                                                    className="w-full"
+                                                    className="w-full border border-gray-300 dark:border-gray-700 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200 bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
                                                 />
                                                 <ErrorMessage
                                                     name="name"
                                                     component="div"
-                                                    className="text-xs text-red-500 mt-1"
+                                                    className="text-xs text-red-500 dark:text-red-400 mt-1"
                                                 />
                                             </div>
                                             <div>
-                                                <label htmlFor="description" className="block text-sm font-medium mb-1">
+                                                <label htmlFor="description" className="block text-sm font-medium mb-1 text-gray-900 dark:text-white">
                                                     Description
                                                 </label>
                                                 <Field
@@ -222,16 +231,20 @@ export default function BlogCategoriesPage() {
                                                     name="description"
                                                     id="description"
                                                     placeholder="Enter description"
-                                                    className="w-full"
+                                                    className="w-full border border-gray-300 dark:border-gray-700 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200 bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
                                                 />
                                                 <ErrorMessage
                                                     name="description"
                                                     component="div"
-                                                    className="text-xs text-red-500 mt-1"
+                                                    className="text-xs text-red-500 dark:text-red-400 mt-1"
                                                 />
                                             </div>
                                             <div className="flex justify-end">
-                                                <Button type="submit" disabled={isSubmitting}>
+                                                <Button
+                                                    type="submit"
+                                                    disabled={isSubmitting}
+                                                    className="bg-gradient-to-r from-green-500 to-cyan-500 hover:from-green-600 hover:to-cyan-600 text-white dark:text-white shadow-md dark:shadow-none"
+                                                >
                                                     <Plus className="h-4 w-4 mr-2" />
                                                     Create Category
                                                 </Button>
