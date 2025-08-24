@@ -7,38 +7,38 @@ export const sidebarConfig: SidebarItem[] = [
         icon: "LayoutDashboard",
         href: "/dashboard",
     },
-    {
-        id: "analytics",
-        title: "Analytics",
-        icon: "BarChart3",
-        href: "/dashboard/analytics",
-        badge: "New",
-    },
-    {
-        id: "campaigns",
-        title: "Campaigns",
-        icon: "Target",
-        children: [
-            {
-                id: "all-campaigns",
-                title: "All Campaigns",
-                icon: "List",
-                href: "/dashboard/campaigns",
-            },
-            {
-                id: "create-campaign",
-                title: "Create Campaign",
-                icon: "Plus",
-                href: "/dashboard/campaigns/create",
-            },
-            {
-                id: "campaign-templates",
-                title: "Templates",
-                icon: "FileTemplate",
-                href: "/dashboard/campaigns/templates",
-            },
-        ],
-    },
+    // {
+    //     id: "analytics",
+    //     title: "Analytics",
+    //     icon: "BarChart3",
+    //     href: "/dashboard/analytics",
+    //     badge: "New",
+    // },
+    // {
+    //     id: "campaigns",
+    //     title: "Campaigns",
+    //     icon: "Target",
+    //     children: [
+    //         {
+    //             id: "all-campaigns",
+    //             title: "All Campaigns",
+    //             icon: "List",
+    //             href: "/dashboard/campaigns",
+    //         },
+    //         {
+    //             id: "create-campaign",
+    //             title: "Create Campaign",
+    //             icon: "Plus",
+    //             href: "/dashboard/campaigns/create",
+    //         },
+    //         {
+    //             id: "campaign-templates",
+    //             title: "Templates",
+    //             icon: "FileTemplate",
+    //             href: "/dashboard/campaigns/templates",
+    //         },
+    //     ],
+    // },
     {
         id: "blog",
         title: "Blog Management",
@@ -83,54 +83,54 @@ export const sidebarConfig: SidebarItem[] = [
             },
         ],
     },
-    {
-        id: "clients",
-        title: "Clients",
-        icon: "Users",
-        href: "/dashboard/clients",
-    },
-    {
-        id: "reports",
-        title: "Reports",
-        icon: "FileBarChart",
-        children: [
-            {
-                id: "performance",
-                title: "Performance",
-                icon: "TrendingUp",
-                href: "/dashboard/reports/performance",
-            },
-            {
-                id: "roi",
-                title: "ROI Analysis",
-                icon: "DollarSign",
-                href: "/dashboard/reports/roi",
-            },
-        ],
-    },
-    {
-        id: "settings",
-        title: "Settings",
-        icon: "Settings",
-        children: [
-            {
-                id: "profile",
-                title: "Profile",
-                icon: "User",
-                href: "/dashboard/settings/profile",
-            },
-            {
-                id: "billing",
-                title: "Billing",
-                icon: "CreditCard",
-                href: "/dashboard/settings/billing",
-            },
-            {
-                id: "integrations",
-                title: "Integrations",
-                icon: "Plug",
-                href: "/dashboard/settings/integrations",
-            },
-        ],
-    },
+    // {
+    //     id: "clients",
+    //     title: "Clients",
+    //     icon: "Users",
+    //     href: "/dashboard/clients",
+    // },
+    // {
+    //     id: "reports",
+    //     title: "Reports",
+    //     icon: "FileBarChart",
+    //     children: [
+    //         {
+    //             id: "performance",
+    //             title: "Performance",
+    //             icon: "TrendingUp",
+    //             href: "/dashboard/reports/performance",
+    //         },
+    //         {
+    //             id: "roi",
+    //             title: "ROI Analysis",
+    //             icon: "DollarSign",
+    //             href: "/dashboard/reports/roi",
+    //         },
+    //     ],
+    // },
+    // {
+    //     id: "settings",
+    //     title: "Settings",
+    //     icon: "Settings",
+    //     children: [
+    //         {
+    //             id: "profile",
+    //             title: "Profile",
+    //             icon: "User",
+    //             href: "/dashboard/settings/profile",
+    //         },
+    //         {
+    //             id: "billing",
+    //             title: "Billing",
+    //             icon: "CreditCard",
+    //             href: "/dashboard/settings/billing",
+    //         },
+    //         {
+    //             id: "integrations",
+    //             title: "Integrations",
+    //             icon: "Plug",
+    //             href: "/dashboard/settings/integrations",
+    //         },
+    //     ],
+    // },
 ]

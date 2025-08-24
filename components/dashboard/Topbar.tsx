@@ -17,6 +17,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { useTheme } from "@/hooks/useTheme"
 import { useSidebar } from "@/hooks/useSidebar"
+import { useAuth } from "@/hooks/useAuth"
 
 interface TopbarProps {
   user: {
@@ -31,6 +32,11 @@ export function Topbar({ user }: TopbarProps) {
   const [searchQuery, setSearchQuery] = useState("")
   const { theme, toggleTheme } = useTheme()
   const { toggleMobile, toggleCollapsed, isCollapsed } = useSidebar()
+  const { logout } = useAuth()
+
+  const handleLogout = () => {
+    logout()
+  }
 
   return (
     <motion.header
@@ -156,7 +162,10 @@ export function Topbar({ user }: TopbarProps) {
                 <span>Settings</span>
               </DropdownMenuItem>
               <DropdownMenuSeparator className="bg-gray-100 dark:bg-gray-800" />
-              <DropdownMenuItem className="text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/40">
+              <DropdownMenuItem 
+                className="text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/40"
+                onClick={handleLogout}
+              >
                 <LogOut className="mr-2 h-4 w-4" />
                 <span>Log out</span>
               </DropdownMenuItem>

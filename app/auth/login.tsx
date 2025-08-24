@@ -6,6 +6,9 @@ import { Formik, Form, Field, ErrorMessage } from "formik"
 import * as Yup from "yup"
 import { Eye, EyeOff, Mail, Lock, ArrowRight, Sparkles, Shield, Zap } from "lucide-react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useAuth } from "@/hooks/useAuth"
+import { login as loginAPI } from "@/app/api/auth/auth.api"
 
 const loginSchema = Yup.object().shape({
   email: Yup.string().email("Please enter a valid email address").required("Email is required"),
@@ -16,23 +19,49 @@ const loginSchema = Yup.object().shape({
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState("")
+  const router = useRouter()
+  const { login } = useAuth()
 
   const handleSubmit = async (values: any) => {
     setIsLoading(true)
+    setError("")
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000))
+    try {
+      // Call the actual login API
+      const response = await loginAPI({
+        email: values.email,
+        password: values.password,
+      })
 
-    // Print form data to console
-    console.log("Login Form Data:", {
-      email: values.email,
-      password: values.password,
-      rememberMe: values.rememberMe,
-      timestamp: new Date().toISOString(),
-    })
-
-    setIsLoading(false)
-    alert("Login successful! Check console for form data.")
+      // Check if the response contains accessToken
+      if (response.accessToken) {
+        // Store the token using the auth hook
+        const success = login(response.accessToken)
+        
+        if (success) {
+          // Redirect to dashboard
+          router.push("/dashboard")
+        } else {
+          setError("Failed to process login. Please try again.")
+        }
+      } else {
+        setError("Invalid response from server. Please try again.")
+      }
+    } catch (error: any) {
+      console.error("Login error:", error)
+      
+      // Handle different types of errors
+      if (error.response?.data?.message) {
+        setError(error.response.data.message)
+      } else if (error.message) {
+        setError(error.message)
+      } else {
+        setError("An unexpected error occurred. Please try again.")
+      }
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const floatingElements = Array.from({ length: 6 }, (_, i) => (
@@ -95,6 +124,17 @@ export default function LoginPage() {
             </h1>
             <p className="text-gray-600 dark:text-gray-300">Sign in to your Gulshan Ads account</p>
           </motion.div>
+
+          {/* Error Message */}
+          {error && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg"
+            >
+              <p className="text-red-600 dark:text-red-400 text-sm">{error}</p>
+            </motion.div>
+          )}
 
           {/* Form */}
           <Formik
@@ -175,7 +215,7 @@ export default function LoginPage() {
                     <span className="ml-2 text-sm text-gray-600 dark:text-gray-300">Remember me</span>
                   </label>
                   <Link
-                    href="/auth/forgot-password"
+                    href="/forget-password"
                     className="text-sm text-green-600 hover:text-green-700 transition-colors"
                   >
                     Forgot password?
@@ -277,7 +317,7 @@ export default function LoginPage() {
             className="text-center text-gray-600 dark:text-gray-300 mt-8"
           >
             Don't have an account?{" "}
-            <Link href="/auth/register" className="text-green-600 hover:text-green-700 font-semibold transition-colors">
+            <Link href="/sign-up" className="text-green-600 hover:text-green-700 font-semibold transition-colors">
               Sign up
             </Link>
           </motion.p>
