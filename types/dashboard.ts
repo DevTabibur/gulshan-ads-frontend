@@ -21,6 +21,7 @@ export interface SidebarItem {
   }
   
   export interface BlogPost {
+    private _id(_id: any): void
     id: string
     title: string
     content: string

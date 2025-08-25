@@ -1,10 +1,10 @@
 "use client"
 
-import { useState } from "react"
-import { motion } from "framer-motion"
+import React, { useEffect, useState, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { Formik, Form, Field, ErrorMessage } from "formik"
 import * as Yup from "yup"
+import { motion } from "framer-motion"
 import { Save, Eye, Upload, X, Plus, Tag, ImageIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -13,70 +13,224 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { DashboardLayout } from "@/components/dashboard/DashboardLayout"
+import { Breadcrumb } from "@/components/dashboard/Breadcrumb"
+import { getAllBlogCategories, createBlog } from "@/app/api/blog/blog.api"
+import toast from "react-hot-toast"
 
 const validationSchema = Yup.object({
   title: Yup.string()
+    .trim()
     .min(5, "Title must be at least 5 characters")
     .max(100, "Title must be less than 100 characters")
     .required("Title is required"),
   excerpt: Yup.string()
+    .trim()
     .min(20, "Excerpt must be at least 20 characters")
     .max(300, "Excerpt must be less than 300 characters")
     .required("Excerpt is required"),
-  content: Yup.string().min(100, "Content must be at least 100 characters").required("Content is required"),
+  content: Yup.string()
+    .trim()
+    .min(100, "Content must be at least 100 characters")
+    .required("Content is required"),
+  status: Yup.string()
+    .oneOf(["draft", "published"], "Status must be draft or published")
+    .required("Status is required"),
   category: Yup.string().required("Category is required"),
-  status: Yup.string().required("Status is required"),
+  tags: Yup.array().min(1, "At least one tag is required"),
+  featuredImage: Yup.mixed().required("Featured image is required"),
 })
 
-const categories = ["Technology", "Platform Analysis", "Strategy", "Case Studies", "Industry News", "Tips & Tricks"]
+function slugify(str: string) {
+  return str
+    .toLowerCase()
+    .trim()
+    .replace(/[\s\W-]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+}
 
 export default function CreateBlogPage() {
   const router = useRouter()
   const [tags, setTags] = useState<string[]>([])
   const [newTag, setNewTag] = useState("")
-  const [featuredImage, setFeaturedImage] = useState<string | null>(null)
+  const [featuredImage, setFeaturedImage] = useState<File | null>(null)
+  const [featuredImagePreview, setFeaturedImagePreview] = useState<string | null>(null)
+  const [dragActive, setDragActive] = useState(false)
+  const fileInputRef = useRef<HTMLInputElement | null>(null)
+  const [categories, setCategories] = useState<any[]>([])
+  const [loadingCategories, setLoadingCategories] = useState(false)
 
-  const addTag = () => {
-    if (newTag.trim() && !tags.includes(newTag.trim())) {
-      setTags([...tags, newTag.trim()])
+  // Error states for custom validation
+  const [featuredImageError, setFeaturedImageError] = useState<string | null>(null)
+  const [tagsError, setTagsError] = useState<string | null>(null)
+  const [categoryError, setCategoryError] = useState<string | null>(null)
+
+  useEffect(() => {
+    async function fetchCategories() {
+      setLoadingCategories(true)
+      try {
+        const res = await getAllBlogCategories()
+        if (res.statusCode === 200 && Array.isArray(res.data)) {
+          setCategories(res.data)
+        } else {
+          setCategories([])
+        }
+      } catch (err) {
+        setCategories([])
+      } finally {
+        setLoadingCategories(false)
+      }
+    }
+    fetchCategories()
+  }, [])
+
+  const addTag = (setFieldValue?: (field: string, value: any, shouldValidate?: boolean) => void) => {
+    const tag = newTag.trim()
+    if (tag && !tags.includes(tag)) {
+      const newTags = [...tags, tag]
+      setTags(newTags)
       setNewTag("")
+      setTagsError(null)
+      if (setFieldValue) {
+        setFieldValue("tags", newTags, true)
+      }
     }
   }
 
   const removeTag = (tagToRemove: string) => {
-    setTags(tags.filter((tag) => tag !== tagToRemove))
+    const newTags = tags.filter((tag) => tag !== tagToRemove)
+    setTags(newTags)
+    if (newTags.length > 0) {
+      setTagsError(null)
+    }
   }
 
-  const handleSubmit = (values: any) => {
-    const blogPost = {
-      ...values,
-      tags,
-      featuredImage,
-      author: "Current User",
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      views: 0,
+  // Handle file input change, store File object and preview URL
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files && e.target.files[0]
+    if (file) {
+      setFeaturedImage(file)
+      setFeaturedImagePreview(URL.createObjectURL(file))
+      setFeaturedImageError(null)
+    }
+  }
+
+  // Handle drag and drop, store File object and preview URL
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setDragActive(true)
+  }
+
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setDragActive(false)
+  }
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setDragActive(false)
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      const file = e.dataTransfer.files[0]
+      setFeaturedImage(file)
+      setFeaturedImagePreview(URL.createObjectURL(file))
+      setFeaturedImageError(null)
+    }
+  }
+
+  const handleChooseImageClick = () => {
+    fileInputRef.current?.click()
+  }
+
+  const handleRemoveImage = () => {
+    setFeaturedImage(null)
+    setFeaturedImagePreview(null)
+    setFeaturedImageError("Featured image is required")
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ""
+    }
+  }
+
+  const handleSubmit = async (values: any, { setSubmitting, setFieldError, resetForm }: any) => {
+    let categoryId = ""
+    setFeaturedImageError(null)
+    setTagsError(null)
+    setCategoryError(null)
+    try {
+      const parsed = JSON.parse(values.category)
+      categoryId = parsed._id
+    } catch {
+      categoryId = values.category
     }
 
-    console.log("Creating blog post:", blogPost)
+    let hasError = false
 
-    // Simulate API call
-    setTimeout(() => {
-      router.push("/dashboard/blog")
-    }, 1000)
+    if (!tags.length) {
+      setFieldError("tags", "At least one tag is required")
+      setTagsError("At least one tag is required")
+      hasError = true
+    }
+
+    if (!featuredImage) {
+      setFieldError("featuredImage", "Featured image is required")
+      setFeaturedImageError("Featured image is required")
+      hasError = true
+    }
+
+    if (!values.category) {
+      setFieldError("category", "Category is required")
+      setCategoryError("Category is required")
+      hasError = true
+    }
+
+    if (hasError) {
+      setSubmitting(false)
+      return
+    }
+
+    // Prepare FormData to send image and all blog data
+    const formData = new FormData();
+    formData.append("title", values.title);
+    formData.append("excerpt", values.excerpt);
+    formData.append("content", values.content);
+    formData.append("status", values.status);
+    formData.append("category", categoryId);
+    formData.append("tags", JSON.stringify(tags.map((t) => t.trim())));
+    formData.append("blogFeaturedImage", featuredImage as any);
+
+    try {
+      const res = await createBlog(formData)
+      if (res.statusCode === 200) {
+        resetForm() 
+        setTags([])
+        setFeaturedImage(null)
+        setFeaturedImagePreview(null)
+        setFeaturedImageError(null)
+        setTagsError(null)
+        setCategoryError(null)
+        toast.success("Blog Created Successfully")
+        // router.push("/dashboard/blog")
+      }
+    } catch (err: any) {
+      toast.error("Error creating blog")
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
     <DashboardLayout>
       <div className="mx-auto space-y-6">
-        {/* Page Header */}
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Create Blog Post</h1>
             <p className="text-gray-600 dark:text-gray-400 mt-1">Write and publish a new blog post</p>
           </div>
         </div>
-
+        <div className="my-4">
+          <Breadcrumb />
+        </div>
         <Formik
           initialValues={{
             title: "",
@@ -84,13 +238,14 @@ export default function CreateBlogPage() {
             content: "",
             category: "",
             status: "draft",
+            tags: [],
+            featuredImage: null,
           }}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
           {({ values, setFieldValue, isSubmitting, errors, touched }) => (
             <Form className="space-y-6">
-              {/* Main Content */}
               <div className="grid lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2 space-y-6">
                   {/* Title */}
@@ -117,7 +272,6 @@ export default function CreateBlogPage() {
                       </CardContent>
                     </Card>
                   </motion.div>
-
                   {/* Excerpt */}
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -143,7 +297,6 @@ export default function CreateBlogPage() {
                       </CardContent>
                     </Card>
                   </motion.div>
-
                   {/* Content */}
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -170,7 +323,6 @@ export default function CreateBlogPage() {
                     </Card>
                   </motion.div>
                 </div>
-
                 {/* Sidebar */}
                 <div className="space-y-6">
                   {/* Publish Settings */}
@@ -193,28 +345,44 @@ export default function CreateBlogPage() {
                             <SelectContent className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white border-gray-300 dark:border-gray-700">
                               <SelectItem value="draft" className="text-gray-900 dark:text-white">Draft</SelectItem>
                               <SelectItem value="published" className="text-gray-900 dark:text-white">Published</SelectItem>
-                              <SelectItem value="archived" className="text-gray-900 dark:text-white">Archived</SelectItem>
                             </SelectContent>
                           </Select>
                         </div>
-
                         <div>
                           <label className="text-sm font-medium mb-2 block text-gray-900 dark:text-gray-200">Category</label>
-                          <Select value={values.category} onValueChange={(value) => setFieldValue("category", value)}>
+                          <Select
+                            value={values.category}
+                            onValueChange={(value) => {
+                              setFieldValue("category", value)
+                              setCategoryError(null)
+                            }}
+                          >
                             <SelectTrigger className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white border-gray-300 dark:border-gray-700">
                               <SelectValue placeholder="Select category" />
                             </SelectTrigger>
                             <SelectContent className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white border-gray-300 dark:border-gray-700">
-                              {categories.map((category) => (
-                                <SelectItem key={category} value={category} className="text-gray-900 dark:text-white">
-                                  {category}
-                                </SelectItem>
-                              ))}
+                              {loadingCategories ? (
+                                <div className="px-4 py-2 text-gray-500 dark:text-gray-400">Loading...</div>
+                              ) : categories.length === 0 ? (
+                                <div className="px-4 py-2 text-gray-500 dark:text-gray-400">No categories found</div>
+                              ) : (
+                                categories.map((category) => (
+                                  <SelectItem
+                                    key={category._id}
+                                    value={JSON.stringify({ _id: category?._id, name: category?.name })}
+                                    className="text-gray-900 dark:text-white cursor-pointer"
+                                  >
+                                    {category.name}
+                                  </SelectItem>
+                                ))
+                              )}
                             </SelectContent>
                           </Select>
                           <ErrorMessage name="category" component="div" className="text-red-500 dark:text-red-400 text-sm mt-1" />
+                          {categoryError && (
+                            <div className="text-red-500 dark:text-red-400 text-sm mt-1">{categoryError}</div>
+                          )}
                         </div>
-
                         <div className="flex gap-2">
                           <Button
                             type="submit"
@@ -224,14 +392,13 @@ export default function CreateBlogPage() {
                             <Save className="h-4 w-4 mr-2" />
                             {isSubmitting ? "Saving..." : "Save Post"}
                           </Button>
-                          <Button type="button" variant="outline" className="border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white">
+                          {/* <Button type="button" variant="outline" className="border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white">
                             <Eye className="h-4 w-4" />
-                          </Button>
+                          </Button> */}
                         </div>
                       </CardContent>
                     </Card>
                   </motion.div>
-
                   {/* Featured Image */}
                   <motion.div
                     initial={{ opacity: 0, x: 20 }}
@@ -243,10 +410,10 @@ export default function CreateBlogPage() {
                         <CardTitle className="text-gray-900 dark:text-white">Featured Image</CardTitle>
                       </CardHeader>
                       <CardContent>
-                        {featuredImage ? (
+                        {featuredImagePreview ? (
                           <div className="relative">
                             <img
-                              src={featuredImage || "/placeholder.svg"}
+                              src={featuredImagePreview || "/placeholder.svg"}
                               alt="Featured"
                               className="w-full h-32 object-cover rounded-lg"
                             />
@@ -255,25 +422,54 @@ export default function CreateBlogPage() {
                               variant="destructive"
                               size="sm"
                               className="absolute top-2 right-2"
-                              onClick={() => setFeaturedImage(null)}
+                              onClick={handleRemoveImage}
                             >
                               <X className="h-3 w-3" />
                             </Button>
                           </div>
                         ) : (
-                          <div className="border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg p-6 text-center bg-white dark:bg-gray-900">
-                            <ImageIcon className="h-8 w-8 mx-auto text-gray-400 dark:text-gray-500 mb-2" />
-                            <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">Upload featured image</p>
-                            <Button type="button" variant="outline" size="sm" className="border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white">
+                          <div
+                            className={`border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg p-6 text-center bg-white dark:bg-gray-900 transition-colors duration-150 ${dragActive ? "border-blue-400 dark:border-blue-400 bg-blue-50 dark:bg-blue-900/30" : ""}`}
+                            onDragOver={handleDragOver}
+                            onDragLeave={handleDragLeave}
+                            onDrop={handleDrop}
+                            onClick={handleChooseImageClick}
+                            style={{ cursor: "pointer" }}
+                          >
+                            <input
+                              type="file"
+                              accept="image/*"
+                              ref={fileInputRef}
+                              style={{ display: "none" }}
+                              onChange={handleFileChange}
+                            />
+                            <ImageIcon className="h-8 w-8 mx-auto text-gray-400 dark:text-gray-500 mb-2 pointer-events-none" />
+                            <p className="text-sm text-gray-600 dark:text-gray-400 mb-2 pointer-events-none">
+                              {dragActive ? "Drop image here..." : "Upload featured image"}
+                            </p>
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="sm"
+                              className="border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white pointer-events-none"
+                              tabIndex={-1}
+                            >
                               <Upload className="h-4 w-4 mr-2" />
                               Choose Image
                             </Button>
+                            <p className="text-xs text-gray-400 dark:text-gray-500 mt-2 pointer-events-none">Drag & drop or click to select</p>
                           </div>
+                        )}
+                        <ErrorMessage name="featuredImage" component="div" className="text-red-500 dark:text-red-400 text-sm mt-1" />
+                        {featuredImageError && (
+                          <div className="text-red-500 dark:text-red-400 text-sm mt-1">{featuredImageError}</div>
+                        )}
+                        {tagsError && (
+                          <div className="text-red-500 dark:text-red-400 text-sm mt-1">{tagsError}</div>
                         )}
                       </CardContent>
                     </Card>
                   </motion.div>
-
                   {/* Tags */}
                   <motion.div
                     initial={{ opacity: 0, x: 20 }}
@@ -291,20 +487,34 @@ export default function CreateBlogPage() {
                             onChange={(e) => setNewTag(e.target.value)}
                             placeholder="Add a tag..."
                             className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white border-gray-300 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400"
-                            onKeyPress={(e) => e.key === "Enter" && (e.preventDefault(), addTag())}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter") {
+                                e.preventDefault()
+                                addTag((field, value, shouldValidate) => setFieldValue("tags", [...tags, newTag.trim()], true))
+                              }
+                            }}
                           />
-                          <Button type="button" onClick={addTag} size="sm" className="text-gray-900 dark:text-white">
+                          <Button
+                            type="button"
+                            onClick={() => {
+                              addTag((field, value, shouldValidate) => setFieldValue("tags", [...tags, newTag.trim()], true))
+                            }}
+                            size="sm"
+                            className="text-gray-900 dark:text-white"
+                          >
                             <Plus className="h-4 w-4" />
                           </Button>
                         </div>
-
                         <div className="flex flex-wrap gap-2">
                           {tags.map((tag) => (
                             <Badge
                               key={tag}
                               variant="secondary"
                               className="cursor-pointer hover:bg-red-100 hover:text-red-800 dark:hover:bg-red-900 dark:hover:text-red-300 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
-                              onClick={() => removeTag(tag)}
+                              onClick={() => {
+                                removeTag(tag)
+                                setFieldValue("tags", tags.filter((t) => t !== tag), true)
+                              }}
                             >
                               <Tag className="h-3 w-3 mr-1" />
                               {tag}
@@ -312,6 +522,9 @@ export default function CreateBlogPage() {
                             </Badge>
                           ))}
                         </div>
+                        {tagsError && (
+                          <div className="text-red-500 dark:text-red-400 text-sm mt-1">{tagsError}</div>
+                        )}
                       </CardContent>
                     </Card>
                   </motion.div>
