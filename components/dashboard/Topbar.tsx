@@ -137,7 +137,7 @@ export function Topbar({ user }: TopbarProps) {
                 <Avatar className="h-8 w-8">
                   <AvatarImage src={user.avatar || "/placeholder.svg"} alt={user.name} />
                   <AvatarFallback className="bg-gradient-to-r from-green-500 to-cyan-500 text-white">
-                    {user.name.charAt(0)}
+                    {user?.name?.charAt(0)}
                   </AvatarFallback>
                 </Avatar>
               </Button>
@@ -145,10 +145,10 @@ export function Topbar({ user }: TopbarProps) {
             <DropdownMenuContent className="w-56 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-lg" align="end" forceMount>
               <DropdownMenuLabel className="font-normal">
                 <div className="flex flex-col space-y-1">
-                  <p className="text-sm font-medium leading-none text-gray-900 dark:text-gray-100">{user.name}</p>
-                  <p className="text-xs leading-none text-gray-600 dark:text-gray-400">{user.email}</p>
+                    <p className="text-sm font-medium leading-none text-gray-900 dark:text-gray-100">{user?.name}</p>
+                  <p className="text-xs leading-none text-gray-600 dark:text-gray-400">{user?.email}</p>
                   <Badge variant="secondary" className="w-fit text-xs bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
-                    {user.role}
+                    {user?.role}
                   </Badge>
                 </div>
               </DropdownMenuLabel>

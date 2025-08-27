@@ -19,9 +19,9 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
     // Create user object for Topbar component
     const userForTopbar = user ? {
         id: user.id,
-        name: user.name,
-        email: user.email,
-        avatar: "/placeholder.svg?height=32&width=32&text=" + user.name.charAt(0).toUpperCase(),
+        name: user?.name,
+        email: user?.email,
+        avatar: "/placeholder.svg?height=32&width=32&text=" + user?.name?.charAt(0)?.toUpperCase(),
         role: user.role,
     } : {
         id: "1",

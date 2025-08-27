@@ -8,6 +8,10 @@ import Link from "next/link"
 import { Eye, EyeOff, Mail, Lock, ArrowRight, Sparkles, Zap, Shield } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
+import { login } from "../api/auth/auth.api"
+import toast from "react-hot-toast"
+import { setToLocalStorage } from "@/lib/local-storage"
+import { redirect, useRouter } from "next/navigation"
 
 const SignInSchema = Yup.object().shape({
   email: Yup.string().email("Please enter a valid email address").required("Email is required"),
@@ -23,13 +27,31 @@ const floatingElements = [
 export default function SignInPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const router = useRouter()
 
   const handleSubmit = async (values: { email: string; password: string }) => {
     setIsLoading(true)
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-    console.log("Sign in:", values)
-    setIsLoading(false)
+    try {
+      const res = await login({
+        email: values.email,
+        password: values.password
+
+      })
+      // console.log("Sign in successful:", values)
+      // console.log("res", res)
+      if (res?.statusCode === 200) {
+        toast.success(res?.message)
+        setToLocalStorage("adsToken", res?.data?.accessToken)
+        router.push("/dashboard")
+      }
+      // You may want to redirect or show a success message here
+    } catch (error) {
+      toast.error("Something went wrong")
+      console.log("Sign in error:", error)
+      // Optionally handle error (show error message to user)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -86,7 +108,9 @@ export default function SignInPage() {
                 whileHover={{ scale: 1.05 }}
                 className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-green-500 to-cyan-500 rounded-2xl mb-4 shadow-lg"
               >
-                <Sparkles className="w-8 h-8 text-white" />
+                <Link  href="/" tabIndex={-1} aria-label="Go to home">
+                  <Sparkles className="w-8 h-8 text-white" />
+                </Link>
               </motion.div>
               <h1 className="text-3xl font-bold bg-gradient-to-r from-green-600 to-cyan-600 bg-clip-text text-transparent mb-2">
                 Welcome Back
@@ -112,11 +136,10 @@ export default function SignInPage() {
                       <Field
                         name="email"
                         type="email"
-                        className={`w-full pl-10 pr-4 py-3 bg-white/50 dark:bg-slate-700/50 border-2 rounded-xl focus:outline-none transition-all duration-300 ${
-                          errors.email && touched.email
+                        className={`w-full pl-10 pr-4 py-3 bg-white/50 dark:bg-slate-700/50 border-2 rounded-xl focus:outline-none transition-all duration-300 ${errors.email && touched.email
                             ? "border-red-400 focus:border-red-500"
                             : "border-slate-200 dark:border-slate-600 focus:border-green-400"
-                        }`}
+                          }`}
                         placeholder="Enter your email"
                       />
                     </div>
@@ -137,11 +160,10 @@ export default function SignInPage() {
                       <Field
                         name="password"
                         type={showPassword ? "text" : "password"}
-                        className={`w-full pl-10 pr-12 py-3 bg-white/50 dark:bg-slate-700/50 border-2 rounded-xl focus:outline-none transition-all duration-300 ${
-                          errors.password && touched.password
+                        className={`w-full pl-10 pr-12 py-3 bg-white/50 dark:bg-slate-700/50 border-2 rounded-xl focus:outline-none transition-all duration-300 ${errors.password && touched.password
                             ? "border-red-400 focus:border-red-500"
                             : "border-slate-200 dark:border-slate-600 focus:border-green-400"
-                        }`}
+                          }`}
                         placeholder="Enter your password"
                       />
                       <button
@@ -220,7 +242,7 @@ export default function SignInPage() {
             </Formik>
 
             {/* Divider */}
-            <motion.div
+            {/* <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.7, duration: 0.6 }}
@@ -229,10 +251,10 @@ export default function SignInPage() {
               <div className="flex-1 border-t border-slate-200 dark:border-slate-600" />
               <span className="px-4 text-sm text-slate-500">or</span>
               <div className="flex-1 border-t border-slate-200 dark:border-slate-600" />
-            </motion.div>
+            </motion.div> */}
 
             {/* Social Login */}
-            <motion.div
+            {/* <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.6 }}
@@ -262,7 +284,7 @@ export default function SignInPage() {
                 </svg>
                 Continue with Google
               </Button>
-            </motion.div>
+            </motion.div> */}
 
             {/* Sign Up Link */}
             <motion.div

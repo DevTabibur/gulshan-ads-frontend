@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = 'http://localhost:5000/api/v1';
 
-export const register = async (data: { email: string; password: string; name?: string }) => {
+export const register = async (data: { firstName?: string, lastName:string, email: string; password: string;  confirmPassword:string }) => {
     try {
-        const response = await axios.post(`${API_BASE_URL}/v1/auth/register`, data);
+        const response = await axios.post(`${API_BASE_URL}/auth/register`, data);
         return response.data;
     } catch (error) {
         throw error;
@@ -13,7 +13,7 @@ export const register = async (data: { email: string; password: string; name?: s
 
 export const login = async (data: { email: string; password: string }) => {
     try {
-        const response = await axios.post(`${API_BASE_URL}/login`, data);
+        const response = await axios.post(`${API_BASE_URL}/auth/login`, data);
         return response.data;
     } catch (error) {
         throw error;

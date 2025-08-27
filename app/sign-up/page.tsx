@@ -10,6 +10,9 @@ import { Eye, EyeOff, Mail, Lock, User, ArrowRight, Sparkles, Zap, Shield, Check
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { register } from "../api/auth/auth.api"
+import toast from "react-hot-toast"
+import { setToLocalStorage } from "@/lib/local-storage"
+import { useRouter } from "next/navigation"
 
 const SignUpSchema = Yup.object().shape({
   firstName: Yup.string().min(2, "First name must be at least 2 characters").required("First name is required"),
@@ -45,20 +48,31 @@ export default function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const router = useRouter()
 
   const handleSubmit = async (values: any) => {
     setIsLoading(true)
     try {
       // Call the real register API
       const res = await register({
+        firstName: values.firstName,
+        lastName: values.lastName,
         email: values.email,
         password: values.password,
-        name: `${values.firstName} ${values.lastName}`,
+        confirmPassword: values.confirmPassword,
+
       })
-      console.log("Sign up successful:", values)
+      // console.log("Sign up successful:", values)
+      // console.log("res", res)
+      if (res?.statusCode === 200) {
+        toast.success(res?.message)
+        setToLocalStorage("adsToken", res?.data?.accessToken)
+        router.push("/dashboard")
+      }
       // You may want to redirect or show a success message here
     } catch (error) {
-      console.error("Sign up error:", error)
+      toast.error("Something went wrong")
+      console.log("Sign up error:", error)
       // Optionally handle error (show error message to user)
     } finally {
       setIsLoading(false)
@@ -119,7 +133,9 @@ export default function SignUpPage() {
                 whileHover={{ scale: 1.05 }}
                 className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-green-500 to-cyan-500 rounded-2xl mb-4 shadow-lg"
               >
-                <Sparkles className="w-8 h-8 text-white" />
+                <Link tabIndex={-1} aria-label="Go Home" href={"/"}>
+                  <Sparkles className="w-8 h-8 text-white" /></Link>
+
               </motion.div>
               <h1 className="text-3xl font-bold bg-gradient-to-r from-green-600 to-cyan-600 bg-clip-text text-transparent mb-2">
                 Join Gulshan Ads
@@ -382,7 +398,7 @@ export default function SignUpPage() {
             </Formik>
 
             {/* Divider */}
-            <motion.div
+            {/* <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.9, duration: 0.6 }}
@@ -391,10 +407,10 @@ export default function SignUpPage() {
               <div className="flex-1 border-t border-slate-200 dark:border-slate-600" />
               <span className="px-4 text-sm text-slate-500">or</span>
               <div className="flex-1 border-t border-slate-200 dark:border-slate-600" />
-            </motion.div>
+            </motion.div> */}
 
             {/* Social Login */}
-            <motion.div
+            {/* <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.0, duration: 0.6 }}
@@ -424,7 +440,7 @@ export default function SignUpPage() {
                 </svg>
                 Continue with Google
               </Button>
-            </motion.div>
+            </motion.div> */}
 
             {/* Sign In Link */}
             <motion.div
