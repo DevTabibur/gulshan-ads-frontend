@@ -301,11 +301,10 @@ export const Header = () => {
                           variants={itemVariants}
                           href={platform.isComingSoon ? "#" : platform.href}
                           onClick={(e) => handlePlatformClick(platform, e)}
-                          className={`flex items-center space-x-3 px-4 py-3 transition-colors duration-200 group ${
-                            platform.isComingSoon
+                          className={`flex items-center space-x-3 px-4 py-3 transition-colors duration-200 group ${platform.isComingSoon
                               ? "cursor-not-allowed opacity-60"
                               : "hover:bg-gray-50 dark:hover:bg-gray-700"
-                          }`}
+                            }`}
                           tabIndex={0}
                           aria-disabled={platform.isComingSoon ? "true" : undefined}
                         >
@@ -364,6 +363,7 @@ export const Header = () => {
           {/* Right side controls */}
           <div className="flex items-center space-x-4">
             <ThemeToggle />
+
             {/* <LanguageSwitcher /> */}
 
             {/* Auth buttons - Desktop */}
@@ -480,11 +480,10 @@ export const Header = () => {
                             key={platform.name}
                             href={platform.isComingSoon ? "#" : platform.href}
                             onClick={(e) => handlePlatformClickMobile(platform, e)}
-                            className={`flex items-center space-x-3 py-2 text-gray-600 bg-black dark:bg-white dark:text-gray-300 transition-colors duration-200 ${
-                              platform.isComingSoon
+                            className={`flex items-center space-x-3 py-2 text-gray-600 bg-black dark:bg-white dark:text-gray-300 transition-colors duration-200 ${platform.isComingSoon
                                 ? "cursor-not-allowed opacity-60"
                                 : "hover:text-gray-900 dark:hover:text-white"
-                            }`}
+                              }`}
                             tabIndex={0}
                             aria-disabled={platform.isComingSoon ? "true" : undefined}
                           >

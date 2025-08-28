@@ -1,8 +1,8 @@
 "use client"
 
-import type { ReactNode } from "react"
+import { useEffect, type ReactNode } from "react"
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute"
-import { DashboardLayout } from "@/components/dashboard/DashboardLayout"
+import { UserProvider } from "@/contexts/UserContext"
 import { getFromLocalStorage } from "@/lib/local-storage"
 import { redirect } from "next/navigation"
 
@@ -11,18 +11,22 @@ interface DashboardRootLayoutProps {
 }
 
 export default function DashboardRootLayout({ children }: DashboardRootLayoutProps) {
-    const token = getFromLocalStorage("adsToken")
-    if (!token) {
-        redirect("/sign-in")
+    useEffect(() => {
+        const token = getFromLocalStorage("adsToken");
+        if (!token) {
+            redirect("/sign-in");
+        }
+    }, []);
 
-    }
+
+
     return (
         <>
-            {/* <ProtectedRoute>*/}
-            {/* <DashboardLayout> */}
-            {children}
-            {/* </DashboardLayout> */}
-            {/*</ProtectedRoute> */}
+            <UserProvider>
+                <ProtectedRoute>
+                    {children}
+                </ProtectedRoute>
+            </UserProvider>
         </>
     )
 }

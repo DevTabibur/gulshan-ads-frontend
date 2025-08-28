@@ -17,25 +17,22 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { useTheme } from "@/hooks/useTheme"
 import { useSidebar } from "@/hooks/useSidebar"
-import { useAuth } from "@/hooks/useAuth"
+import { useUserContext } from "@/contexts/UserContext"
 
-interface TopbarProps {
-  user: {
-    name: string
-    email: string
-    avatar?: string
-    role: string
-  }
-}
 
-export function Topbar({ user }: TopbarProps) {
+
+export function Topbar() {
   const [searchQuery, setSearchQuery] = useState("")
   const { theme, toggleTheme } = useTheme()
   const { toggleMobile, toggleCollapsed, isCollapsed } = useSidebar()
-  const { logout } = useAuth()
+  const { user, logout } = useUserContext()
 
   const handleLogout = () => {
+    console.log("handleLogout")
     logout()
+    if (typeof window !== "undefined") {
+      window.location.reload()
+    }
   }
 
   return (
@@ -99,22 +96,21 @@ export function Topbar({ user }: TopbarProps) {
         {/* Right Section */}
         <div className="flex items-center gap-2">
           {/* Theme Toggle */}
+
           <Button
-            variant="ghost"
-            size="sm"
-            onClick={toggleTheme}
-            className="h-9 w-9 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
             aria-label="Toggle theme"
+            className="p-2 rounded-full bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 transition"
+            onClick={toggleTheme}
           >
             {theme === "dark" ? (
-              <Sun className="h-4 w-4" />
+              <Sun className="w-5 h-5 text-yellow-400" />
             ) : (
-              <Moon className="h-4 w-4" />
+              <Moon className="w-5 h-5 text-gray-700" />
             )}
           </Button>
 
           {/* Notifications */}
-          <Button
+          {/* <Button
             variant="ghost"
             size="sm"
             className="h-9 w-9 relative text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
@@ -124,7 +120,7 @@ export function Topbar({ user }: TopbarProps) {
             <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 text-xs bg-red-500 text-white border-2 border-white dark:border-gray-900 shadow">
               3
             </Badge>
-          </Button>
+          </Button> */}
 
           {/* User Menu */}
           <DropdownMenu>
@@ -135,9 +131,9 @@ export function Topbar({ user }: TopbarProps) {
                 aria-label="User menu"
               >
                 <Avatar className="h-8 w-8">
-                  <AvatarImage src={user.avatar || "/placeholder.svg"} alt={user.name} />
+                  <AvatarImage src={user?.avatar || "/placeholder.svg"} alt={user?.firstName} />
                   <AvatarFallback className="bg-gradient-to-r from-green-500 to-cyan-500 text-white">
-                    {user?.name?.charAt(0)}
+                    {(user?.firstName?.charAt(0) || "") + (user?.lastName?.charAt(0) || "")}
                   </AvatarFallback>
                 </Avatar>
               </Button>
@@ -145,10 +141,10 @@ export function Topbar({ user }: TopbarProps) {
             <DropdownMenuContent className="w-56 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-lg" align="end" forceMount>
               <DropdownMenuLabel className="font-normal">
                 <div className="flex flex-col space-y-1">
-                    <p className="text-sm font-medium leading-none text-gray-900 dark:text-gray-100">{user?.name}</p>
+                  <p className="text-sm font-medium leading-none text-gray-900 dark:text-gray-100">  {(user?.firstName?.charAt(0) || "") + (user?.lastName?.charAt(0) || "")}</p>
                   <p className="text-xs leading-none text-gray-600 dark:text-gray-400">{user?.email}</p>
                   <Badge variant="secondary" className="w-fit text-xs bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
-                    {user?.role}
+                    {user?.role || "No Role"}
                   </Badge>
                 </div>
               </DropdownMenuLabel>
@@ -162,7 +158,7 @@ export function Topbar({ user }: TopbarProps) {
                 <span>Settings</span>
               </DropdownMenuItem>
               <DropdownMenuSeparator className="bg-gray-100 dark:bg-gray-800" />
-              <DropdownMenuItem 
+              <DropdownMenuItem
                 className="text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/40"
                 onClick={handleLogout}
               >

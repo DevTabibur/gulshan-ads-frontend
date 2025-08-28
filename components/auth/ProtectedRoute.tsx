@@ -3,6 +3,7 @@
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { useAuth } from "@/hooks/useAuth"
+import { useUserContext } from "@/contexts/UserContext"
 
 interface ProtectedRouteProps {
   children: React.ReactNode
@@ -10,7 +11,7 @@ interface ProtectedRouteProps {
 }
 
 export const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) => {
-  const { isAuthenticated, isLoading, user } = useAuth()
+  const { loggedIn, isLoading, user } = useUserContext()
   const router = useRouter()
 
   // useEffect(() => {
@@ -41,14 +42,14 @@ export const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) 
   }
 
   // Don't render children if not authenticated
-  if (!isAuthenticated) {
+    if (!loggedIn) {
     return null
   }
 
   // Don't render children if role doesn't match
-  if (requiredRole && user?.role !== requiredRole) {
-    return null
-  }
+  // if (requiredRole && user?.role !== requiredRole) {
+  //   return null
+  // }
 
   return <>{children}</>
 }
