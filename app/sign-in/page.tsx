@@ -15,7 +15,7 @@ import { redirect, useRouter } from "next/navigation"
 
 const SignInSchema = Yup.object().shape({
   email: Yup.string().email("Please enter a valid email address").required("Email is required"),
-  password: Yup.string().min(8, "Password must be at least 8 characters").required("Password is required"),
+  password: Yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
 })
 
 const floatingElements = [
@@ -108,7 +108,7 @@ export default function SignInPage() {
                 whileHover={{ scale: 1.05 }}
                 className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-green-500 to-cyan-500 rounded-2xl mb-4 shadow-lg"
               >
-                <Link  href="/" tabIndex={-1} aria-label="Go to home">
+                <Link href="/" tabIndex={-1} aria-label="Go to home">
                   <Sparkles className="w-8 h-8 text-white" />
                 </Link>
               </motion.div>
@@ -137,8 +137,8 @@ export default function SignInPage() {
                         name="email"
                         type="email"
                         className={`w-full pl-10 pr-4 py-3 bg-white/50 dark:bg-slate-700/50 border-2 rounded-xl focus:outline-none transition-all duration-300 ${errors.email && touched.email
-                            ? "border-red-400 focus:border-red-500"
-                            : "border-slate-200 dark:border-slate-600 focus:border-green-400"
+                          ? "border-red-400 focus:border-red-500"
+                          : "border-slate-200 dark:border-slate-600 focus:border-green-400"
                           }`}
                         placeholder="Enter your email"
                       />
@@ -161,8 +161,8 @@ export default function SignInPage() {
                         name="password"
                         type={showPassword ? "text" : "password"}
                         className={`w-full pl-10 pr-12 py-3 bg-white/50 dark:bg-slate-700/50 border-2 rounded-xl focus:outline-none transition-all duration-300 ${errors.password && touched.password
-                            ? "border-red-400 focus:border-red-500"
-                            : "border-slate-200 dark:border-slate-600 focus:border-green-400"
+                          ? "border-red-400 focus:border-red-500"
+                          : "border-slate-200 dark:border-slate-600 focus:border-green-400"
                           }`}
                         placeholder="Enter your password"
                       />

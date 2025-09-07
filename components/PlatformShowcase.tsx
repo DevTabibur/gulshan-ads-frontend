@@ -157,7 +157,7 @@ export const PlatformShowcase = () => {
 
           {/* Promotional Card */}
           <div className="lg:col-span-1">
-            <div className="bg-gradient-to-br from-gray-900 to-gray-800 dark:from-gray-800 dark:to-gray-900 rounded-2xl p-8 text-white relative overflow-hidden shadow-2xl">
+            <div className="bg-gradient-to-br from-gray-900 to-gray-800 dark:from-gray-200 dark:to-gray-400 rounded-2xl p-8 text-gray-500 relative overflow-hidden shadow-2xl">
               {/* Background pattern */}
               <div className="absolute inset-0 opacity-10">
                 <div className="absolute top-4 right-4 w-8 h-8 border-2 border-green-400 rounded-full"></div>
@@ -167,30 +167,62 @@ export const PlatformShowcase = () => {
               </div>
 
               <div className="relative z-10">
-                <div className="text-2xl font-bold text-green-400 mb-2">3x Better ROI</div>
-                <p className="text-gray-300 mb-6 text-sm leading-relaxed">
+                <div className="text-2xl font-bold text-green-400 dark:text-green-500 mb-2">3x Better ROI</div>
+                <p className="text-gray-300 dark:text-gray-700 mb-6 text-sm leading-relaxed font-semibold">
                   Our clients see 3x better return on ad spend compared to single-platform campaigns
                 </p>
 
                 {/* Platform icons */}
                 <div className="flex space-x-3 mb-6">
+                  {/* Facebook */}
                   <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-                    <span className="text-white font-bold text-xs">f</span>
+                    <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M9.197 21V12.845H6.5V9.845h2.697V7.845c0-2.485 1.492-3.845 3.777-3.845 1.094 0 2.238.195 2.238.195v2.46h-1.261c-1.242 0-1.631.771-1.631 1.562v1.626h2.773l-.444 3H12.32V21" />
+                    </svg>
                   </div>
+                  {/* TikTok */}
                   <div className="w-10 h-10 bg-black rounded-lg flex items-center justify-center">
-                    <span className="text-white font-bold text-xs">TT</span>
+                    <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" />
+                    </svg>
                   </div>
-                  <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
-                    <span className="text-white font-bold text-xs">T</span>
+                  {/* Google */}
+                  <div className="w-10 h-10 bg-yellow-400 rounded-lg flex items-center justify-center">
+                    <svg className="w-6 h-6" viewBox="0 0 48 48" fill="none">
+                      {/* Blue bar */}
+                      <path
+                        d="M9.5 39.5L24 10.5L38.5 39.5"
+                        stroke="#4285F4"
+                        strokeWidth="3"
+                        strokeLinecap="round"
+                      />
+                      {/* Green circle */}
+                      <circle
+                        cx="24"
+                        cy="39"
+                        r="3"
+                        fill="#34A853"
+                        stroke="#34A853"
+                        strokeWidth="1.5"
+                      />
+                      {/* Yellow bar */}
+                      <path
+                        d="M24 10.5L38.5 39.5"
+                        stroke="#FBBC05"
+                        strokeWidth="3"
+                        strokeLinecap="round"
+                      />
+                    </svg>
                   </div>
                 </div>
 
                 {/* Avatar placeholder */}
                 <div className="flex items-center space-x-3">
                   <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-cyan-500 rounded-full flex items-center justify-center">
-                    <span className="text-white font-bold">AH</span>
+                    <span className="text-white font-bold">GH</span>
                   </div>
                   <div>
+                    <div className="text-sm font-semibold text-gray-800 dark:text-gray-900">Gulshan Ads Expert</div>
                     <div className="text-sm font-semibold">Gulshan Ads Expert</div>
                     <div className="text-xs text-gray-400">Campaign Specialist</div>
                   </div>

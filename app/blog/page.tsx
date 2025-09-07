@@ -25,7 +25,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Layout } from "@/components/Layout"
-// import Layout from "@/components/Layout"
+import { getAllBlogCategories, getAllBlogs } from "../api/blog/blog.api"
 
 // Mock blog data
 const blogPosts = [
@@ -201,20 +201,6 @@ const blogPosts = [
   },
 ]
 
-const categories = [
-  "All Categories",
-  "AI & Technology",
-  "Platform Comparison",
-  "B2B Marketing",
-  "Creative Strategy",
-  "Freelancing",
-  "Psychology",
-  "Google Ads",
-  "Conversion Optimization",
-  "Social Media",
-  "Email Marketing",
-]
-
 // Custom hook for debounced search
 function useDebounce(value: string, delay: number) {
   const [debouncedValue, setDebouncedValue] = useState(value)
@@ -232,12 +218,18 @@ function useDebounce(value: string, delay: number) {
   return debouncedValue
 }
 
+
+
 export default function BlogPage() {
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("All Categories")
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
   const [currentPage, setCurrentPage] = useState(1)
   const [isSearching, setIsSearching] = useState(false)
+  const [categories, setCategories] = useState<string[]>(["All Categories"])
+  const [isLoadingCategories, setIsLoadingCategories] = useState(false)
+  const [allBlogs, setAllBlogs] = useState<any[]>([])
+  const [isLoadingBlogs, setIsLoadingBlogs] = useState(false)
 
   const postsPerPage = 6
   const debouncedSearchTerm = useDebounce(searchTerm, 300)
@@ -282,6 +274,51 @@ export default function BlogPage() {
     setCurrentPage(page)
     window.scrollTo({ top: 0, behavior: "smooth" })
   }
+
+ 
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      setIsLoadingCategories(true)
+      try {
+        const data = await getAllBlogCategories();
+        if (data?.statusCode === 200) {
+          const categoryNames = data?.data?.map((cat: any) => typeof cat === "string" ? cat : cat.name)
+            .filter(Boolean)
+          setCategories(["All Categories", ...categoryNames])
+        }
+      } catch (error) {
+        console.error("Error fetching categories", error)
+      } finally {
+        setIsLoadingCategories(false)
+      }
+    }
+    fetchCategories()
+  }, []) // Only run on mount
+
+ 
+ 
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      setIsLoadingBlogs(true)
+      try {
+        // You may need to adjust the import path for getAllBlogs
+        const data = await getAllBlogs()
+        if (data?.statusCode === 200) {
+          setAllBlogs(data?.data || [])
+        }
+      } catch (error) {
+        console.error("Error fetching blogs", error)
+      } finally {
+        setIsLoadingBlogs(false)
+      }
+    }
+    fetchBlogs()
+  }, []) // Only run on mount
+
+console.log("fetch blogs", allBlogs)
+
 
   return (
     <Layout>
@@ -347,7 +384,7 @@ export default function BlogPage() {
                 transition={{ duration: 0.8, delay: 0.3 }}
               >
                 <span className="bg-gradient-to-r from-green-600 to-cyan-600 bg-clip-text text-transparent">
-                Gulshan Ads
+                  Gulshan Ads
                 </span>
                 <br />
                 <span className="text-gray-900 dark:text-white">Knowledge Hub</span>
@@ -444,11 +481,10 @@ export default function BlogPage() {
                 <div className="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-1">
                   <motion.button
                     onClick={() => setViewMode("grid")}
-                    className={`p-2 rounded-md transition-all duration-300 ${
-                      viewMode === "grid"
-                        ? "bg-gradient-to-r from-green-500 to-cyan-500 text-white"
-                        : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
-                    }`}
+                    className={`p-2 rounded-md transition-all duration-300 ${viewMode === "grid"
+                      ? "bg-gradient-to-r from-green-500 to-cyan-500 text-white"
+                      : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                      }`}
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                   >
@@ -456,11 +492,10 @@ export default function BlogPage() {
                   </motion.button>
                   <motion.button
                     onClick={() => setViewMode("list")}
-                    className={`p-2 rounded-md transition-all duration-300 ${
-                      viewMode === "list"
-                        ? "bg-gradient-to-r from-green-500 to-cyan-500 text-white"
-                        : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
-                    }`}
+                    className={`p-2 rounded-md transition-all duration-300 ${viewMode === "list"
+                      ? "bg-gradient-to-r from-green-500 to-cyan-500 text-white"
+                      : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                      }`}
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                   >
@@ -634,9 +669,8 @@ export default function BlogPage() {
                       {currentPosts.map((post, index) => (
                         <motion.article
                           key={post.id}
-                          className={`group relative bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-500 ${
-                            viewMode === "list" ? "flex gap-6" : ""
-                          }`}
+                          className={`group relative bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-500 ${viewMode === "list" ? "flex gap-6" : ""
+                            }`}
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.4, delay: index * 0.05 }}
@@ -648,9 +682,8 @@ export default function BlogPage() {
                             <img
                               src={post.image || "/placeholder.svg"}
                               alt={post.title}
-                              className={`object-cover transition-transform duration-500 group-hover:scale-105 ${
-                                viewMode === "list" ? "w-full h-full" : "w-full h-48"
-                              }`}
+                              className={`object-cover transition-transform duration-500 group-hover:scale-105 ${viewMode === "list" ? "w-full h-full" : "w-full h-48"
+                                }`}
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
                             {post.trending && (
@@ -682,9 +715,8 @@ export default function BlogPage() {
                             </div>
 
                             <h3
-                              className={`font-bold mb-3 text-gray-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors duration-300 ${
-                                viewMode === "list" ? "text-lg" : "text-xl"
-                              }`}
+                              className={`font-bold mb-3 text-gray-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors duration-300 ${viewMode === "list" ? "text-lg" : "text-xl"
+                                }`}
                             >
                               {post.title}
                             </h3>
@@ -863,32 +895,33 @@ export default function BlogPage() {
                       <h3 className="font-bold text-lg text-gray-900 dark:text-white">Categories</h3>
                     </div>
                     <div className="space-y-2">
-                      {categories.slice(1).map((category) => {
-                        const count = blogPosts.filter((post) => post.category === category).length
-                        return (
-                          <motion.button
-                            key={category}
-                            onClick={() => setSelectedCategory(category)}
-                            className={`w-full text-left px-3 py-2 rounded-lg transition-all duration-300 ${
-                              selectedCategory === category
-                                ? "bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 border border-green-200 dark:border-green-800"
-                                : "hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
-                            }`}
-                            whileHover={{ x: 5 }}
-                            transition={{ duration: 0.2 }}
-                          >
-                            <div className="flex items-center justify-between">
-                              <span className="text-sm font-medium">{category}</span>
-                              <Badge
-                                variant="outline"
-                                className="text-xs border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400"
-                              >
-                                {count}
-                              </Badge>
-                            </div>
-                          </motion.button>
-                        )
-                      })}
+                      {categories
+                        .map((category) => {
+                          const count = blogPosts.filter((post) => post.category === category).length
+                          return (
+                            <motion.button
+                              key={category}
+                              onClick={() => setSelectedCategory(category)}
+                              className={`w-full text-left px-3 py-2 rounded-lg transition-all duration-300 ${
+                                selectedCategory === category
+                                  ? "bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 border border-green-200 dark:border-green-800"
+                                  : "hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                              }`}
+                              whileHover={{ x: 5 }}
+                              transition={{ duration: 0.2 }}
+                            >
+                              <div className="flex items-center justify-between">
+                                <span className="text-sm font-medium">{category}</span>
+                                <Badge
+                                  variant="outline"
+                                  className="text-xs border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400"
+                                >
+                                  {count}
+                                </Badge>
+                              </div>
+                            </motion.button>
+                          )
+                        })}
                     </div>
                   </motion.div>
 

@@ -133,4 +133,22 @@ export const sidebarConfig: SidebarItem[] = [
     //         },
     //     ],
     // },
+
+    {
+        id: "homepage",
+        title: "Home",
+        icon: "Home",
+        href: "/dashboard/homepage",
+        children: [
+            {
+                id: "hero-section",
+                title: "Hero Section",
+                icon: "FileText",
+                href: "/dashboard/homepage/hero-section",
+            },
+        ],
+    },
+   
+
+
 ]

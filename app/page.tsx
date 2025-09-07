@@ -32,7 +32,7 @@ export default function Home() {
         <TrustedBy />
         <PlatformShowcase />
         <MetaShowcase />
-        <TelegramShowcase />
+        {/* <TelegramShowcase /> */}
         <AboutGulshanAds/>
         <Testimonials />
         <HowItWorks />

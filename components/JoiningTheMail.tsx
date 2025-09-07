@@ -93,13 +93,13 @@ export default function JoiningMail() {
       <div className="absolute inset-0 backdrop-blur-sm rounded-3xl" />
 
       {/* Floating Decorative Elements */}
-      <motion.div
+      {/* <motion.div
         variants={floatingVariants}
         animate="animate"
         className="absolute top-6 left-6 w-12 h-12 bg-gradient-to-br from-emerald-400 to-cyan-400 rounded-2xl flex items-center justify-center shadow-lg"
       >
         <Mail className="w-6 h-6 text-white" />
-      </motion.div>
+      </motion.div> */}
 
       <motion.div
         variants={sparkleVariants}

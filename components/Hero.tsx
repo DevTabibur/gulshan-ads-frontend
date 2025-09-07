@@ -2,6 +2,8 @@
 
 import { useEffect, useRef } from "react"
 import { useLanguage } from "../hooks/useLanguage"
+import { FaFacebookF, FaFacebookSquare, FaTiktok } from "react-icons/fa";
+import { FaGoogle } from "react-icons/fa";
 
 export const Hero = () => {
   const { t, isRTL } = useLanguage()
@@ -58,18 +60,28 @@ export const Hero = () => {
               </button>
 
               <div className="flex items-center space-x-4 mt-4 sm:mt-0">
-                <div className="flex items-center space-x-2 bg-white dark:bg-gray-800 px-4 py-2 rounded-lg shadow-md">
-                  <div className="w-8 h-8 bg-black rounded flex items-center justify-center">
-                    <span className="text-white text-xs font-bold">TT</span>
+                {/* Facebook Button */}
+                <div className="flex items-center space-x-2 bg-[#eaf2fe] dark:bg-[#1e293b] px-4 py-2 rounded-lg shadow-md transition-all hover:shadow-lg">
+                  <div className="w-8 h-8 bg-[#1877f2] dark:bg-[#2563eb] rounded flex items-center justify-center">
+                    <FaFacebookF className="text-white" />
                   </div>
-                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">TikTok</span>
+                  <span className="text-sm font-medium text-[#1e293b] dark:text-gray-200">Facebook</span>
                 </div>
 
-                <div className="flex items-center space-x-2 bg-white dark:bg-gray-800 px-4 py-2 rounded-lg shadow-md">
-                  <div className="w-8 h-8 bg-blue-500 rounded flex items-center justify-center">
-                    <span className="text-white text-xs font-bold">T</span>
+                {/* TikTok Button */}
+                <div className="flex items-center space-x-2 bg-[#f3f4f6] dark:bg-[#111827] px-4 py-2 rounded-lg shadow-md transition-all hover:shadow-lg">
+                  <div className="w-8 h-8 bg-[#111827] dark:bg-[#f3f4f6] rounded flex items-center justify-center">
+                    <FaTiktok className="text-white dark:text-[#111827]" />
                   </div>
-                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Telegram</span>
+                  <span className="text-sm font-medium text-[#1e293b] dark:text-gray-200">TikTok</span>
+                </div>
+
+                {/* Google Button */}
+                <div className="flex items-center space-x-2 bg-[#ffeaea] dark:bg-[#7f1d1d] px-4 py-2 rounded-lg shadow-md transition-all hover:shadow-lg">
+                  <div className="w-8 h-8 bg-[#ea4335] dark:bg-[#ef4444] rounded flex items-center justify-center">
+                    <FaGoogle className="text-white" />
+                  </div>
+                  <span className="text-sm font-medium text-[#1e293b] dark:text-gray-200">Google</span>
                 </div>
               </div>
             </div>
