@@ -11,9 +11,21 @@ import {  AboutGulshanAds } from "../components/AboutGulshanAds"
 import { Testimonials } from "../components/Testimonials"
 import { HowItWorks } from "../components/HowItWorks"
 import { useLanguage } from "../hooks/useLanguage"
+import { useEffect, useState } from "react"
+import { getAllTestimonials } from "./api/auth/testimonials/testimonials.api"
 
 export default function Home() {
   const { t } = useLanguage()
+  const [testimonials, setTestimonials] = useState<any[]>([])
+  useEffect(() =>{
+    const fetchTestimonials = async() =>{
+      const res = await getAllTestimonials()
+      if(res?.statusCode === 200){
+        setTestimonials(res?.data)
+      }
+    }
+    fetchTestimonials()
+  }, [])
 
   return (
     <>
@@ -34,7 +46,7 @@ export default function Home() {
         <MetaShowcase />
         {/* <TelegramShowcase /> */}
         <AboutGulshanAds/>
-        <Testimonials />
+        <Testimonials testimonials={testimonials}/>
         <HowItWorks />
       </Layout>
     </>
