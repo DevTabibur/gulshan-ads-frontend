@@ -1,163 +1,219 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
-import { Plus, Search, Filter, MoreHorizontal, Edit, Trash2, Eye, User, Calendar, Star, ChevronRight } from "lucide-react"
+import {
+  Plus, Search, Filter, MoreHorizontal, Edit, Trash2, Eye, Calendar, Star, ChevronRight
+} from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import {
+  DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu"
+import {
+  Select, SelectContent, SelectItem, SelectTrigger, SelectValue
+} from "@/components/ui/select"
 import Link from "next/link"
 import { DashboardLayout } from "@/components/dashboard/DashboardLayout"
-
-type Testimonial = {
-  id: string
-  name: string
-  role: string
-  company: string
-  avatarUrl?: string
-  rating: number
-  content: string
-  status: "published" | "pending" | "archived"
-  createdAt: string
-}
-
-const mockTestimonials: Testimonial[] = [
-  {
-    id: "1",
-    name: "Amit Sharma",
-    role: "Marketing Lead",
-    company: "TechNova",
-    avatarUrl: "",
-    rating: 5,
-    content: "Gulshan Ads helped us double our leads in just 3 months. Their expertise in digital campaigns is unmatched.",
-    status: "published",
-    createdAt: "2024-01-10T09:15:00Z",
-  },
-  {
-    id: "2",
-    name: "Priya Verma",
-    role: "Founder",
-    company: "EcoBite",
-    avatarUrl: "",
-    rating: 4,
-    content: "The team is responsive and creative. Our brand visibility has grown significantly since partnering with them.",
-    status: "published",
-    createdAt: "2024-01-12T14:30:00Z",
-  },
-  {
-    id: "3",
-    name: "Rahul Singh",
-    role: "CMO",
-    company: "FinEdge",
-    avatarUrl: "",
-    rating: 5,
-    content: "Professional, data-driven, and always on time. Highly recommend for any business looking to scale.",
-    status: "pending",
-    createdAt: "2024-01-15T10:00:00Z",
-  },
-  {
-    id: "4",
-    name: "Sonia Kapoor",
-    role: "Product Manager",
-    company: "Appify",
-    avatarUrl: "",
-    rating: 4,
-    content: "Their campaign strategies are innovative and effective. We saw a 30% increase in app downloads.",
-    status: "published",
-    createdAt: "2024-01-18T11:00:00Z",
-  },
-  {
-    id: "5",
-    name: "Vikram Mehra",
-    role: "CEO",
-    company: "MarketMinds",
-    avatarUrl: "",
-    rating: 3,
-    content: "Good service overall, but communication could be improved.",
-    status: "archived",
-    createdAt: "2024-01-20T13:00:00Z",
-  },
-  {
-    id: "6",
-    name: "Neha Joshi",
-    role: "Head of Sales",
-    company: "RetailX",
-    avatarUrl: "",
-    rating: 5,
-    content: "We achieved our quarterly targets thanks to their targeted ad campaigns.",
-    status: "published",
-    createdAt: "2024-01-22T15:00:00Z",
-  },
-  {
-    id: "7",
-    name: "Arjun Patel",
-    role: "Growth Hacker",
-    company: "Startly",
-    avatarUrl: "",
-    rating: 4,
-    content: "Great ROI and transparent reporting. Will work with them again.",
-    status: "pending",
-    createdAt: "2024-01-25T17:00:00Z",
-  },
-  {
-    id: "8",
-    name: "Meera Nair",
-    role: "Brand Manager",
-    company: "GlowUp",
-    avatarUrl: "",
-    rating: 5,
-    content: "Our social media engagement skyrocketed. The creative team is top-notch.",
-    status: "published",
-    createdAt: "2024-01-28T19:00:00Z",
-  },
-  {
-    id: "9",
-    name: "Suresh Kumar",
-    role: "Director",
-    company: "EduSmart",
-    avatarUrl: "",
-    rating: 4,
-    content: "Very satisfied with the campaign results and the professionalism of the team.",
-    status: "published",
-    createdAt: "2024-01-30T21:00:00Z",
-  },
-]
+import { Breadcrumb } from "@/components/dashboard/Breadcrumb"
+import {
+  deleteTestimonial, getAllTestimonials, updateTestimonial
+} from "@/app/api/auth/testimonials/testimonials.api"
+import toast from "react-hot-toast"
+import {
+  Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose
+} from "@/components/ui/dialog"
+import { Textarea } from "@/components/ui/textarea"
 
 const PAGE_SIZE = 6
 
-// Simple Breadcrumb component for dashboard
-function Breadcrumbs() {
+const statusOptions = [
+  { value: "published", label: "Published" },
+  { value: "pending", label: "Pending" },
+  { value: "archived", label: "Archived" },
+]
+
+
+function EditTestimonialModal({
+  open,
+  onOpenChange,
+  testimonial,
+  onSave,
+  loading,
+}: {
+  open: boolean
+  onOpenChange: (open: boolean) => void
+  testimonial: any
+  onSave: (data: any) => void
+  loading: boolean
+}) {
+  const [form, setForm] = useState({
+    fullName: "",
+    companyName: "",
+    role: "",
+    rating: 0,
+    description: "",
+    status: "published",
+    authorImage: "",
+  })
+
+  useEffect(() => {
+    if (testimonial) {
+      setForm({
+        fullName: testimonial.fullName || "",
+        companyName: testimonial.companyName || "",
+        role: testimonial.role || "",
+        rating: testimonial.rating || 0,
+        description: testimonial.description || "",
+        status: testimonial.status || "published",
+        authorImage: testimonial.authorImage || "",
+      })
+    }
+  }, [testimonial, open])
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value })
+  }
+
+  const handleStarClick = (i: number) => {
+    setForm({ ...form, rating: i })
+  }
+
+  const handleStatusChange = (v: string) => {
+    setForm({ ...form, status: v })
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    onSave(form)
+  }
+
   return (
-    <nav className="mb-4" aria-label="Breadcrumb">
-      <ol className="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
-        <li>
-          <Link href="/dashboard" className="hover:underline text-gray-700 dark:text-gray-200 font-medium">
-            Dashboard
-          </Link>
-        </li>
-        <li>
-          <ChevronRight className="w-4 h-4" />
-        </li>
-        <li className="text-gray-900 dark:text-gray-100 font-semibold">Testimonials</li>
-      </ol>
-    </nav>
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-lg w-full bg-[#181f2a] text-white border-none rounded-2xl p-0">
+        <form onSubmit={handleSubmit}>
+          <DialogHeader className="px-8 pt-8">
+            <DialogTitle className="text-2xl font-bold mb-1">Edit Testimonial</DialogTitle>
+            <p className="text-gray-400 text-sm mb-4">Update client testimonial and feedback</p>
+          </DialogHeader>
+          <div className="flex flex-col items-center gap-4 px-8">
+            <div className="relative flex flex-col items-center mb-2">
+              <div className="w-20 h-20 rounded-full border-4 border-cyan-400 bg-[#232b3a] flex items-center justify-center text-4xl text-cyan-300 mb-2">
+                {form.authorImage ? (
+                  <img
+                    src={`${process.env.NEXT_PUBLIC_IMAGE_API}/${form.authorImage}`}
+                    alt={form.fullName}
+                    className="w-20 h-20 rounded-full object-cover"
+                  />
+                ) : (
+                  form.fullName
+                    .split(" ")
+                    .map((n) => n[0])
+                    .join("")
+                    .slice(0, 2)
+                )}
+              </div>
+            </div>
+            <div className="w-full flex flex-col gap-3">
+              <Input
+                name="fullName"
+                value={form.fullName}
+                onChange={handleChange}
+                placeholder="Full Name"
+                className="bg-[#232b3a] text-white border-cyan-400"
+                required
+              />
+              <Input
+                name="companyName"
+                value={form.companyName}
+                onChange={handleChange}
+                placeholder="Company Name"
+                className="bg-[#232b3a] text-white border-cyan-400"
+                required
+              />
+              <Input
+                name="role"
+                value={form.role}
+                onChange={handleChange}
+                placeholder="Role"
+                className="bg-[#232b3a] text-white border-cyan-400"
+                required
+              />
+              <Textarea
+                name="description"
+                value={form.description}
+                onChange={handleChange}
+                placeholder="Testimonial"
+                className="bg-[#232b3a] text-white border-cyan-400"
+                required
+              />
+              <div className="flex items-center gap-2">
+                <span className="text-sm">Rating:</span>
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <Star
+                    key={i}
+                    className={`w-5 h-5 cursor-pointer ${i <= form.rating ? "text-yellow-400 fill-yellow-400" : "text-gray-500"}`}
+                    fill={i <= form.rating ? "currentColor" : "none"}
+                    onClick={() => handleStarClick(i)}
+                  />
+                ))}
+              </div>
+              <Select value={form.status} onValueChange={handleStatusChange}>
+                <SelectTrigger className="bg-[#232b3a] text-white border-cyan-400">
+                  <SelectValue placeholder="Status" />
+                </SelectTrigger>
+                <SelectContent className="bg-[#232b3a] text-white border-cyan-400">
+                  {statusOptions.map((opt) => (
+                    <SelectItem key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          <DialogFooter className="px-8 pb-8 mt-4 flex justify-end gap-2">
+            <DialogClose asChild>
+              <Button type="button" variant="outline" className="border-cyan-400 text-cyan-400">
+                Cancel
+              </Button>
+            </DialogClose>
+            <Button type="submit" className="bg-gradient-to-r from-green-500 to-cyan-500 text-white" disabled={loading}>
+              {loading ? "Saving..." : "Save"}
+            </Button>
+          </DialogFooter>
+        </form>
+      </DialogContent>
+    </Dialog>
   )
 }
 
 export default function TestimonialsManagePage() {
   const [searchTerm, setSearchTerm] = useState("")
   const [statusFilter, setStatusFilter] = useState("all")
-  const [testimonials, setTestimonials] = useState(mockTestimonials)
+  const [testimonials, setTestimonials] = useState<any[]>([])
   const [page, setPage] = useState(1)
+  const [editModalOpen, setEditModalOpen] = useState(false)
+  const [editLoading, setEditLoading] = useState(false)
+  const [selectedTestimonial, setSelectedTestimonial] = useState<any>(null)
+
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      const res = await getAllTestimonials()
+      if (res?.statusCode === 200) {
+        setTestimonials(res?.data)
+      }
+    }
+    fetchTestimonials()
+  }, [])
 
   const filteredTestimonials = testimonials.filter((t) => {
     const matchesSearch =
-      t.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      t.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      t.content.toLowerCase().includes(searchTerm.toLowerCase())
+      t?.fullName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      t?.companyName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      t?.description?.toLowerCase().includes(searchTerm.toLowerCase())
     const matchesStatus = statusFilter === "all" || t.status === statusFilter
     return matchesSearch && matchesStatus
   })
@@ -165,8 +221,36 @@ export default function TestimonialsManagePage() {
   const totalPages = Math.ceil(filteredTestimonials.length / PAGE_SIZE)
   const paginatedTestimonials = filteredTestimonials.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
 
-  const handleDelete = (id: string) => {
-    setTestimonials(testimonials.filter((t) => t.id !== id))
+  const handleDelete = async (id: string) => {
+    if (!window.confirm("Are you sure you want to delete this testimonial?")) return
+    const res = await deleteTestimonial(id)
+    if (res?.statusCode === 200) {
+      toast.success("Testimonial deleted successfully")
+      setTestimonials(testimonials.filter((t) => t?._id !== id))
+    } else {
+      toast.error("Something went wrong")
+    }
+  }
+
+  const handleEdit = (testimonial: any) => {
+    setSelectedTestimonial(testimonial)
+    setEditModalOpen(true)
+  }
+
+  const handleEditSave = async (form: any) => {
+    setEditLoading(true)
+    const res = await updateTestimonial(selectedTestimonial._id, form)
+    if (res?.statusCode === 200) {
+      toast.success("Testimonial updated successfully")
+      setTestimonials((prev) =>
+        prev.map((t) => (t._id === selectedTestimonial._id ? { ...t, ...form } : t))
+      )
+      setEditModalOpen(false)
+      setSelectedTestimonial(null)
+    } else {
+      toast.error("Failed to update testimonial")
+    }
+    setEditLoading(false)
   }
 
   const getStatusColor = (status: string) => {
@@ -184,7 +268,7 @@ export default function TestimonialsManagePage() {
 
   const renderStars = (rating: number) => (
     <div className="flex gap-0.5">
-      {[1,2,3,4,5].map((i) => (
+      {[1, 2, 3, 4, 5].map((i) => (
         <Star
           key={i}
           className={`w-4 h-4 ${i <= rating ? "text-yellow-400 fill-yellow-400" : "text-gray-300 dark:text-gray-600"}`}
@@ -197,8 +281,6 @@ export default function TestimonialsManagePage() {
   return (
     <DashboardLayout>
       <div className="space-y-6">
-        {/* Breadcrumb */}
-        {/* <Breadcrumbs /> */}
 
         {/* Page Header */}
         <div className="flex items-center justify-between flex-wrap gap-4">
@@ -212,6 +294,10 @@ export default function TestimonialsManagePage() {
               Add Testimonial
             </Button>
           </Link>
+        </div>
+
+        <div className="my-4">
+          <Breadcrumb />
         </div>
 
         {/* Filters */}
@@ -252,7 +338,7 @@ export default function TestimonialsManagePage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {paginatedTestimonials.map((t, index) => (
             <motion.div
-              key={t.id}
+              key={t._id || t.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: index * 0.1 }}
@@ -263,29 +349,31 @@ export default function TestimonialsManagePage() {
                   <div className="flex flex-col flex-1 h-full">
                     <div className="flex items-center gap-3 mb-2">
                       <div className="w-10 h-10 rounded-full bg-gradient-to-br from-green-400 to-cyan-400 flex items-center justify-center text-white font-bold text-lg">
-                        {t.avatarUrl ? (
-                          <img src={t.avatarUrl} alt={t.name} className="w-10 h-10 rounded-full object-cover" />
+                        {t.authorImage ? (
+                          <img src={`${process.env.NEXT_PUBLIC_IMAGE_API}/${t.authorImage}`} alt={t.fullName} className="w-10 h-10 rounded-full object-cover" />
                         ) : (
-                          t.name
+                          t.fullName
                             .split(" ")
-                            .map((n) => n[0])
+                            .map((n: any) => n[0])
                             .join("")
                             .slice(0, 2)
                         )}
                       </div>
                       <div>
-                        <div className="font-semibold text-gray-900 dark:text-gray-100">{t.name}</div>
-                        <div className="text-xs text-gray-500 dark:text-gray-400">{t.role} @ {t.company}</div>
+                        <div className="font-semibold text-gray-900 dark:text-gray-100">{t.fullName}</div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">{t.role} @ {t.companyName}</div>
                       </div>
-                      <Badge className={getStatusColor(t.status) + " capitalize px-2 py-0.5 rounded ml-auto"}>
-                        {t.status}
+                      <Badge
+                        className={getStatusColor(t?.status) + " capitalize px-2 py-0.5 rounded ml-auto"}
+                      >
+                        {t?.status}
                       </Badge>
                     </div>
                     <div className="mb-2">{renderStars(t.rating)}</div>
-                    <p className="text-gray-700 dark:text-gray-300 mb-4 line-clamp-4">{t.content}</p>
+                    <p className="text-gray-700 dark:text-gray-300 mb-4 line-clamp-4">{t.description}</p>
                     <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 mt-auto mb-3">
                       <Calendar className="h-3 w-3" />
-                      <span>{new Date(t.createdAt).toLocaleDateString()}</span>
+                      <span>{new Date(t?.createdAt).toLocaleDateString()}</span>
                     </div>
                     <div className="flex justify-end">
                       <DropdownMenu>
@@ -295,17 +383,20 @@ export default function TestimonialsManagePage() {
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end" className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700">
-                          <DropdownMenuItem className="text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800">
+                          <DropdownMenuItem
+                            className="text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800"
+                            onClick={() => handleEdit(t)}
+                          >
                             <Edit className="h-4 w-4 mr-2" />
                             Edit
                           </DropdownMenuItem>
-                          <DropdownMenuItem className="text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800">
+                          {/* <DropdownMenuItem className="text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800">
                             <Eye className="h-4 w-4 mr-2" />
                             View
-                          </DropdownMenuItem>
+                          </DropdownMenuItem> */}
                           <DropdownMenuItem
                             className="text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900"
-                            onClick={() => handleDelete(t.id)}
+                            onClick={() => handleDelete(t?._id)}
                           >
                             <Trash2 className="h-4 w-4 mr-2" />
                             Delete
@@ -337,11 +428,10 @@ export default function TestimonialsManagePage() {
                 key={i}
                 variant={page === i + 1 ? "default" : "outline"}
                 size="sm"
-                className={`rounded-full ${
-                  page === i + 1
-                    ? "bg-gradient-to-r from-green-500 to-cyan-500 text-white dark:text-gray-900 border-none"
-                    : "bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-700"
-                }`}
+                className={`rounded-full ${page === i + 1
+                  ? "bg-gradient-to-r from-green-500 to-cyan-500 text-white dark:text-gray-900 border-none"
+                  : "bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-700"
+                  }`}
                 onClick={() => setPage(i + 1)}
               >
                 {i + 1}
@@ -373,6 +463,18 @@ export default function TestimonialsManagePage() {
             </div>
           </motion.div>
         )}
+
+        {/* Edit Modal */}
+        <EditTestimonialModal
+          open={editModalOpen}
+          onOpenChange={(open) => {
+            setEditModalOpen(open)
+            if (!open) setSelectedTestimonial(null)
+          }}
+          testimonial={selectedTestimonial}
+          onSave={handleEditSave}
+          loading={editLoading}
+        />
       </div>
     </DashboardLayout>
   )

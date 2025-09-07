@@ -33,7 +33,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
                 const token = localStorage.getItem("adsToken")
                 if (token) {
                     const userData = await getMe()
-                    console.log("userData", userData)
+                    // console.log("userData", userData)
                     if (userData?.statusCode == 200) {
                         setUser({
                             firstName: userData?.data?.firstName,
