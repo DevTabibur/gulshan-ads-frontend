@@ -76,9 +76,6 @@ export const deleteBlogCategory = async (id: string) => {
 // Create Blog (with form-data for image upload)
 export const createBlog = async (data: any) => {
     try {
-        console.log("data", data)
-
-
 
         const response = await axios.post(
             `${API_BASE_URL}/blog`,
@@ -90,7 +87,6 @@ export const createBlog = async (data: any) => {
                 },
             }
         );
-        console.log("response", response)
         return response.data;
     } catch (error) {
         console.error('Error creating blog:', error);
@@ -156,7 +152,12 @@ export const getBlogById = async (id: string) => {
 // Update Blog
 export const updateBlog = async (id: string, data: any) => {
     try {
-        const response = await axios.patch(`${API_BASE_URL}/blog/${id}`, data);
+        const response = await axios.patch(`${API_BASE_URL}/blog/${id}`, data, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+                "Authorization": `Bearer ${getFromLocalStorage("adsToken")}`
+            },
+        });
         return response.data;
     } catch (error) {
         console.error('Error updating blog:', error);

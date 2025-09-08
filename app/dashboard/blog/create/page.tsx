@@ -17,6 +17,7 @@ import { getAllBlogCategories, createBlog } from "@/app/api/blog/blog.api"
 import toast from "react-hot-toast"
 import { QuillField } from "@/form/QuillField"
 
+// Remove tags and featuredImage from Yup validation, handle them manually
 const validationSchema = Yup.object({
   title: Yup.string()
     .trim()
@@ -31,8 +32,7 @@ const validationSchema = Yup.object({
     .oneOf(["draft", "published"], "Status must be draft or published")
     .required("Status is required"),
   category: Yup.string().required("Category is required"),
-  tags: Yup.array().min(1, "At least one tag is required"),
-  // featuredImage handled manually
+  // tags and featuredImage handled manually
 })
 
 export default function CreateBlogPage() {
@@ -50,6 +50,7 @@ export default function CreateBlogPage() {
   const [featuredImageError, setFeaturedImageError] = useState<string | null>(null)
   const [tagsError, setTagsError] = useState<string | null>(null)
   const [categoryError, setCategoryError] = useState<string | null>(null)
+  const [submitAttempted, setSubmitAttempted] = useState(false)
 
   useEffect(() => {
     async function fetchCategories() {
@@ -198,6 +199,11 @@ export default function CreateBlogPage() {
         setFeaturedImageError(null)
         setTagsError(null)
         setCategoryError(null)
+        // Reset QuillField by dispatching an event to clear content
+        const quillEditor = document.querySelector('.ql-editor');
+        if (quillEditor) {
+          quillEditor.innerHTML = '';
+        }
         toast.success("Blog Created Successfully")
         // router.push("/dashboard/blog")
       }
@@ -207,6 +213,12 @@ export default function CreateBlogPage() {
       setSubmitting(false)
     }
   }
+
+  // if (tagsError) {
+  //   toast.error(tagsError)
+  // }
+
+
 
   return (
     <DashboardLayout>
@@ -275,9 +287,8 @@ export default function CreateBlogPage() {
                       </CardHeader>
                       <CardContent>
                         <div
-                          className={`quill-field-wrapper rounded-md border px-3 py-2 min-h-[180px] bg-white dark:bg-gray-900 text-gray-900 dark:text-white border-gray-300 dark:border-gray-700 focus-within:border-blue-500 dark:focus-within:border-blue-400 transition-colors duration-200 ${
-                            errors.content && touched.content ? "border-red-500 dark:border-red-500" : ""
-                          }`}
+                          className={`quill-field-wrapper rounded-md border px-3 py-2 min-h-[180px] bg-white dark:bg-gray-900 text-gray-900 dark:text-white border-gray-300 dark:border-gray-700 focus-within:border-blue-500 dark:focus-within:border-blue-400 transition-colors duration-200 ${errors.content && touched.content ? "border-red-500 dark:border-red-500" : ""
+                            }`}
                         >
                           <QuillField
                             value={values.content}
@@ -309,8 +320,9 @@ export default function CreateBlogPage() {
                               <SelectValue />
                             </SelectTrigger>
                             <SelectContent className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white border-gray-300 dark:border-gray-700">
-                              <SelectItem value="draft" className="text-gray-900 dark:text-white">Draft</SelectItem>
-                              <SelectItem value="published" className="text-gray-900 dark:text-white">Published</SelectItem>
+                              <SelectItem value="draft" className="text-gray-900 dark:text-white cursor-pointer">Draft</SelectItem>
+                              <SelectItem value="published" className="text-gray-900 dark:text-white cursor-pointer">Published</SelectItem>
+                              <SelectItem value="archived" className="text-gray-900 dark:text-white cursor-pointer">Archived</SelectItem>
                             </SelectContent>
                           </Select>
                         </div>
@@ -424,9 +436,9 @@ export default function CreateBlogPage() {
                           </div>
                         )}
                         <ErrorMessage name="featuredImage" component="div" className="text-red-500 dark:text-red-400 text-sm mt-1" />
-                        {featuredImageError && (
+                        {/* {featuredImageError && (
                           <div className="text-red-500 dark:text-red-400 text-sm mt-1">{featuredImageError}</div>
-                        )}
+                        )} */}
                       </CardContent>
                     </Card>
                   </motion.div>
