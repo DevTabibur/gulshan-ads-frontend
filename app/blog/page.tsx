@@ -251,9 +251,8 @@ export default function BlogPage() {
   const filteredPosts = useMemo(() => {
     return blogPosts.filter((post) => {
       const matchesSearch =
-        post.title.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
-        post.excerpt.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
-        post.tags.some((tag) => tag.toLowerCase().includes(debouncedSearchTerm.toLowerCase()))
+        post?.title?.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
+        post?.tags?.some((tag) => tag.toLowerCase().includes(debouncedSearchTerm.toLowerCase()))
 
       const matchesCategory = selectedCategory === "All Categories" || post.category === selectedCategory
 

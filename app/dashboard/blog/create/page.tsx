@@ -5,10 +5,9 @@ import { useRouter } from "next/navigation"
 import { Formik, Form, Field, ErrorMessage } from "formik"
 import * as Yup from "yup"
 import { motion } from "framer-motion"
-import { Save, Eye, Upload, X, Plus, Tag, ImageIcon } from "lucide-react"
+import { Save, Upload, X, Plus, Tag, ImageIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -16,6 +15,7 @@ import { DashboardLayout } from "@/components/dashboard/DashboardLayout"
 import { Breadcrumb } from "@/components/dashboard/Breadcrumb"
 import { getAllBlogCategories, createBlog } from "@/app/api/blog/blog.api"
 import toast from "react-hot-toast"
+import { QuillField } from "@/form/QuillField"
 
 const validationSchema = Yup.object({
   title: Yup.string()
@@ -23,11 +23,6 @@ const validationSchema = Yup.object({
     .min(5, "Title must be at least 5 characters")
     .max(100, "Title must be less than 100 characters")
     .required("Title is required"),
-  excerpt: Yup.string()
-    .trim()
-    .min(20, "Excerpt must be at least 20 characters")
-    .max(300, "Excerpt must be less than 300 characters")
-    .required("Excerpt is required"),
   content: Yup.string()
     .trim()
     .min(100, "Content must be at least 100 characters")
@@ -37,16 +32,8 @@ const validationSchema = Yup.object({
     .required("Status is required"),
   category: Yup.string().required("Category is required"),
   tags: Yup.array().min(1, "At least one tag is required"),
-  featuredImage: Yup.mixed().required("Featured image is required"),
+  // featuredImage handled manually
 })
-
-function slugify(str: string) {
-  return str
-    .toLowerCase()
-    .trim()
-    .replace(/[\s\W-]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-}
 
 export default function CreateBlogPage() {
   const router = useRouter()
@@ -96,9 +83,12 @@ export default function CreateBlogPage() {
     }
   }
 
-  const removeTag = (tagToRemove: string) => {
+  const removeTag = (tagToRemove: string, setFieldValue?: (field: string, value: any, shouldValidate?: boolean) => void) => {
     const newTags = tags.filter((tag) => tag !== tagToRemove)
     setTags(newTags)
+    if (setFieldValue) {
+      setFieldValue("tags", newTags, true)
+    }
     if (newTags.length > 0) {
       setTagsError(null)
     }
@@ -192,7 +182,6 @@ export default function CreateBlogPage() {
     // Prepare FormData to send image and all blog data
     const formData = new FormData();
     formData.append("title", values.title);
-    formData.append("excerpt", values.excerpt);
     formData.append("content", values.content);
     formData.append("status", values.status);
     formData.append("category", categoryId);
@@ -202,7 +191,7 @@ export default function CreateBlogPage() {
     try {
       const res = await createBlog(formData)
       if (res.statusCode === 200) {
-        resetForm() 
+        resetForm()
         setTags([])
         setFeaturedImage(null)
         setFeaturedImagePreview(null)
@@ -234,7 +223,6 @@ export default function CreateBlogPage() {
         <Formik
           initialValues={{
             title: "",
-            excerpt: "",
             content: "",
             category: "",
             status: "draft",
@@ -272,31 +260,6 @@ export default function CreateBlogPage() {
                       </CardContent>
                     </Card>
                   </motion.div>
-                  {/* Excerpt */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: 0.1 }}
-                  >
-                    <Card className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
-                      <CardHeader>
-                        <CardTitle className="text-gray-900 dark:text-white">Excerpt</CardTitle>
-                        <CardDescription className="text-gray-600 dark:text-gray-400">
-                          A brief summary of your blog post
-                        </CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <Field
-                          as={Textarea}
-                          name="excerpt"
-                          placeholder="Write a brief excerpt..."
-                          rows={3}
-                          className={`bg-white dark:bg-gray-900 text-gray-900 dark:text-white border-gray-300 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400 ${errors.excerpt && touched.excerpt ? "border-red-500 dark:border-red-500" : ""}`}
-                        />
-                        <ErrorMessage name="excerpt" component="div" className="text-red-500 dark:text-red-400 text-sm mt-1" />
-                      </CardContent>
-                    </Card>
-                  </motion.div>
                   {/* Content */}
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -311,13 +274,16 @@ export default function CreateBlogPage() {
                         </CardDescription>
                       </CardHeader>
                       <CardContent>
-                        <Field
-                          as={Textarea}
-                          name="content"
-                          placeholder="Write your blog post content..."
-                          rows={15}
-                          className={`bg-white dark:bg-gray-900 text-gray-900 dark:text-white border-gray-300 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400 ${errors.content && touched.content ? "border-red-500 dark:border-red-500" : ""}`}
-                        />
+                        <div
+                          className={`quill-field-wrapper rounded-md border px-3 py-2 min-h-[180px] bg-white dark:bg-gray-900 text-gray-900 dark:text-white border-gray-300 dark:border-gray-700 focus-within:border-blue-500 dark:focus-within:border-blue-400 transition-colors duration-200 ${
+                            errors.content && touched.content ? "border-red-500 dark:border-red-500" : ""
+                          }`}
+                        >
+                          <QuillField
+                            value={values.content}
+                            onChange={(val) => setFieldValue("content", val)}
+                          />
+                        </div>
                         <ErrorMessage name="content" component="div" className="text-red-500 dark:text-red-400 text-sm mt-1" />
                       </CardContent>
                     </Card>
@@ -392,9 +358,6 @@ export default function CreateBlogPage() {
                             <Save className="h-4 w-4 mr-2" />
                             {isSubmitting ? "Saving..." : "Save Post"}
                           </Button>
-                          {/* <Button type="button" variant="outline" className="border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white">
-                            <Eye className="h-4 w-4" />
-                          </Button> */}
                         </div>
                       </CardContent>
                     </Card>
@@ -464,9 +427,6 @@ export default function CreateBlogPage() {
                         {featuredImageError && (
                           <div className="text-red-500 dark:text-red-400 text-sm mt-1">{featuredImageError}</div>
                         )}
-                        {tagsError && (
-                          <div className="text-red-500 dark:text-red-400 text-sm mt-1">{tagsError}</div>
-                        )}
                       </CardContent>
                     </Card>
                   </motion.div>
@@ -512,8 +472,7 @@ export default function CreateBlogPage() {
                               variant="secondary"
                               className="cursor-pointer hover:bg-red-100 hover:text-red-800 dark:hover:bg-red-900 dark:hover:text-red-300 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
                               onClick={() => {
-                                removeTag(tag)
-                                setFieldValue("tags", tags.filter((t) => t !== tag), true)
+                                removeTag(tag, setFieldValue)
                               }}
                             >
                               <Tag className="h-3 w-3 mr-1" />

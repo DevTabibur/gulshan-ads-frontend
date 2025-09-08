@@ -1,6 +1,9 @@
+import { getFromLocalStorage } from '@/lib/local-storage';
 import axios from 'axios';
 
+
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 
 export const createBlogCategory = async (data: any) => {
     try {
@@ -83,9 +86,11 @@ export const createBlog = async (data: any) => {
             {
                 headers: {
                     "Content-Type": "multipart/form-data",
+                    "Authorization": `Bearer ${getFromLocalStorage("adsToken")}`
                 },
             }
         );
+        console.log("response", response)
         return response.data;
     } catch (error) {
         console.error('Error creating blog:', error);
