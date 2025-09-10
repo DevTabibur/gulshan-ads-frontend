@@ -129,7 +129,7 @@ export const MetaShowcase = () => {
             <span className="text-gray-700 dark:text-gray-300">Your Gateway to Social Success</span>
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
-            Leverage the power of Facebook and Instagram advertising with Gulshan Ads's premium Meta solutions. Reach
+            Leverage the power of Facebook and Instagram advertising with Biggapon BD's premium Meta solutions. Reach
             billions of users with precision targeting and expert campaign management.
           </p>
         </div>

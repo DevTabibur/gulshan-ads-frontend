@@ -140,7 +140,7 @@ export default function AdvertisersPage() {
       role: "Digital Marketer",
       avatar: "/placeholder.svg?height=60&width=60",
       content:
-        "Gulshan Ads transformed my freelance business. I went from struggling to find clients to having a 3-month waiting list!",
+        "Biggapon BD transformed my freelance business. I went from struggling to find clients to having a 3-month waiting list!",
       rating: 5,
       revenue: "+400% revenue",
     },
@@ -158,7 +158,7 @@ export default function AdvertisersPage() {
       role: "Business Owner",
       avatar: "/placeholder.svg?height=60&width=60",
       content:
-        "Finally, I can focus on what I love - writing - while Gulshan Ads handles all my marketing. Best decision ever!",
+        "Finally, I can focus on what I love - writing - while Biggapon BD handles all my marketing. Best decision ever!",
       rating: 5,
       revenue: "+180% income",
     },
@@ -376,7 +376,7 @@ export default function AdvertisersPage() {
                 Why Advertisers Choose
                 <span className="bg-gradient-to-r from-emerald-600 to-cyan-600 bg-clip-text text-transparent">
                   {" "}
-                  Gulshan Ads
+                  Biggapon BD
                 </span>
               </h2>
               <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
@@ -517,7 +517,7 @@ export default function AdvertisersPage() {
                 </span>
               </h2>
               <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
-                See how AdHGulshan Ads and has transformed freelance businesses across different industries
+                See how AdHBiggapon BD and has transformed freelance businesses across different industries
               </p>
             </motion.div>
 
@@ -642,7 +642,7 @@ export default function AdvertisersPage() {
               </h2>
 
               <p className="text-xl text-white/90 mb-8 leading-relaxed">
-                Join 200+ successful Advertisers who've transformed their business with Gulshan Ads. Get your first campaign running in 24 hours with our expert team.
+                Join 200+ successful Advertisers who've transformed their business with Biggapon BD. Get your first campaign running in 24 hours with our expert team.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">

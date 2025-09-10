@@ -241,10 +241,10 @@ export const Header = () => {
           <div className="flex-shrink-0">
             <a href="/" className="flex items-center">
               <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-cyan-500 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-lg">G</span>
+                <span className="text-white font-bold text-lg">B</span>
               </div>
               <span className="ml-2 text-xl font-bold text-gray-900 dark:text-white">
-                Gulshan Ads
+                Biggapon BD
               </span>
             </a>
           </div>

@@ -223,11 +223,11 @@ function SidebarContent({ onItemClick }: { onItemClick?: () => void }) {
         )}
       >
         <div className="h-8 w-8 rounded-lg bg-gradient-to-r from-green-500 to-cyan-500 flex items-center justify-center flex-shrink-0">
-          <span className="text-white font-bold text-sm">G</span>
+          <span className="text-white font-bold text-sm">B</span>
         </div>
         {!isCollapsed && (
           <span className="font-bold text-lg bg-gradient-to-r from-green-600 to-cyan-600 bg-clip-text text-transparent">
-            Gulshan Ads
+            Biggapon BD
           </span>
         )}
       </Link>
@@ -239,7 +239,7 @@ function SidebarContent({ onItemClick }: { onItemClick?: () => void }) {
       {!isCollapsed && (
         <div className="border-t border-gray-200 dark:border-gray-800 p-3">
           <div className="text-xs text-gray-500 dark:text-gray-400">
-            © {new Date().getFullYear()} Gulshan Ads
+            © {new Date().getFullYear()} Biggapon BD
           </div>
         </div>
       )}

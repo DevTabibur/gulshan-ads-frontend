@@ -102,7 +102,7 @@ export default function TermsPage() {
                 Terms of Service
               </h1>
               <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-                These terms govern your use of Gulshan Ads's advertising services and
+                These terms govern your use of Biggapon BD's advertising services and
                 platform. Please read them carefully.
               </p>
               <div className="mt-4 text-sm text-gray-500 dark:text-gray-400">
@@ -168,11 +168,11 @@ export default function TermsPage() {
                 </h2>
                 <div className="prose prose-gray dark:prose-invert max-w-none">
                   <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                    By accessing and using Gulshan Ads's advertising services
+                    By accessing and using Biggapon BD's advertising services
                     ("Services"), you agree to be bound by these Terms of
                     Service ("Terms"). These Terms constitute a legally binding
                     agreement between you ("Client," "you," or "your") and
-                    Gulshan Ads ("we," "us," or "our").
+                    Biggapon BD ("we," "us," or "our").
                   </p>
                   <p className="text-gray-600 dark:text-gray-300 leading-relaxed mt-4">
                     If you do not agree to these Terms, you may not access or
@@ -220,7 +220,7 @@ export default function TermsPage() {
                       Advertising Services
                     </h3>
                     <p className="text-gray-600 dark:text-gray-300 mb-4">
-                    Gulshan Ads provides comprehensive digital advertising services
+                    Biggapon BD provides comprehensive digital advertising services
                       across multiple platforms including but not limited to:
                     </p>
                     <div className="grid md:grid-cols-2 gap-6">
@@ -477,7 +477,7 @@ export default function TermsPage() {
                 <div className="grid md:grid-cols-2 gap-8">
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                    Gulshan Ads's Responsibilities
+                    Biggapon BD's Responsibilities
                     </h3>
                     <div className="space-y-4">
                       {[
@@ -628,7 +628,7 @@ export default function TermsPage() {
                     <div className="p-6 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-700">
                       <p className="text-gray-600 dark:text-gray-300 mb-4">
                         <strong>LIMITATION OF LIABILITY:</strong> In no event
-                        shall Gulshan Ads be liable for any indirect, incidental,
+                        shall Biggapon BD be liable for any indirect, incidental,
                         special, consequential, or punitive damages, including
                         but not limited to:
                       </p>
@@ -673,7 +673,7 @@ export default function TermsPage() {
 
                       <div>
                         <h4 className="font-medium text-gray-900 dark:text-white mb-3">
-                          Termination by Gulshan Ads
+                          Termination by Biggapon BD
                         </h4>
                         <ul className="space-y-2 text-gray-600 dark:text-gray-300 text-sm">
                           <li>• Breach of terms or non-payment</li>
@@ -723,7 +723,7 @@ export default function TermsPage() {
 
                   <div className="mt-8 pt-6 border-t border-white/20">
                     <p className="text-cyan-100 text-sm">
-                      By continuing to use Gulshan Ads's services, you acknowledge
+                      By continuing to use Biggapon BD's services, you acknowledge
                       that you have read, understood, and agree to be bound by
                       these Terms of Service.
                     </p>

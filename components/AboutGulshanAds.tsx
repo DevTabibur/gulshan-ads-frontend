@@ -156,7 +156,7 @@ export const AboutGulshanAds = () => {
       {/* Background Text */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <h1 className="text-[12rem] md:text-[16rem] lg:text-[20rem] font-bold text-gray-200/30 dark:text-gray-700/30 select-none">
-        Gulshan Ads
+        Biggapon BD
         </h1>
       </div>
 
@@ -172,7 +172,7 @@ export const AboutGulshanAds = () => {
           <div className="about-animate opacity-0 transform translate-y-4">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
               <span className="bg-gradient-to-r from-green-500 to-cyan-500 bg-clip-text text-transparent">
-                About Gulshan Ads
+                About Biggapon BD
               </span>
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">

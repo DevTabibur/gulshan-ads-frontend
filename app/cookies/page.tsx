@@ -312,7 +312,7 @@ export default function CookiesPage() {
                       </p>
                       <p>
                         We distinguish between first-party cookies (set by
-                          Gulshan Ads) and third-party cookies (set by our advertising
+                          Biggapon BD) and third-party cookies (set by our advertising
                         partners) to give you full transparency about data
                         collection.
                       </p>

@@ -115,7 +115,7 @@ export default function SignInPage() {
               <h1 className="text-3xl font-bold bg-gradient-to-r from-green-600 to-cyan-600 bg-clip-text text-transparent mb-2">
                 Welcome Back
               </h1>
-              <p className="text-slate-600 dark:text-slate-400">Sign in to your Gulshan Ads account</p>
+              <p className="text-slate-600 dark:text-slate-400">Sign in to your Biggapon BD account</p>
             </motion.div>
 
             {/* Form */}

@@ -152,7 +152,7 @@ export const TelegramShowcase = () => {
                   <div className="bg-gray-50 dark:bg-gray-700 px-6 py-3 flex justify-between items-center">
                     <div className="flex items-center space-x-2">
                       <div className="w-4 h-4 bg-cyan-500 rounded-full"></div>
-                      <span className="text-sm font-medium text-gray-900 dark:text-white">Gulshan Ads Agency</span>
+                      <span className="text-sm font-medium text-gray-900 dark:text-white">Biggapon BD Agency</span>
                     </div>
                     <div className="text-xs text-gray-500">12:34 PM</div>
                   </div>
@@ -178,7 +178,7 @@ export const TelegramShowcase = () => {
                         <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-cyan-500 rounded-full flex items-center justify-center">
                           <span className="text-white text-xs font-bold">AH</span>
                         </div>
-                        <span className="font-semibold text-gray-900 dark:text-white text-sm">Gulshan Ads</span>
+                        <span className="font-semibold text-gray-900 dark:text-white text-sm">Biggapon BD</span>
                         <span className="text-xs text-gray-500">2:30 PM</span>
                       </div>
                       <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
@@ -197,7 +197,7 @@ export const TelegramShowcase = () => {
                         <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-cyan-500 rounded-full flex items-center justify-center">
                           <span className="text-white text-xs font-bold">AH</span>
                         </div>
-                        <span className="font-semibold text-gray-900 dark:text-white text-sm">Gulshan Ads</span>
+                        <span className="font-semibold text-gray-900 dark:text-white text-sm">Biggapon BD</span>
                         <span className="text-xs text-gray-500">2:45 PM</span>
                       </div>
                       <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
@@ -215,7 +215,7 @@ export const TelegramShowcase = () => {
                         <span className="text-xs text-gray-500">Ad</span>
                       </div>
                       <h4 className="font-semibold text-gray-900 dark:text-white text-sm mb-1">
-                        Scale Your Agency with Gulshan Ads
+                        Scale Your Agency with Biggapon BD
                       </h4>
                       <p className="text-gray-600 dark:text-gray-400 text-xs mb-3">
                         White-label solutions for marketing agencies. Manage all platforms in one dashboard.

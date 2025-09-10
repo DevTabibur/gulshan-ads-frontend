@@ -128,7 +128,7 @@ export default function JoiningMail() {
           >
             Join the{" "}
             <span className="bg-gradient-to-r from-emerald-400 via-cyan-400 to-teal-400 bg-clip-text text-transparent">
-            Gulshan Ads
+            Biggapon BD
             </span>{" "}
             mailing list
           </motion.h2>
@@ -252,7 +252,7 @@ export default function JoiningMail() {
                 exit={{ opacity: 0, y: -10 }}
                 className="mt-4 p-4 bg-emerald-500/20 border border-emerald-500/30 rounded-xl text-emerald-300 text-sm text-center"
               >
-                🎉 Welcome to the Gulshan Ads community! Check your email for
+                🎉 Welcome to the Biggapon BD community! Check your email for
                 confirmation.
               </motion.div>
             )}

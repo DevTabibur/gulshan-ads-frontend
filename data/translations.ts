@@ -12,7 +12,7 @@ export const translations: Translations = {
     },
     hero: {
       title: "Promote your business in Meta, TikTok and Telegram",
-      subtitle: "Find clients on booming platforms with Gulshan Ads — easy payment and ad launch in one interface",
+      subtitle: "Find clients on booming platforms with Biggapon BD — easy payment and ad launch in one interface",
       cta: "Sign up",
     },
     trusted: "We are trusted by leading companies",
@@ -28,7 +28,7 @@ export const translations: Translations = {
     },
     hero: {
       title: "মেটা, টিকটক এবং টেলিগ্রামে আপনার ব্যবসার প্রচার করুন",
-      subtitle: "Gulshan Ads দিয়ে বুমিং প্ল্যাটফর্মে ক্লায়েন্ট খুঁজুন — সহজ পেমেন্ট এবং একটি ইন্টারফেসে বিজ্ঞাপন চালু",
+      subtitle: "Biggapon BD দিয়ে বুমিং প্ল্যাটফর্মে ক্লায়েন্ট খুঁজুন — সহজ পেমেন্ট এবং একটি ইন্টারফেসে বিজ্ঞাপন চালু",
       cta: "সাইন আপ",
     },
     trusted: "আমরা শীর্ষস্থানীয় কোম্পানিগুলির দ্বারা বিশ্বস্ত",
@@ -45,7 +45,7 @@ export const translations: Translations = {
     hero: {
       title: "Продвигайте свой бизнес в Meta, TikTok и Telegram",
       subtitle:
-        "Находите клиентов на растущих платформах с Gulshan Ads — простая оплата и запуск рекламы в одном интерфейсе",
+        "Находите клиентов на растущих платформах с Biggapon BD — простая оплата и запуск рекламы в одном интерфейсе",
       cta: "Регистрация",
     },
     trusted: "Нам доверяют ведущие компании",
@@ -61,7 +61,7 @@ export const translations: Translations = {
     },
     hero: {
       title: "روج لعملك في Meta و TikTok و Telegram",
-      subtitle: "اعثر على العملاء في المنصات المزدهرة مع Gulshan Ads — دفع سهل وإطلاق الإعلانات في واجهة واحدة",
+      subtitle: "اعثر على العملاء في المنصات المزدهرة مع Biggapon BD — دفع سهل وإطلاق الإعلانات في واجهة واحدة",
       cta: "التسجيل",
     },
     trusted: "نحن موثوقون من قبل الشركات الرائدة",
@@ -77,7 +77,7 @@ export const translations: Translations = {
     },
     hero: {
       title: "Meta, TikTok और Telegram में अपने व्यवसाय का प्रचार करें",
-      subtitle: "Gulshan Ads के साथ बूमिंग प्लेटफॉर्म पर क्लाइंट खोजें — आसान भुगतान और एक इंटरफेस में विज्ञापन लॉन्च",
+      subtitle: "Biggapon BD के साथ बूमिंग प्लेटफॉर्म पर क्लाइंट खोजें — आसान भुगतान और एक इंटरफेस में विज्ञापन लॉन्च",
       cta: "साइन अप",
     },
     trusted: "हम अग्रणी कंपनियों द्वारा भरोसेमंद हैं",
@@ -94,7 +94,7 @@ export const translations: Translations = {
     hero: {
       title: "Promouvez votre entreprise sur Meta, TikTok et Telegram",
       subtitle:
-        "Trouvez des clients sur les plateformes en plein essor avec Gulshan Ads — paiement facile et lancement de publicités dans une seule interface",
+        "Trouvez des clients sur les plateformes en plein essor avec Biggapon BD — paiement facile et lancement de publicités dans une seule interface",
       cta: "S'inscrire",
     },
     trusted: "Nous sommes approuvés par les entreprises leaders",

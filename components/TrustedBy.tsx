@@ -176,7 +176,7 @@ export const TrustedBy = () => {
         <div className="text-center mb-12">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4">{t("trusted")}</h2>
           <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Join thousands of businesses that trust Gulshan Ads to grow their presence across social media platforms
+            Join thousands of businesses that trust Biggapon BD to grow their presence across social media platforms
           </p>
         </div>
 
@@ -217,7 +217,7 @@ export const TrustedBy = () => {
         {/* Testimonial Quote */}
         <div className="mt-16 text-center">
           <blockquote className="text-xl md:text-2xl font-medium text-gray-900 dark:text-white italic max-w-4xl mx-auto">
-            "Gulshan Ads transformed our social media advertising strategy. We've seen a 300% increase in engagement across
+            "Biggapon BD transformed our social media advertising strategy. We've seen a 300% increase in engagement across
             all platforms."
           </blockquote>
           <div className="mt-6 flex items-center justify-center space-x-4">

@@ -62,7 +62,7 @@ export const Testimonials = ({ testimonials }: { testimonials: any[] }) => {
               <span className="text-gray-700 dark:text-gray-300">Stories</span>
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
-              Discover how businesses and agencies worldwide are achieving exceptional results with Gulshan Ads's
+              Discover how businesses and agencies worldwide are achieving exceptional results with Biggapon BD's
               multi-platform advertising solutions.
             </p>
           </motion.div>
@@ -261,7 +261,7 @@ export const Testimonials = ({ testimonials }: { testimonials: any[] }) => {
         >
           <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Ready to Join Our Success Stories?</h3>
           <p className="text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
-            Start your journey with Gulshan Ads today and discover how our multi-platform advertising solutions can transform
+            Start your journey with Biggapon BD today and discover how our multi-platform advertising solutions can transform
             your business results.
           </p>
           <button className="bg-gradient-to-r from-green-500 to-cyan-500 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-green-600 hover:to-cyan-600 transition-all duration-300 transform hover:scale-105 hover:shadow-lg">

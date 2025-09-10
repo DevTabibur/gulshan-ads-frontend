@@ -138,7 +138,7 @@ export default function SignUpPage() {
 
               </motion.div>
               <h1 className="text-3xl font-bold bg-gradient-to-r from-green-600 to-cyan-600 bg-clip-text text-transparent mb-2">
-                Join Gulshan Ads
+                Join Biggapon BD
               </h1>
               <p className="text-slate-600 dark:text-slate-400">Create your account and start growing</p>
             </motion.div>

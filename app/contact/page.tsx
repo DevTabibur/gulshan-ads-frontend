@@ -153,7 +153,7 @@ export default function ContactPage() {
                 className="text-lg text-gray-600 dark:text-gray-300 mb-8"
               >
                 We're sending you an auto-generated username and password to get
-                started with Gulshan Ads.
+                started with Biggapon BD.
               </motion.p>
 
               <motion.div

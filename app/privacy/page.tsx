@@ -102,7 +102,7 @@ export default function PrivacyPage() {
                 Privacy Policy
               </h1>
               <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-                Your privacy is our priority. Learn how Gulshan Ads protects and
+                Your privacy is our priority. Learn how Biggapon BD protects and
                 manages your data in our advertising services.
               </p>
               <div className="mt-4 text-sm text-gray-500 dark:text-gray-400">
@@ -152,7 +152,7 @@ export default function PrivacyPage() {
                 </h2>
                 <div className="prose prose-gray dark:prose-invert max-w-none">
                   <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                  Gulshan Ads ("we," "our," or "us") is committed to protecting
+                  Biggapon BD ("we," "our," or "us") is committed to protecting
                     your privacy. This Privacy Policy explains how we collect,
                     use, disclose, and safeguard your information when you use
                     our advertising agency services, including campaign

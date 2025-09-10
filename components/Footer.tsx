@@ -36,10 +36,10 @@ export const Footer = () => {
           <div>
             <div className="flex items-center mb-4">
               <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-cyan-500 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-lg">G</span>
+                <span className="text-white font-bold text-lg">B</span>
               </div>
               <span className="ml-2 text-xl font-bold text-gray-900 dark:text-white">
-              Gulshan Ads
+              Biggapon BD
               </span>
             </div>
             <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-sm">
@@ -96,7 +96,7 @@ export const Footer = () => {
             <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800 hidden md:block">
               <div className="flex flex-col md:flex-row justify-between items-center">
                 <p className="text-gray-600 dark:text-gray-400 text-sm">
-                  © {new Date().getFullYear()} Gulshan Ads. All rights reserved.
+                  © {new Date().getFullYear()} Biggapon BD. All rights reserved.
                 </p>
                 
               </div>
@@ -176,7 +176,7 @@ export const Footer = () => {
         <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800 md:hidden block">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-600 dark:text-gray-400 text-sm">
-              © {new Date().getFullYear()} Gulshan Ads. All rights reserved.
+              © {new Date().getFullYear()} Biggapon BD. All rights reserved.
             </p>
           </div>
         </div>

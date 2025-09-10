@@ -383,7 +383,7 @@ console.log("fetch blogs", allBlogs)
                 transition={{ duration: 0.8, delay: 0.3 }}
               >
                 <span className="bg-gradient-to-r from-green-600 to-cyan-600 bg-clip-text text-transparent">
-                  Gulshan Ads
+                  Biggapon BD
                 </span>
                 <br />
                 <span className="text-gray-900 dark:text-white">Knowledge Hub</span>

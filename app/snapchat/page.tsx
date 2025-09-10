@@ -973,7 +973,7 @@ export default function SnapchatPage() {
               </svg>
             </div>
 
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Join the Gulshan Ads mailing list</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Join the Biggapon BD mailing list</h2>
             <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
               No spam, just client case studies, automation tips and best practices for Snapchat advertising delivered
               to your inbox.

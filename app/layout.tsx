@@ -5,9 +5,9 @@ import './globals.css'
 import  { Toaster } from 'react-hot-toast';
 
     export const metadata: Metadata = {
-      title: 'Gulshan Ads',
-      description: 'Gulshan Ads is a modern advertising platform for managing and showcasing ads efficiently.',
-      applicationName: 'Gulshan Ads',
+      title: 'Biggapon BD',
+      description: 'Biggapon BD is a modern advertising platform for managing and showcasing ads efficiently.',
+      applicationName: 'Biggapon BD',
       authors: [{ name: 'Gulshan', url: 'https://gulshan.dev' }],
       keywords: ['ads', 'gulshan', 'advertising', 'nextjs', 'marketing', 'platform', 'digital ads'],
       creator: 'Gulshan',
@@ -19,16 +19,16 @@ import  { Toaster } from 'react-hot-toast';
         { rel: 'apple-touch-icon', url: '/apple-touch-icon.png' }
       ],
       openGraph: {
-        title: 'Gulshan Ads',
-        description: 'Gulshan Ads is a modern advertising platform for managing and showcasing ads efficiently.',
+        title: 'Biggapon BD',
+        description: 'Biggapon BD is a modern advertising platform for managing and showcasing ads efficiently.',
         url: 'https://gulshan.dev',
-        siteName: 'Gulshan Ads',
+        siteName: 'Biggapon BD',
         images: [
           {
             url: '/og-image.png',
             width: 1200,
             height: 630,
-            alt: 'Gulshan Ads'
+            alt: 'Biggapon BD'
           }
         ],
         locale: 'en_US',
@@ -36,8 +36,8 @@ import  { Toaster } from 'react-hot-toast';
       },
       twitter: {
         card: 'summary_large_image',
-        title: 'Gulshan Ads',
-        description: 'Gulshan Ads is a modern advertising platform for managing and showcasing ads efficiently.',
+        title: 'Biggapon BD',
+        description: 'Biggapon BD is a modern advertising platform for managing and showcasing ads efficiently.',
         creator: '@gulshan',
         images: ['/og-image.png']
       },

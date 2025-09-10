@@ -30,10 +30,10 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Gulshan Ads - Promote your business in Meta, TikTok and Telegram</title>
+        <title>Biggapon BD - Promote your business in Meta, TikTok and Telegram</title>
         <meta
           name="description"
-          content="Find clients on booming platforms with Gulshan Ads — easy payment and ad launch in one interface"
+          content="Find clients on booming platforms with Biggapon BD — easy payment and ad launch in one interface"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />

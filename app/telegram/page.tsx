@@ -342,7 +342,7 @@ export default function TelegramPage() {
                 Conditions of work with us
               </h2>
               <p className="text-xl text-gray-600 dark:text-gray-300">
-                With Gulshan Ads you can launch ads on any platform. We support 3 types of advertising in Telegram - focused
+                With Biggapon BD you can launch ads on any platform. We support 3 types of advertising in Telegram - focused
                 on international audience and on Russian-speaking audience. A different type of account is suitable for
                 each of these purposes.
               </p>
@@ -508,7 +508,7 @@ export default function TelegramPage() {
                     className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white"
                     variants={itemVariants}
                   >
-                    Gulshan Ads will help you get started quickly
+                    Biggapon BD will help you get started quickly
                   </motion.h2>
                 </div>
               </motion.div>
@@ -582,7 +582,7 @@ export default function TelegramPage() {
               </div>
 
               <div className="space-y-4">
-                <h2 className="text-3xl md:text-4xl font-bold text-white">Join the Gulshan Ads mailing list</h2>
+                <h2 className="text-3xl md:text-4xl font-bold text-white">Join the Biggapon BD mailing list</h2>
                 <p className="text-xl text-gray-300">No spam, just email about automation and best practices.</p>
               </div>
 
