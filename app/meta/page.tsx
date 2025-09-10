@@ -113,7 +113,7 @@ export default function MetaPage() {
   const pricingTiers = [
     {
       name: "Starter",
-      price: "$500",
+      price: "$300",
       period: "minimum spend",
       description: "Perfect for small businesses starting with Meta advertising",
       features: [
