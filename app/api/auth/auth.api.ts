@@ -4,8 +4,9 @@ import axios from "axios";
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export const register = async (data: {
-  firstName?: string;
-  lastName: string;
+  fullName: string;
+  whatsApp: string;
+  companyName: string;
   email: string;
   password: string;
   confirmPassword: string;
