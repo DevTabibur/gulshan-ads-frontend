@@ -611,14 +611,14 @@ export default function PrivacyPage() {
                     don't hesitate to contact us.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <motion.a
+                    {/* <motion.a
                       href="mailto:privacy@gulshanads.app"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       className="inline-flex items-center px-6 py-3 bg-white text-green-600 rounded-lg font-medium hover:bg-gray-100 transition-colors"
                     >
                       Email Privacy Team
-                    </motion.a>
+                    </motion.a> */}
                     <motion.a
                       href="/contact"
                       whileHover={{ scale: 1.05 }}

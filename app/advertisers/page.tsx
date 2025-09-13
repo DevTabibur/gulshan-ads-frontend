@@ -1,6 +1,9 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { useFormik } from "formik"
+import * as Yup from "yup"
 import { useLanguage } from "@/hooks/useLanguage"
 import { translations } from "@/data/translations"
 import {
@@ -23,6 +26,7 @@ import {
   MessageSquare,
   Calendar,
   CreditCard,
+  X,
 } from "lucide-react"
 import { Layout } from "@/components/Layout"
 
@@ -72,9 +76,45 @@ const pulseVariants: any = {
   },
 }
 
+// Modal component
+function Modal({ open, onClose, children }: { open: boolean; onClose: () => void; children: React.ReactNode }) {
+  return (
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          <motion.div
+            className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl p-8 w-full max-w-lg relative"
+            initial={{ scale: 0.95, opacity: 0, y: 40 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.95, opacity: 0, y: 40 }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          >
+            <button
+              className="absolute top-4 right-4 text-slate-400 hover:text-slate-900 dark:hover:text-white transition"
+              onClick={onClose}
+              aria-label="Close"
+              type="button"
+            >
+              <X className="w-6 h-6" />
+            </button>
+            {children}
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
+}
+
 export default function AdvertisersPage() {
   // const { language } = useLanguage()
   // const t = translations[language]
+
+  const [modalOpen, setModalOpen] = useState(false)
 
   const stats = [
     { icon: Users, value: "200+", label: "Active Advertisers", color: "text-emerald-400" },
@@ -117,6 +157,7 @@ export default function AdvertisersPage() {
       description: "Facebook, Instagram, Google, LinkedIn, TikTok - we handle them all",
       features: ["Cross-platform optimization", "Weekly reporting", "Unified reporting", "Budget friendly campaign"],
       price: "From $299/mo",
+      link: "https://wa.link/zzxfdy"
     },
     {
       icon: Rocket,
@@ -124,6 +165,7 @@ export default function AdvertisersPage() {
       description: "Scale your freelance business with proven advertising strategies",
       features: ["Lead generation", "Brand awareness", "Client acquisition"],
       price: "From $499/mo",
+      link: "https://wa.link/zzxfdy"
     },
     {
       icon: Shield,
@@ -131,6 +173,7 @@ export default function AdvertisersPage() {
       description: "White-glove service with dedicated account manager",
       features: ["1-on-1 strategy calls", "Custom creatives", "Priority support"],
       price: "From $999/mo",
+      link: "https://wa.link/zzxfdy"
     },
   ]
 
@@ -195,6 +238,31 @@ export default function AdvertisersPage() {
     },
   ]
 
+  // Formik + Yup for modal form
+  const formik = useFormik({
+    initialValues: {
+      fullName: "",
+      pageName: "",
+      pageLink: "",
+      whatsApp: "",
+      email: "",
+      details: "",
+    },
+    validationSchema: Yup.object({
+      fullName: Yup.string().required("Full Name is required"),
+      pageName: Yup.string().required("Page/Company Name is required"),
+      pageLink: Yup.string().required("Page/Website Link is required"),
+      whatsApp: Yup.string().required("WhatsApp is required"),
+      email: Yup.string().email("Invalid email").required("Email is required"),
+      details: Yup.string().required("Details are required"),
+    }),
+    onSubmit: (values, { resetForm }) => {
+      console.log(values)
+      resetForm()
+      setModalOpen(false)
+    },
+  })
+
   return (
     <Layout>
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-emerald-50 dark:from-slate-900 dark:via-slate-800 dark:to-emerald-900">
@@ -246,18 +314,20 @@ export default function AdvertisersPage() {
                     className="px-8 py-4 bg-gradient-to-r from-emerald-600 to-cyan-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2 group"
                     whileHover={{ scale: 1.02, y: -2 }}
                     whileTap={{ scale: 0.98 }}
+                    onClick={() => window.open("https://wa.link/zzxfdy", "_blank", "noopener,noreferrer")}
+                    type="button"
                   >
                     Start Growing Today
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </motion.button>
 
-                  <motion.button
+                  {/* <motion.button
                     className="px-8 py-4 border-2 border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 font-semibold rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
                     View Case Studies
-                  </motion.button>
+                  </motion.button> */}
                 </motion.div>
 
                 <motion.div className="flex items-center gap-6 pt-4" variants={itemVariants}>
@@ -457,8 +527,8 @@ export default function AdvertisersPage() {
 
                   <div
                     className={`relative bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-lg border-2 ${index === 1
-                        ? "border-emerald-500 dark:border-emerald-400"
-                        : "border-slate-200 dark:border-slate-700"
+                      ? "border-emerald-500 dark:border-emerald-400"
+                      : "border-slate-200 dark:border-slate-700"
                       } group-hover:shadow-2xl transition-all duration-300`}
                   >
                     <div className="flex items-center gap-4 mb-6">
@@ -482,19 +552,32 @@ export default function AdvertisersPage() {
                       ))}
                     </ul>
 
-                    <motion.button
-                      className={`w-full py-4 rounded-xl font-semibold transition-all duration-300 ${index === 1
-                          ? "bg-gradient-to-r from-emerald-600 to-cyan-600 text-white shadow-lg hover:shadow-xl"
-                          : "border-2 border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700"
+                    <motion.a
+                      href={service.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`w-full inline-block text-center py-4 rounded-xl font-semibold transition-all duration-300 ${index === 1
+                        ? "bg-gradient-to-r from-emerald-600 to-cyan-600 text-white shadow-lg hover:shadow-xl"
+                        : "border-2 border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700"
                         }`}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
                       Get Started
-                    </motion.button>
+                    </motion.a>
                   </div>
                 </motion.div>
               ))}
+            </div>
+            <div className="flex justify-center mt-12">
+              <motion.a
+                href="/pricing-plans"
+                className="inline-block px-8 py-4 bg-gradient-to-r from-emerald-600 to-cyan-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+                whileHover={{ scale: 1.03, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                View All Plans
+              </motion.a>
             </div>
           </div>
         </motion.section>
@@ -650,20 +733,23 @@ export default function AdvertisersPage() {
                   className="px-8 py-4 bg-white text-emerald-600 font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2 group"
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
+                  onClick={() => setModalOpen(true)}
+                  type="button"
                 >
                   <Calendar className="w-5 h-5" />
                   Book Free Strategy Call
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </motion.button>
 
-                <motion.button
+                <motion.a
+                  href="/pricing-plans"
                   className="px-8 py-4 border-2 border-white text-white font-semibold rounded-xl hover:bg-white hover:text-emerald-600 transition-all duration-300 flex items-center gap-2"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
                   <CreditCard className="w-5 h-5" />
                   View Pricing Plans
-                </motion.button>
+                </motion.a>
               </div>
 
               <div className="flex items-center justify-center gap-8 text-white/80">
@@ -682,6 +768,132 @@ export default function AdvertisersPage() {
               </div>
             </motion.div>
           </div>
+
+          {/* Modal for Book Free Strategy Call */}
+          <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
+            <h3 className="text-2xl font-bold mb-4 text-slate-900 dark:text-white text-center">
+              Book Free Strategy Call
+            </h3>
+            <form onSubmit={formik.handleSubmit} className="space-y-4">
+              <div>
+                <label htmlFor="fullName" className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-1">
+                  Full Name
+                </label>
+                <input
+                  id="fullName"
+                  name="fullName"
+                  type="text"
+                  className={`w-full px-4 py-2 rounded-lg border ${formik.touched.fullName && formik.errors.fullName ? "border-red-500" : "border-slate-300"} focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:bg-slate-800 dark:text-white`}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.fullName}
+                  autoComplete="off"
+                />
+                {formik.touched.fullName && formik.errors.fullName && (
+                  <div className="text-red-500 text-xs mt-1">{formik.errors.fullName}</div>
+                )}
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="pageName" className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-1">
+                    Page/Company Name
+                  </label>
+                  <input
+                    id="pageName"
+                    name="pageName"
+                    type="text"
+                    className={`w-full px-4 py-2 rounded-lg border ${formik.touched.pageName && formik.errors.pageName ? "border-red-500" : "border-slate-300"} focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:bg-slate-800 dark:text-white`}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.pageName}
+                    autoComplete="off"
+                  />
+                  {formik.touched.pageName && formik.errors.pageName && (
+                    <div className="text-red-500 text-xs mt-1">{formik.errors.pageName}</div>
+                  )}
+                </div>
+                <div>
+                  <label htmlFor="pageLink" className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-1">
+                    Page/Website Link
+                  </label>
+                  <input
+                    id="pageLink"
+                    name="pageLink"
+                    type="text"
+                    className={`w-full px-4 py-2 rounded-lg border ${formik.touched.pageLink && formik.errors.pageLink ? "border-red-500" : "border-slate-300"} focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:bg-slate-800 dark:text-white`}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.pageLink}
+                    autoComplete="off"
+                  />
+                  {formik.touched.pageLink && formik.errors.pageLink && (
+                    <div className="text-red-500 text-xs mt-1">{formik.errors.pageLink}</div>
+                  )}
+                </div>
+                <div>
+                  <label htmlFor="whatsApp" className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-1">
+                    WhatsApp
+                  </label>
+                  <input
+                    id="whatsApp"
+                    name="whatsApp"
+                    type="text"
+                    className={`w-full px-4 py-2 rounded-lg border ${formik.touched.whatsApp && formik.errors.whatsApp ? "border-red-500" : "border-slate-300"} focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:bg-slate-800 dark:text-white`}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.whatsApp}
+                    autoComplete="off"
+                  />
+                  {formik.touched.whatsApp && formik.errors.whatsApp && (
+                    <div className="text-red-500 text-xs mt-1">{formik.errors.whatsApp}</div>
+                  )}
+                </div>
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-1">
+                    Email
+                  </label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    className={`w-full px-4 py-2 rounded-lg border ${formik.touched.email && formik.errors.email ? "border-red-500" : "border-slate-300"} focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:bg-slate-800 dark:text-white`}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.email}
+                    autoComplete="off"
+                  />
+                  {formik.touched.email && formik.errors.email && (
+                    <div className="text-red-500 text-xs mt-1">{formik.errors.email}</div>
+                  )}
+                </div>
+              </div>
+              <div>
+                <label htmlFor="details" className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-1">
+                  What do you need from us?
+                </label>
+                <textarea
+                  id="details"
+                  name="details"
+                  rows={3}
+                  className={`w-full px-4 py-2 rounded-lg border ${formik.touched.details && formik.errors.details ? "border-red-500" : "border-slate-300"} focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:bg-slate-800 dark:text-white`}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.details}
+                />
+                {formik.touched.details && formik.errors.details && (
+                  <div className="text-red-500 text-xs mt-1">{formik.errors.details}</div>
+                )}
+              </div>
+              <button
+                type="submit"
+                className="w-full py-3 mt-2 bg-gradient-to-r from-emerald-600 to-cyan-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2"
+                disabled={formik.isSubmitting}
+              >
+                <Calendar className="w-5 h-5" />
+                Submit
+              </button>
+            </form>
+          </Modal>
 
           {/* Floating Elements */}
           <motion.div

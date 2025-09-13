@@ -384,49 +384,7 @@ export default function SecurityPage() {
               </div>
             </motion.section>
 
-            {/* Contact Section */}
-            <motion.section
-              variants={itemVariants}
-              className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-green-600 to-cyan-600"
-            >
-              <div className="max-w-4xl mx-auto text-center">
-                <motion.h2
-                  variants={itemVariants}
-                  className="text-3xl md:text-4xl font-bold text-white mb-6"
-                >
-                  Security Questions or Concerns?
-                </motion.h2>
-                <motion.p
-                  variants={itemVariants}
-                  className="text-xl text-green-100 mb-8 leading-relaxed"
-                >
-                  Our security team is available 24/7 to address any questions
-                  about our data protection measures, compliance standards, or
-                  security policies.
-                </motion.p>
-                <motion.div
-                  variants={itemVariants}
-                  className="flex flex-col sm:flex-row gap-4 justify-center"
-                >
-                  <motion.a
-                    href="mailto:security@gulshanads.app"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="bg-white text-green-600 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-colors"
-                  >
-                    Contact Security Team
-                  </motion.a>
-                  <motion.a
-                    href="/contact"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-green-600 transition-colors"
-                  >
-                    General Contact
-                  </motion.a>
-                </motion.div>
-              </div>
-            </motion.section>
+            
           </motion.div>
         </div>
       </Layout>

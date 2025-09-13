@@ -187,11 +187,7 @@ export default function MetaPage() {
       answer:
         "Yes, our Enterprise plan includes multi-account management capabilities. You can manage multiple brands or client accounts from a single dashboard with consolidated reporting.",
     },
-    {
-      question: "What are your commission rates?",
-      answer:
-        "Our commission is transparent and competitive at 10% for most services. Enterprise clients may qualify for custom pricing based on volume and requirements.",
-    },
+    
   ]
 
   return (

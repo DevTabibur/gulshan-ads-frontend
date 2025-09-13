@@ -688,7 +688,7 @@ export default function TermsPage() {
               </motion.section>
 
               {/* Contact & Legal */}
-              <motion.section
+              {/* <motion.section
                 variants={itemVariants}
                 className="bg-gradient-to-r from-cyan-500 to-green-500 rounded-2xl p-8 text-white"
               >
@@ -729,7 +729,7 @@ export default function TermsPage() {
                     </p>
                   </div>
                 </div>
-              </motion.section>
+              </motion.section> */}
             </div>
           </motion.div>
         </div>
