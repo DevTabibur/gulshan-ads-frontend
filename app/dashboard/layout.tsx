@@ -14,6 +14,7 @@ export default function DashboardRootLayout({
   children,
 }: DashboardRootLayoutProps) {
   const [checkedAuth, setCheckedAuth] = useState(false);
+  
 
   useEffect(() => {
     const token = getFromLocalStorage("adsToken");

@@ -4,12 +4,12 @@ import { getMe, logout as logoutApi } from "@/app/api/auth/auth.api"
 import { createContext, useContext, useEffect, useState, ReactNode } from "react"
 
 interface User {
-    firstName: string
-    lastName: string
+    fullName: string
     email: string
     role?: string
     avatar?: string
     status?: string
+    isVerified?: boolean
 }
 
 interface UserContextType {
@@ -36,12 +36,12 @@ export function UserProvider({ children }: { children: ReactNode }) {
                     // console.log("userData", userData)
                     if (userData?.statusCode == 200) {
                         setUser({
-                            firstName: userData?.data?.firstName,
-                            lastName: userData?.data?.lastName,
+                            fullName: userData?.data?.fullName,
                             email: userData?.data?.email,
                             avatar: userData?.data?.avatar,
                             role: userData?.data?.role,
                             status: userData?.data?.status,
+                            isVerified: userData?.data?.isVerified,
 
                         })
                         setLoggedIn(true)

@@ -17,7 +17,7 @@ interface DashboardLayoutProps {
 export function DashboardLayout({ children }: DashboardLayoutProps) {
     const {  user, isLoading, loggedIn, logout } = useUserContext()
 
-    // console.log("loggedIn",  user)
+    console.log("loggedIn",  user)
     if(isLoading){
         return <Loader className="animate-spin" />
     }

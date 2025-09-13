@@ -1,10 +1,14 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { BarChart3, TrendingUp, Users, DollarSign, Target, Eye, MousePointer, ShoppingCart } from "lucide-react"
+import { BarChart3, TrendingUp, Users, DollarSign, Target, Eye, MousePointer, ShoppingCart, AlertTriangle } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { DashboardLayout } from "@/components/dashboard/DashboardLayout"
+import { useUserContext } from "@/contexts/UserContext"
+import { useEffect, useState } from "react"
+import { getFromLocalStorage } from "@/lib/local-storage"
+import AccountApproved from "@/components/AccountApproved"
 
 const stats = [
   {
@@ -73,7 +77,25 @@ const recentCampaigns = [
   },
 ]
 
+
+
 export default function DashboardPage() {
+  const { user, isLoading } = useUserContext()
+  const [token, setToken] = useState<string | null>(null)
+
+  useEffect(() => {
+    setToken(getFromLocalStorage("adsToken"))
+  }, [])
+
+  // If not token and user is not verified, show approval message
+  if (!token || (user && user.isVerified === false)) {
+    return (
+      <AccountApproved />
+    )
+  }
+
+  
+
   return (
     <DashboardLayout>
       <div className="space-y-6">

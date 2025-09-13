@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { redirect, useRouter } from "next/navigation"
 import { useAuth } from "@/hooks/useAuth"
 import { useUserContext } from "@/contexts/UserContext"
 
@@ -13,21 +13,23 @@ interface ProtectedRouteProps {
 export const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) => {
   const { loggedIn, isLoading, user } = useUserContext()
   const router = useRouter()
+  console.log("loggedIn", loggedIn)
+  console.log("isLoading", isLoading)
+  console.log("user", user)
 
-  // useEffect(() => {
-  //   if (!isLoading) {
-  //     if (!isAuthenticated) {
-  //       router.push("/sign-in")
-  //       return
-  //     }
+  useEffect(() => {
+    if (!isLoading) {
+      if (!user?.email) {
+        redirect("/sign-in")
+      }
 
-  //     // Check role if required
-  //     if (requiredRole && user?.role !== requiredRole) {
-  //       router.push("/dashboard")
-  //       return
-  //     }
-  //   }
-  // }, [isAuthenticated, isLoading, user, requiredRole, router])
+      // Check role if required
+      if (requiredRole && user?.role !== requiredRole) {
+        router.push("/dashboard")
+        return
+      }
+    }
+  }, [ isLoading, user, requiredRole, router])
 
   // Show loading state while checking authentication
   if (isLoading) {
