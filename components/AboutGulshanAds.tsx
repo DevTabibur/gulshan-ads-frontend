@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react"
 import { useLanguage } from "../hooks/useLanguage"
 
-export const AboutGulshanAds = () => {
+export const AboutGulshanAds = ({ aboutBiggaponBd, weWorkWith, ourMission }: any) => {
   const { t, isRTL } = useLanguage()
   const sectionRef = useRef<HTMLElement>(null)
 
@@ -151,12 +151,14 @@ export const AboutGulshanAds = () => {
     },
   ]
 
+ 
+
   return (
     <section ref={sectionRef} className="py-20 bg-gray-50 dark:bg-gray-800/50 relative overflow-hidden">
       {/* Background Text */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <h1 className="text-[12rem] md:text-[16rem] lg:text-[20rem] font-bold text-gray-200/30 dark:text-gray-700/30 select-none">
-        Biggapon BD
+          Biggapon BD
         </h1>
       </div>
 
@@ -172,12 +174,13 @@ export const AboutGulshanAds = () => {
           <div className="about-animate opacity-0 transform translate-y-4">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
               <span className="bg-gradient-to-r from-green-500 to-cyan-500 bg-clip-text text-transparent">
-                About Biggapon BD
+                {aboutBiggaponBd?.title}
               </span>
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
-              Empowering businesses and agencies with cutting-edge multi-platform advertising solutions. We bridge the
-              gap between complex ad platforms and successful campaigns.
+              {/* Empowering businesses and agencies with cutting-edge multi-platform advertising solutions. We bridge the
+                  gap between complex ad platforms and successful campaigns. */}
+              {aboutBiggaponBd?.description}
             </p>
           </div>
         </div>
@@ -203,67 +206,92 @@ export const AboutGulshanAds = () => {
         {/* We Work With Section */}
         <div className="text-center mb-16">
           <div className="about-animate opacity-0 transform translate-y-4">
-            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">We Work With</h3>
+            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">{weWorkWith?.title}</h3>
             <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-              Our platform serves diverse clients, from growing agencies to enterprise advertisers, each with unique
-              needs and goals.
+              {weWorkWith?.description}
             </p>
           </div>
         </div>
 
         {/* Target Audiences */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
-          {targetAudiences.map((audience, index) => (
-            <div
-              key={index}
-              className="about-animate opacity-0 transform translate-y-4 bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 group border border-gray-200 dark:border-gray-700"
-            >
-              <div className="mb-6 transform group-hover:scale-110 transition-transform duration-300">
-                {audience.icon}
-              </div>
-              <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-4 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors duration-300">
-                {audience.title}
-              </h4>
-              <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">{audience.description}</p>
-              <div className="space-y-2">
-                {audience.benefits.map((benefit, benefitIndex) => (
-                  <div key={benefitIndex} className="flex items-center space-x-3">
-                    <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
-                      <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
+
+        {(() => {
+          const defaultIcons = [
+            // Icon 1
+            <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-cyan-500 rounded-xl flex items-center justify-center">
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+            </div>,
+            // Icon 2
+            <div className="w-12 h-12 bg-gradient-to-r from-pink-500 to-rose-500 rounded-xl flex items-center justify-center">
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth={2} />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12l2 2 4-4" />
+              </svg>
+            </div>,
+            // Icon 3
+            <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center">
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <rect x="4" y="4" width="16" height="16" rx="4" stroke="currentColor" strokeWidth={2} />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6" />
+              </svg>
+            </div>,
+          ];
+          return (
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+              {weWorkWith?.cards.map((audience: any, index: any) => {
+                // Use default icon if audience.icon is empty/undefined/null
+                const iconToShow =
+                  audience.icon
+                    ? audience.icon
+                    : defaultIcons[index % defaultIcons.length];
+                return (
+                  <div
+                    key={index}
+                    className="about-animate opacity-0 transform translate-y-4 bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 group border border-gray-200 dark:border-gray-700"
+                  >
+                    <div className="mb-6 transform group-hover:scale-110 transition-transform duration-300">
+                      {iconToShow}
                     </div>
-                    <span className="text-sm text-gray-600 dark:text-gray-400">{benefit}</span>
+                    <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-4 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors duration-300">
+                      {audience.title}
+                    </h4>
+                    <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">{audience.description}</p>
                   </div>
-                ))}
-              </div>
+                );
+              })}
             </div>
-          ))}
-        </div>
+          );
+        })()}
 
         {/* Mission Statement */}
         <div className="about-animate opacity-0 transform translate-y-4 bg-gradient-to-r from-green-500 to-cyan-500 rounded-3xl p-8 md:p-12 text-white text-center">
           <div className="max-w-4xl mx-auto">
-            <h3 className="text-3xl md:text-4xl font-bold mb-6">Our Mission</h3>
+            <h3 className="text-3xl md:text-4xl font-bold mb-6">{ourMission?.title}</h3>
             <p className="text-xl text-green-100 leading-relaxed mb-8">
-              To democratize access to premium advertising platforms and expert knowledge, enabling businesses of all
+              {/* To democratize access to premium advertising platforms and expert knowledge, enabling businesses of all
               sizes to compete effectively in the digital marketplace. We believe great advertising should be
-              accessible, transparent, and results-driven.
+              accessible, transparent, and results-driven. */}
+              {ourMission?.decoration}
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <div className="text-2xl font-bold mb-2">Transparency</div>
-                <div className="text-green-100 text-sm">Clear pricing, honest reporting, no hidden fees</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold mb-2">Expertise</div>
-                <div className="text-green-100 text-sm">Certified specialists with proven track records</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold mb-2">Innovation</div>
-                <div className="text-green-100 text-sm">Cutting-edge tools and emerging platform access</div>
-              </div>
+              {ourMission?.cards?.map((card: any, index: any) => (
+                <div className="text-center" key={index}>
+                  <div className="text-2xl font-bold mb-2">{card?.title}</div>
+                  <div className="text-green-100 text-sm">{card?.description}</div>
+                </div>
+              ))}
             </div>
+
+
+
+
           </div>
         </div>
       </div>

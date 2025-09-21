@@ -3,7 +3,46 @@
 import { useEffect, useRef } from "react"
 import { useLanguage } from "../hooks/useLanguage"
 
-export const PlatformShowcase = () => {
+// Default icons for fallback
+const defaultIcons = [
+  // Multi-Platform Targeting
+  (
+    <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-cyan-500 rounded-xl flex items-center justify-center">
+      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+    </div>
+  ),
+  // AI-Powered Optimization
+  (
+    <div className="w-12 h-12 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-xl flex items-center justify-center">
+      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M12 2.25a9.75 9.75 0 109.75 9.75A9.75 9.75 0 0012 2.25z"
+        />
+      </svg>
+    </div>
+  ),
+  // Lightning Fast Setup
+  (
+    <div className="w-12 h-12 bg-gradient-to-r from-teal-500 to-green-500 rounded-xl flex items-center justify-center">
+      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+      </svg>
+    </div>
+  ),
+]
+
+// The main PlatformShowcase component
+export const PlatformShowcase = ({ multiPlatform }: any) => {
   const { t, isRTL } = useLanguage()
   const sectionRef = useRef<HTMLElement>(null)
 
@@ -31,55 +70,7 @@ export const PlatformShowcase = () => {
     return () => observer.disconnect()
   }, [])
 
-  const platformFeatures = [
-    {
-      icon: (
-        <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-cyan-500 rounded-2xl flex items-center justify-center">
-          <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-        </div>
-      ),
-      title: "Multi-Platform Targeting",
-      description:
-        "Run synchronized campaigns across Meta, TikTok, and Telegram with unified audience targeting and budget optimization.",
-    },
-    {
-      icon: (
-        <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-2xl flex items-center justify-center">
-          <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M12 2.25a9.75 9.75 0 109.75 9.75A9.75 9.75 0 0012 2.25z"
-            />
-          </svg>
-        </div>
-      ),
-      title: "AI-Powered Optimization",
-      description:
-        "Our intelligent algorithms automatically optimize your ad spend across platforms to maximize ROI and reach your target audience effectively.",
-    },
-    {
-      icon: (
-        <div className="w-16 h-16 bg-gradient-to-r from-teal-500 to-green-500 rounded-2xl flex items-center justify-center">
-          <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-          </svg>
-        </div>
-      ),
-      title: "Lightning Fast Setup",
-      description:
-        "Launch your campaigns in under 5 minutes with our streamlined interface. Pay securely with card or invoice - no hidden fees.",
-    },
-  ]
-
+  // Platform badges
   const platformBadges = [
     {
       text: "Minimum budget - $100",
@@ -98,10 +89,76 @@ export const PlatformShowcase = () => {
     },
   ]
 
+  // Fallback for cards if not present
+  const cards = multiPlatform?.cards && Array.isArray(multiPlatform.cards)
+    ? multiPlatform.cards
+    : [
+        {
+          icon: defaultIcons[0],
+          title: "Multi-Platform Targeting",
+          description: "Reach your audience across Meta, TikTok, and Telegram with our unified advertising platform.",
+        },
+        {
+          icon: defaultIcons[1],
+          title: "AI-Powered Optimization",
+          description: "Advanced targeting meets simplified management for unprecedented results.",
+        },
+        {
+          icon: defaultIcons[2],
+          title: "Lightning Fast Setup",
+          description: "Get started in minutes and launch campaigns faster than ever before.",
+        },
+      ]
+
+  // If cards from multiPlatform are missing icon, use defaultIcons
+  const platformFeatures = cards.map((card: any, idx: number) => ({
+    icon: card.icon || defaultIcons[idx % defaultIcons.length],
+    title: card.title || `Feature ${idx + 1}`,
+    description: card.description || "",
+  }))
+
+  // Stats section (can be customized via multiPlatform.stats if provided)
+  const stats = multiPlatform?.stats && Array.isArray(multiPlatform.stats)
+    ? multiPlatform.stats
+    : [
+        {
+          value: "250%",
+          label: "Average ROI Increase",
+          color: "text-green-600 dark:text-green-400",
+        },
+        {
+          value: "5M+",
+          label: "People Reached Monthly",
+          color: "text-cyan-600 dark:text-cyan-400",
+        },
+        {
+          value: "48h",
+          label: "Average Setup Time",
+          color: "text-teal-600 dark:text-teal-400",
+        },
+        {
+          value: "99.9%",
+          label: "Platform Uptime",
+          color: "text-blue-600 dark:text-blue-400",
+        },
+      ]
+
+  // CTA section (can be customized via multiPlatform.cta if provided)
+  const cta = multiPlatform?.cta || {
+    primary: {
+      label: "Start Your Campaign",
+      onClick: () => {},
+    },
+    secondary: {
+      label: "Learn More",
+      onClick: () => {},
+    },
+  }
+
   return (
     <section ref={sectionRef} className="py-20 bg-white dark:bg-gray-900 relative overflow-hidden">
       {/* Background decoration */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 right-20 w-64 h-64 bg-gradient-to-r from-green-400/20 to-cyan-400/20 rounded-full filter blur-3xl"></div>
         <div className="absolute bottom-20 left-20 w-64 h-64 bg-gradient-to-r from-cyan-400/20 to-blue-400/20 rounded-full filter blur-3xl"></div>
       </div>
@@ -111,14 +168,12 @@ export const PlatformShowcase = () => {
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
             <span className="bg-gradient-to-r from-green-500 to-cyan-500 bg-clip-text text-transparent">
-              Multi-Platform Advertising
+              {multiPlatform?.title || "Multi-Platform Advertising"}
             </span>
-            <br />
-            <span className="text-gray-700 dark:text-gray-300">for Maximum Impact</span>
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
-            Reach your audience across Meta, TikTok, and Telegram with our unified advertising platform. Advanced
-            targeting meets simplified management for unprecedented results.
+            {multiPlatform?.description ||
+              "Reach your audience across Meta, TikTok, and Telegram with our unified advertising platform. Advanced targeting meets simplified management for unprecedented results."}
           </p>
         </div>
 
@@ -139,7 +194,7 @@ export const PlatformShowcase = () => {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
           {/* Feature Cards */}
           <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-8">
-            {platformFeatures.map((feature, index) => (
+            {platformFeatures.map((feature: any, index: any) => (
               <div
                 key={index}
                 className="feature-card opacity-0 transform translate-y-8 bg-gray-50 dark:bg-gray-800 rounded-2xl p-8 hover:shadow-xl transition-all duration-500 group hover:bg-white dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700"
@@ -159,7 +214,7 @@ export const PlatformShowcase = () => {
           <div className="lg:col-span-1">
             <div className="bg-gradient-to-br from-gray-900 to-gray-800 dark:from-gray-200 dark:to-gray-400 rounded-2xl p-8 text-gray-500 relative overflow-hidden shadow-2xl">
               {/* Background pattern */}
-              <div className="absolute inset-0 opacity-10">
+              <div className="absolute inset-0 opacity-10 pointer-events-none">
                 <div className="absolute top-4 right-4 w-8 h-8 border-2 border-green-400 rounded-full"></div>
                 <div className="absolute top-12 right-12 w-4 h-4 bg-cyan-400 rounded-full"></div>
                 <div className="absolute bottom-8 left-4 w-6 h-6 border-2 border-teal-400 rounded-full"></div>
@@ -167,9 +222,12 @@ export const PlatformShowcase = () => {
               </div>
 
               <div className="relative z-10">
-                <div className="text-2xl font-bold text-green-400 dark:text-green-500 mb-2">3x Better ROI</div>
+                <div className="text-2xl font-bold text-green-400 dark:text-green-500 mb-2">
+                  {multiPlatform?.promoTitle || "3x Better ROI"}
+                </div>
                 <p className="text-gray-300 dark:text-gray-700 mb-6 text-sm leading-relaxed font-semibold">
-                  Our clients see 3x better return on ad spend compared to single-platform campaigns
+                  {multiPlatform?.promoDescription ||
+                    "Our clients see 3x better return on ad spend compared to single-platform campaigns"}
                 </p>
 
                 {/* Platform icons */}
@@ -219,12 +277,20 @@ export const PlatformShowcase = () => {
                 {/* Avatar placeholder */}
                 <div className="flex items-center space-x-3">
                   <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-cyan-500 rounded-full flex items-center justify-center">
-                    <span className="text-white font-bold">GH</span>
+                    <span className="text-white font-bold">
+                      {multiPlatform?.promoAvatarInitials || "GH"}
+                    </span>
                   </div>
                   <div>
-                    <div className="text-sm font-semibold text-gray-800 dark:text-gray-900">Biggapon BD Expert</div>
-                    <div className="text-sm font-semibold">Biggapon BD Expert</div>
-                    <div className="text-xs text-gray-400">Campaign Specialist</div>
+                    <div className="text-sm font-semibold text-gray-800 dark:text-gray-900">
+                      {multiPlatform?.promoAvatarName || "Biggapon BD Expert"}
+                    </div>
+                    <div className="text-sm font-semibold">
+                      {multiPlatform?.promoAvatarCompany || "Biggapon BD Expert"}
+                    </div>
+                    <div className="text-xs text-gray-400">
+                      {multiPlatform?.promoAvatarRole || "Campaign Specialist"}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -234,31 +300,27 @@ export const PlatformShowcase = () => {
 
         {/* Stats Section */}
         <div className="mt-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          <div className="text-center">
-            <div className="text-4xl font-bold text-green-600 dark:text-green-400 mb-2">250%</div>
-            <div className="text-gray-600 dark:text-gray-400">Average ROI Increase</div>
-          </div>
-          <div className="text-center">
-            <div className="text-4xl font-bold text-cyan-600 dark:text-cyan-400 mb-2">5M+</div>
-            <div className="text-gray-600 dark:text-gray-400">People Reached Monthly</div>
-          </div>
-          <div className="text-center">
-            <div className="text-4xl font-bold text-teal-600 dark:text-teal-400 mb-2">48h</div>
-            <div className="text-gray-600 dark:text-gray-400">Average Setup Time</div>
-          </div>
-          <div className="text-center">
-            <div className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">99.9%</div>
-            <div className="text-gray-600 dark:text-gray-400">Platform Uptime</div>
-          </div>
+          {stats.map((stat: any, idx: any) => (
+            <div className="text-center" key={idx}>
+              <div className={`text-4xl font-bold mb-2 ${stat.color}`}>{stat.value}</div>
+              <div className="text-gray-600 dark:text-gray-400">{stat.label}</div>
+            </div>
+          ))}
         </div>
 
         {/* CTA Section */}
         <div className="mt-16 text-center">
-          <button className="bg-gradient-to-r from-green-500 to-cyan-500 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-green-600 hover:to-cyan-600 transition-all duration-300 transform hover:scale-105 hover:shadow-lg mr-4">
-            Start Your Campaign
+          <button
+            className="bg-gradient-to-r from-green-500 to-cyan-500 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-green-600 hover:to-cyan-600 transition-all duration-300 transform hover:scale-105 hover:shadow-lg mr-4"
+            onClick={cta.primary.onClick}
+          >
+            {cta.primary.label}
           </button>
-          <button className="border-2 border-green-500 text-green-600 dark:text-green-400 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-green-50 dark:hover:bg-green-900/20 transition-all duration-300">
-            Learn More
+          <button
+            className="border-2 border-green-500 text-green-600 dark:text-green-400 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-green-50 dark:hover:bg-green-900/20 transition-all duration-300"
+            onClick={cta.secondary.onClick}
+          >
+            {cta.secondary.label}
           </button>
         </div>
       </div>

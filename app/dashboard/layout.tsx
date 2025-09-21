@@ -18,7 +18,7 @@ export default function DashboardRootLayout({
 
   useEffect(() => {
     const token = getFromLocalStorage("adsToken");
-    console.log("token", token);
+    // console.log("token", token);
     if (!token) {
       redirect("/sign-in");
     } else {

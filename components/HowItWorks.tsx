@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import { motion, useInView } from "framer-motion"
 import { useLanguage } from "../hooks/useLanguage"
 
-export const HowItWorks = () => {
+export const HowItWorks = ({howToGetStarted}: any) => {
   const { t, isRTL } = useLanguage()
   const sectionRef = useRef<HTMLElement>(null)
   const isInViewport = useInView(sectionRef, { once: true, margin: "-100px" })
@@ -130,6 +130,7 @@ export const HowItWorks = () => {
     },
   }
 
+
   return (
     <section ref={sectionRef} className="py-20 bg-gray-50 dark:bg-gray-800/50 relative overflow-hidden">
       {/* Background decoration */}
@@ -149,14 +150,14 @@ export const HowItWorks = () => {
         >
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
             <span className="bg-gradient-to-r from-green-500 to-cyan-500 bg-clip-text text-transparent">
-              How to Get Started
+             {howToGetStarted?.title}
             </span>
-            <br />
-            <span className="text-gray-700 dark:text-gray-300">with Biggapon BD?</span>
+            
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
-            Launch your first multi-platform advertising campaign in just 4 simple steps. Our streamlined process gets
-            you from signup to success in minutes, not hours.
+            {/* Launch your first multi-platform advertising campaign in just 4 simple steps. Our streamlined process gets
+            you from signup to success in minutes, not hours. */}
+            {howToGetStarted?.description}
           </p>
         </motion.div>
 
@@ -226,29 +227,47 @@ export const HowItWorks = () => {
 
                   {/* Content */}
                   <div className="text-center">
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{step.title}</h3>
-                    <p className="text-sm text-green-600 dark:text-green-400 font-medium mb-4">{step.subtitle}</p>
-                    <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">{step.description}</p>
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+                      {howToGetStarted?.cards?.[index]?.title || step.title}
+                    </h3>
+                    <p className="text-sm text-green-600 dark:text-green-400 font-medium mb-4">
+                      {/* Subtitle is not present in dynamic data, so omit or use a default if needed */}
+                      {(() => {
+                        // Optionally, you can provide a default subtitle for each step
+                        const defaultSubtitles = [
+                          "Quick & Free Setup",
+                          "Secure Account Setup",
+                          "Flexible Payment Options",
+                          "Expert-Guided Success"
+                        ];
+                        return defaultSubtitles[index] || "";
+                      })()}
+                    </p>
+                    <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
+                      {howToGetStarted?.cards?.[index]?.description || step.description}
+                    </p>
 
-                    {/* Features */}
-                    <div className="space-y-2">
-                      {step.features.map((feature, featureIndex) => (
-                        <motion.div
-                          key={featureIndex}
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 0.1 * featureIndex }}
-                          className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400"
-                        >
-                          <div className="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
-                            <svg className="w-2 h-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                            </svg>
-                          </div>
-                          <span>{feature}</span>
-                        </motion.div>
-                      ))}
-                    </div>
+                    {/* Features: Not present in dynamic data, so only show if available */}
+                    {/* {step.features && step.features.length > 0 && (
+                      <div className="space-y-2">
+                        {step.features.map((feature, featureIndex) => (
+                          <motion.div
+                            key={featureIndex}
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.1 * featureIndex }}
+                            className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400"
+                          >
+                            <div className="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
+                              <svg className="w-2 h-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                              </svg>
+                            </div>
+                            <span>{feature}</span>
+                          </motion.div>
+                        ))}
+                      </div>
+                    )} */}
                   </div>
                 </div>
 

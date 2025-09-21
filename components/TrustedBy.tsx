@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react"
 import { useLanguage } from "../hooks/useLanguage"
 
-export const TrustedBy = () => {
+export const TrustedBy = ({ trustedByLeading }: any) => {
   const { t, isRTL } = useLanguage()
   const sectionRef = useRef<HTMLElement>(null)
 
@@ -174,9 +174,14 @@ export const TrustedBy = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-12">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4">{t("trusted")}</h2>
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4">
+            {/* {t("trusted")} */}
+            {trustedByLeading?.title}
+
+          </h2>
           <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Join thousands of businesses that trust Biggapon BD to grow their presence across social media platforms
+            {/* Join thousands of businesses that trust Biggapon BD to grow their presence across social media platforms */}
+            {trustedByLeading?.description}
           </p>
         </div>
 
@@ -217,10 +222,11 @@ export const TrustedBy = () => {
         {/* Testimonial Quote */}
         <div className="mt-16 text-center">
           <blockquote className="text-xl md:text-2xl font-medium text-gray-900 dark:text-white italic max-w-4xl mx-auto">
-            "Biggapon BD transformed our social media advertising strategy. We've seen a 300% increase in engagement across
-            all platforms."
+            {/* "Biggapon BD transformed our social media advertising strategy. We've seen a 300% increase in engagement across
+            all platforms." */}
+            {trustedByLeading?.adminQuote}
           </blockquote>
-          <div className="mt-6 flex items-center justify-center space-x-4">
+          {/* <div className="mt-6 flex items-center justify-center space-x-4">
             <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-cyan-500 rounded-full flex items-center justify-center">
               <span className="text-white font-bold">JD</span>
             </div>
@@ -228,7 +234,7 @@ export const TrustedBy = () => {
               <div className="font-semibold text-gray-900 dark:text-white">John Davis</div>
               <div className="text-gray-600 dark:text-gray-400 text-sm">CEO, TechFlow Solutions</div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>

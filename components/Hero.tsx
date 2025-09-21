@@ -5,7 +5,7 @@ import { useLanguage } from "../hooks/useLanguage"
 import { FaFacebookF, FaFacebookSquare, FaTiktok } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa";
 
-export const Hero = () => {
+export const Hero = ({promoteYourBusiness}: any) => {
   const { t, isRTL } = useLanguage()
   const heroRef = useRef<HTMLElement>(null)
 
@@ -47,11 +47,15 @@ export const Hero = () => {
             <div className="space-y-6">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white leading-tight">
                 <span className="bg-gradient-to-r from-green-500 to-cyan-500 bg-clip-text text-transparent">
-                  {t("hero.title")}
+                  {/* {t("hero.title")} */}
+                  {promoteYourBusiness?.title}
                 </span>
               </h1>
 
-              <p className="text-xl text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl">{t("hero.subtitle")}</p>
+              <p className="text-xl text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl">
+                {/* {t("hero.subtitle")} */}
+                {promoteYourBusiness?.description}
+                </p>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">

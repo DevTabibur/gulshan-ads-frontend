@@ -3,7 +3,42 @@
 import { useEffect, useRef } from "react"
 import { useLanguage } from "../hooks/useLanguage"
 
-export const MetaShowcase = () => {
+// Default icons for cards (order matters)
+const defaultIcons = [
+  (
+    <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center">
+      <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+        />
+      </svg>
+    </div>
+  ),
+  (
+    <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-2xl flex items-center justify-center">
+      <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+        />
+      </svg>
+    </div>
+  ),
+  (
+    <div className="w-16 h-16 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-2xl flex items-center justify-center">
+      <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+      </svg>
+    </div>
+  ),
+]
+
+export const MetaShowcase = ({ metaYourGateway }: any) => {
   const { t, isRTL } = useLanguage()
   const sectionRef = useRef<HTMLElement>(null)
 
@@ -13,7 +48,7 @@ export const MetaShowcase = () => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const cards = entry.target.querySelectorAll(".meta-card")
-            cards.forEach((card, index) => {
+            cards.forEach((card: any, index: number) => {
               setTimeout(() => {
                 card.classList.add("animate-fade-in-up")
               }, index * 150)
@@ -31,55 +66,7 @@ export const MetaShowcase = () => {
     return () => observer.disconnect()
   }, [])
 
-  const metaFeatures = [
-    {
-      icon: (
-        <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center">
-          <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-            />
-          </svg>
-        </div>
-      ),
-      title: "Advanced Security",
-      description:
-        "Premium verified accounts with multi-layer protection, creative pre-approval, and 24/7 monitoring to prevent ad blocks and account suspensions.",
-    },
-    {
-      icon: (
-        <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-2xl flex items-center justify-center">
-          <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-            />
-          </svg>
-        </div>
-      ),
-      title: "Meta Certified Experts",
-      description:
-        "Our team of Meta Blueprint certified specialists provides instant support, campaign optimization, and strategic guidance for maximum ROI.",
-    },
-    {
-      icon: (
-        <div className="w-16 h-16 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-2xl flex items-center justify-center">
-          <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-          </svg>
-        </div>
-      ),
-      title: "Smart Automation",
-      description:
-        "AI-powered audience targeting, automatic bid optimization, and intelligent budget allocation across Facebook and Instagram campaigns.",
-    },
-  ]
-
+  // Benefits for the badges section
   const metaBenefits = [
     {
       text: "Tax-optimized billing",
@@ -97,6 +84,7 @@ export const MetaShowcase = () => {
       color: "from-teal-500 to-cyan-500",
     },
   ]
+
 
   return (
     <section ref={sectionRef} className="py-20 bg-gray-50 dark:bg-gray-800/50 relative overflow-hidden">
@@ -124,13 +112,12 @@ export const MetaShowcase = () => {
         {/* Header Section */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-            <span className="bg-gradient-to-r from-green-500 to-cyan-500 bg-clip-text text-transparent">Meta:</span>
-            <br />
-            <span className="text-gray-700 dark:text-gray-300">Your Gateway to Social Success</span>
+            <span className="bg-gradient-to-r from-green-500 to-cyan-500 bg-clip-text text-transparent">
+              {metaYourGateway?.title}
+            </span>
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
-            Leverage the power of Facebook and Instagram advertising with Biggapon BD's premium Meta solutions. Reach
-            billions of users with precision targeting and expert campaign management.
+            {metaYourGateway?.description}
           </p>
         </div>
 
@@ -148,21 +135,55 @@ export const MetaShowcase = () => {
         </div>
 
         {/* Feature Cards */}
+        {/*
+          Use 3 different default icons for the feature cards if feature.icon is missing.
+        */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-          {metaFeatures.map((feature, index) => (
-            <div
-              key={index}
-              className="meta-card opacity-0 transform translate-y-8 bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 group border border-gray-200 dark:border-gray-700"
-            >
-              <div className="mb-6 transform group-hover:scale-110 transition-transform duration-300">
-                {feature.icon}
+          {metaYourGateway?.cards?.map((feature: any, index: number) => {
+            // Define 3 different default icons
+            const defaultIcons = [
+              // Icon 1
+              <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-cyan-500 rounded-xl flex items-center justify-center">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </div>,
+              // Icon 2
+              <div className="w-12 h-12 bg-gradient-to-r from-pink-500 to-rose-500 rounded-xl flex items-center justify-center">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth={2} />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12l2 2 4-4" />
+                </svg>
+              </div>,
+              // Icon 3
+              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <rect x="4" y="4" width="16" height="16" rx="4" stroke="currentColor" strokeWidth={2} />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6" />
+                </svg>
+              </div>,
+            ];
+            const iconToShow = feature.icon ? feature.icon : defaultIcons[index % defaultIcons.length];
+            return (
+              <div
+                key={index}
+                className="meta-card opacity-0 transform translate-y-8 bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 group border border-gray-200 dark:border-gray-700"
+              >
+                <div className="mb-6 transform group-hover:scale-110 transition-transform duration-300">
+                  {iconToShow}
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors duration-300">
+                  {feature.title}
+                </h3>
+                <p className="text-gray-600 dark:text-gray-400 leading-relaxed">{feature.description}</p>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors duration-300">
-                {feature.title}
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400 leading-relaxed">{feature.description}</p>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Performance Stats */}

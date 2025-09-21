@@ -1,118 +1,180 @@
+import { getFromLocalStorage } from "@/lib/local-storage";
 import axios from "axios";
 
-const API_BASE_URL = `http://localhost:5000/api/v1`;
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+const HOME_PAGE_BASE_URL = `${API_BASE_URL}/home-page`;
 
-export const createHeroSection = async (data: any) => {
+// Get all home page sections
+export const getAllHomePageSections = async () => {
     try {
-        const response = await axios.post(`${API_BASE_URL}/hero-section`, data);
+        const response = await axios.get(`${HOME_PAGE_BASE_URL}`,
+           
+        );
         return response.data;
     } catch (error) {
-        console.error('Error creating hero section:', error);
+        console.error("Error getting all home page sections:", error);
         return null;
     }
 };
 
-export const getHeroSection = async () => {
+
+
+// Create/Update Promote Your Business section
+export const createOrUpdatePromoteYourBusiness = async (data: { title: string; description: string }) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/hero-section`);
+       
+        const response = await axios.post(
+            `${HOME_PAGE_BASE_URL}/promote-your-business`,
+            data,
+            {
+                headers: {
+                    "Authorization": `Bearer ${getFromLocalStorage("adsToken")}`
+                }
+            }
+        );
         return response.data;
     } catch (error) {
-        console.error('Error getting hero section:', error);
+        console.error("Error creating/updating Promote Your Business section:", error);
         return null;
     }
 };
 
-export const updateHeroSection = async (data: any) => {
+// Create/Update Trusted by Leading section
+export const createOrUpdateTrustedByLeading = async (data: { title: string; description: string; adminQuote: string }) => {
     try {
-        const response = await axios.patch(`${API_BASE_URL}/hero-section`, data);
+        const token = getFromLocalStorage("adsToken");
+        const response = await axios.post(
+            `${HOME_PAGE_BASE_URL}/trusted-by-leading`,
+            data,
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        );
         return response.data;
     } catch (error) {
-        console.error('Error updating hero section:', error);
+        console.error("Error creating/updating Trusted by Leading section:", error);
         return null;
     }
 };
 
-export const deleteHeroSection = async () => {
+// Create/Update Multi Platform section
+export const createOrUpdateMultiPlatform = async (data: { title: string; description: string; cards: any[] }) => {
     try {
-        const response = await axios.delete(`${API_BASE_URL}/hero-section`);
+        const token = getFromLocalStorage("adsToken");
+        const response = await axios.post(
+            `${HOME_PAGE_BASE_URL}/multi-platform`,
+            data,
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        );
         return response.data;
     } catch (error) {
-        console.error('Error deleting hero section:', error);
+        console.error("Error creating/updating Multi Platform section:", error);
         return null;
     }
 };
 
-// TRUST SECTION
-
-
-// Trust Section API functions
-
-export const createTrustSection = async (data: any) => {
+// Create/Update Meta Your Gateway section
+export const createOrUpdateMetaYourGateway = async (data: { title: string; description: string; cards: any[] }) => {
     try {
-        const response = await axios.post(`${API_BASE_URL}/trust-section`, data);
+        const token = getFromLocalStorage("adsToken");
+        const response = await axios.post(
+            `${HOME_PAGE_BASE_URL}/meta-your-gateway`,
+            data,
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        );
         return response.data;
     } catch (error) {
-        console.error('Error creating trust section:', error);
+        console.error("Error creating/updating Meta Your Gateway section:", error);
         return null;
     }
 };
 
-export const getTrustSection = async () => {
+// Create/Update About Biggapon BD section
+export const createOrUpdateAboutBiggaponBd = async (data: { title: string; description: string }) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/trust-section`);
+        const token = getFromLocalStorage("adsToken");
+        const response = await axios.post(
+            `${HOME_PAGE_BASE_URL}/about-biggapon-bd`,
+            data,
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        );
         return response.data;
     } catch (error) {
-        console.error('Error getting trust section:', error);
+        console.error("Error creating/updating About Biggapon BD section:", error);
         return null;
     }
 };
 
-export const updateTrustSection = async (data: any) => {
+// Create/Update We Work With section
+export const createOrUpdateWeWorkWith = async (data: { title: string; description: string; cards: any[] }) => {
     try {
-        const response = await axios.patch(`${API_BASE_URL}/trust-section`, data);
+        const token = getFromLocalStorage("adsToken");
+        const response = await axios.post(
+            `${HOME_PAGE_BASE_URL}/we-work-with`,
+            data,
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        );
         return response.data;
     } catch (error) {
-        console.error('Error updating trust section:', error);
+        console.error("Error creating/updating We Work With section:", error);
         return null;
     }
 };
 
-export const updateTrustedCompanies = async (trustedCompanies: any[]) => {
+// Create/Update Our Mission section
+export const createOrUpdateOurMission = async (data: { title: string; description: string; cards: any[] }) => {
     try {
-        const response = await axios.patch(`${API_BASE_URL}/trust-section/companies`, { trustedCompanies });
+        const token = getFromLocalStorage("adsToken");
+        const response = await axios.post(
+            `${HOME_PAGE_BASE_URL}/our-mission`,
+            data,
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        );
         return response.data;
     } catch (error) {
-        console.error('Error updating trusted companies:', error);
+        console.error("Error creating/updating Our Mission section:", error);
         return null;
     }
 };
 
-export const updateStatistics = async (statistics: any[]) => {
+// Create/Update How to Get Started section
+export const createOrUpdateHowToGetStarted = async (data: { title: string; description: string; cards: any[] }) => {
     try {
-        const response = await axios.patch(`${API_BASE_URL}/trust-section/statistics`, { statistics });
+        const token = getFromLocalStorage("adsToken");
+        const response = await axios.post(
+            `${HOME_PAGE_BASE_URL}/how-to-get-started`,
+            data,
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        );
         return response.data;
     } catch (error) {
-        console.error('Error updating statistics:', error);
-        return null;
-    }
-};
-
-export const updateFeaturedTestimonial = async (featuredTestimonial: any) => {
-    try {
-        const response = await axios.patch(`${API_BASE_URL}/trust-section/testimonial`, { featuredTestimonial });
-        return response.data;
-    } catch (error) {
-        console.error('Error updating featured testimonial:', error);
-        return null;
-    }
-};
-
-export const deleteTrustSection = async () => {
-    try {
-        const response = await axios.delete(`${API_BASE_URL}/trust-section`);
-        return response.data;
-    } catch (error) {
-        console.error('Error deleting trust section:', error);
+        console.error("Error creating/updating How to Get Started section:", error);
         return null;
     }
 };

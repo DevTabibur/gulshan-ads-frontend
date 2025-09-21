@@ -1,4 +1,5 @@
 
+
 "use client"
 import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import {
@@ -11,11 +12,306 @@ import { Formik, Form, Field, FieldArray, ErrorMessage, FormikHelpers } from "fo
 import * as Yup from "yup";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Breadcrumb } from "@/components/dashboard/Breadcrumb";
+import { createOrUpdateAboutBiggaponBd, createOrUpdateHowToGetStarted, createOrUpdateMetaYourGateway, createOrUpdateMultiPlatform, createOrUpdateOurMission, createOrUpdatePromoteYourBusiness, createOrUpdateTrustedByLeading, createOrUpdateWeWorkWith, getAllHomePageSections } from "@/app/api/homepage/homepage.Api";
+import { Loader } from "lucide-react";
+import toast from "react-hot-toast";
+
+// // Section configs for all 9 sections
+// const sectionConfigs = [
+//     {
+//         key: "promote",
+//         label: "Promote Your Business Section",
+//         fields: [
+//             { name: "title", label: "Title", type: "text" },
+//             { name: "description", label: "Description", type: "textarea" },
+//         ],
+//         initialValues: { title: "abuld", description: "abuld" },
+//         validationSchema: Yup.object({
+//             title: Yup.string().required("Title is required"),
+//             description: Yup.string().required("Description is required"),
+//         }),
+//     },
+//     {
+//         key: "trusted",
+//         label: "Trusted By Leading Section",
+//         fields: [
+//             { name: "title", label: "Title", type: "text" },
+//             { name: "description", label: "Description", type: "textarea" },
+//             { name: "adminQuotte", label: "Admin Quote", type: "textarea" },
+//         ],
+//         initialValues: { title: "", description: "", adminQuotte: "" },
+//         validationSchema: Yup.object({
+//             title: Yup.string().required("Title is required"),
+//             description: Yup.string().required("Description is required"),
+//             adminQuotte: Yup.string().required("Admin Quote is required"),
+//         }),
+//     },
+//     {
+//         key: "multiPlatform",
+//         label: "Multi Platform Section",
+//         fields: [
+//             { name: "title", label: "Title", type: "text" },
+//             { name: "description", label: "Description", type: "textarea" },
+//             {
+//                 name: "cards",
+//                 label: "Cards",
+//                 type: "cards",
+//                 cardFields: [
+//                     { name: "icon", label: "Icon", type: "text" },
+//                     { name: "title", label: "Card Title", type: "text" },
+//                     { name: "description", label: "Card Description", type: "textarea" },
+//                 ],
+//             },
+//         ],
+//         initialValues: {
+//             title: "",
+//             description: "",
+//             cards: [{ icon: "", title: "", description: "" }],
+//         },
+//         validationSchema: Yup.object({
+//             title: Yup.string().required("Title is required"),
+//             description: Yup.string().required("Description is required"),
+//             cards: Yup.array()
+//                 .of(
+//                     Yup.object({
+//                         icon: Yup.string().required("Icon is required"),
+//                         title: Yup.string().required("Card title is required"),
+//                         description: Yup.string().required("Card description is required"),
+//                     })
+//                 )
+//                 .min(1, "At least one card is required"),
+//         }),
+//     },
+//     {
+//         key: "metaGateway",
+//         label: "Meta: Your Gateway Section",
+//         fields: [
+//             { name: "title", label: "Title", type: "text" },
+//             { name: "description", label: "Description", type: "textarea" },
+//             {
+//                 name: "cards",
+//                 label: "Cards",
+//                 type: "cards",
+//                 cardFields: [
+//                     { name: "icon", label: "Icon", type: "text" },
+//                     { name: "title", label: "Card Title", type: "text" },
+//                     { name: "description", label: "Card Description", type: "textarea" },
+//                 ],
+//             },
+//         ],
+//         initialValues: {
+//             title: "",
+//             description: "",
+//             cards: [{ icon: "", title: "", description: "" }],
+//         },
+//         validationSchema: Yup.object({
+//             title: Yup.string().required("Title is required"),
+//             description: Yup.string().required("Description is required"),
+//             cards: Yup.array()
+//                 .of(
+//                     Yup.object({
+//                         icon: Yup.string().required("Icon is required"),
+//                         title: Yup.string().required("Card title is required"),
+//                         description: Yup.string().required("Card description is required"),
+//                     })
+//                 )
+//                 .min(1, "At least one card is required"),
+//         }),
+//     },
+//     {
+//         key: "about",
+//         label: "About Biggapon Bd Section",
+//         fields: [
+//             { name: "title", label: "Title", type: "text" },
+//             { name: "description", label: "Description", type: "textarea" },
+//         ],
+//         initialValues: { title: "", description: "" },
+//         validationSchema: Yup.object({
+//             title: Yup.string().required("Title is required"),
+//             description: Yup.string().required("Description is required"),
+//         }),
+//     },
+//     {
+//         key: "weWorkWith",
+//         label: "We Work With Section",
+//         fields: [
+//             { name: "title", label: "Title", type: "text" },
+//             { name: "description", label: "Description", type: "textarea" },
+//             {
+//                 name: "cards",
+//                 label: "Cards",
+//                 type: "cards",
+//                 cardFields: [
+//                     { name: "icon", label: "Icon", type: "text" },
+//                     { name: "title", label: "Card Title", type: "text" },
+//                     { name: "description", label: "Card Description", type: "textarea" },
+//                 ],
+//             },
+//         ],
+//         initialValues: {
+//             title: "",
+//             description: "",
+//             cards: [{ icon: "", title: "", description: "" }],
+//         },
+//         validationSchema: Yup.object({
+//             title: Yup.string().required("Title is required"),
+//             description: Yup.string().required("Description is required"),
+//             cards: Yup.array()
+//                 .of(
+//                     Yup.object({
+//                         icon: Yup.string().required("Icon is required"),
+//                         title: Yup.string().required("Card title is required"),
+//                         description: Yup.string().required("Card description is required"),
+//                     })
+//                 )
+//                 .min(1, "At least one card is required"),
+//         }),
+//     },
+//     {
+//         key: "ourMission",
+//         label: "Our Mission Section",
+//         fields: [
+//             { name: "title", label: "Title", type: "text" },
+//             { name: "description", label: "Description", type: "textarea" },
+//             {
+//                 name: "cards",
+//                 label: "Cards",
+//                 type: "cards",
+//                 cardFields: [
+//                     { name: "title", label: "Card Title", type: "text" },
+//                     { name: "description", label: "Card Description", type: "textarea" },
+//                 ],
+//             },
+//         ],
+//         initialValues: {
+//             title: "",
+//             description: "",
+//             cards: [{ title: "", description: "" }],
+//         },
+//         validationSchema: Yup.object({
+//             title: Yup.string().required("Title is required"),
+//             description: Yup.string().required("Description is required"),
+//             cards: Yup.array()
+//                 .of(
+//                     Yup.object({
+//                         title: Yup.string().required("Card title is required"),
+//                         description: Yup.string().required("Card description is required"),
+//                     })
+//                 )
+//                 .min(1, "At least one card is required"),
+//         }),
+//     },
+//     {
+//         key: "clientSuccessStories",
+//         label: "Client Success Stories Section",
+//         fields: [],
+//         initialValues: {},
+//         validationSchema: Yup.object({}),
+//         noForm: true,
+//     },
+//     {
+//         key: "howToGetStarted",
+//         label: "How to Get Started Section",
+//         fields: [
+//             { name: "title", label: "Title", type: "text" },
+//             { name: "description", label: "Description", type: "textarea" },
+//             {
+//                 name: "cards",
+//                 label: "Cards",
+//                 type: "cards",
+//                 cardFields: [
+//                     { name: "title", label: "Card Title", type: "text" },
+//                     { name: "description", label: "Card Description", type: "textarea" },
+//                 ],
+//             },
+//         ],
+//         initialValues: {
+//             title: "",
+//             description: "",
+//             cards: [{ title: "", description: "" }],
+//         },
+//         validationSchema: Yup.object({
+//             title: Yup.string().required("Title is required"),
+//             description: Yup.string().required("Description is required"),
+//             cards: Yup.array()
+//                 .of(
+//                     Yup.object({
+//                         title: Yup.string().required("Card title is required"),
+//                         description: Yup.string().required("Card description is required"),
+//                     })
+//                 )
+//                 .min(1, "At least one card is required"),
+//         }),
+//     },
+// ];
+
+
+// Function to get initial values from fetched data
+const getInitialValuesFromData = (sectionKey: string, pageData: any) => {
+    if (!pageData) return {};
+
+    const dataMapping: { [key: string]: string } = {
+        promote: 'promoteYourBusiness',
+        trusted: 'trustedByLeading',
+        multiPlatform: 'multiPlatform',
+        metaGateway: 'metaYourGateway',
+        about: 'aboutBiggaponBd',
+        weWorkWith: 'weWorkWith',
+        ourMission: 'ourMission',
+        howToGetStarted: 'howToGetStarted'
+    };
+
+    const dataKey = dataMapping[sectionKey];
+    if (!dataKey || !pageData[dataKey]) return {};
+
+    const sectionData = pageData[dataKey];
+
+    // Handle different section structures
+    switch (sectionKey) {
+        case 'promote':
+        case 'about':
+            return {
+                title: sectionData.title || '',
+                description: sectionData.description || ''
+            };
+
+        case 'trusted':
+            return {
+                title: sectionData.title || '',
+                description: sectionData.description || '',
+                adminQuotte: sectionData.adminQuote || ''
+            };
+
+        case 'multiPlatform':
+        case 'metaGateway':
+        case 'weWorkWith':
+            return {
+                title: sectionData.title || '',
+                description: sectionData.description || '',
+                cards: sectionData.cards && sectionData.cards.length > 0
+                    ? sectionData.cards
+                    : [{ icon: '', title: '', description: '' }]
+            };
+
+        case 'ourMission':
+        case 'howToGetStarted':
+            return {
+                title: sectionData.title || '',
+                description: sectionData.description || '',
+                cards: sectionData.cards && sectionData.cards.length > 0
+                    ? sectionData.cards
+                    : [{ title: '', description: '' }]
+            };
+
+        default:
+            return {};
+    }
+};
 
 // Section configs for all 9 sections
-const sectionConfigs = [
+const getSectionConfigs = (pageData: any) => [
     {
         key: "promote",
         label: "Promote Your Business Section",
@@ -23,7 +319,7 @@ const sectionConfigs = [
             { name: "title", label: "Title", type: "text" },
             { name: "description", label: "Description", type: "textarea" },
         ],
-        initialValues: { title: "", description: "" },
+        initialValues: getInitialValuesFromData("promote", pageData),
         validationSchema: Yup.object({
             title: Yup.string().required("Title is required"),
             description: Yup.string().required("Description is required"),
@@ -37,7 +333,7 @@ const sectionConfigs = [
             { name: "description", label: "Description", type: "textarea" },
             { name: "adminQuotte", label: "Admin Quote", type: "textarea" },
         ],
-        initialValues: { title: "", description: "", adminQuotte: "" },
+        initialValues: getInitialValuesFromData("trusted", pageData),
         validationSchema: Yup.object({
             title: Yup.string().required("Title is required"),
             description: Yup.string().required("Description is required"),
@@ -61,11 +357,7 @@ const sectionConfigs = [
                 ],
             },
         ],
-        initialValues: {
-            title: "",
-            description: "",
-            cards: [{ icon: "", title: "", description: "" }],
-        },
+        initialValues: getInitialValuesFromData("multiPlatform", pageData),
         validationSchema: Yup.object({
             title: Yup.string().required("Title is required"),
             description: Yup.string().required("Description is required"),
@@ -97,11 +389,7 @@ const sectionConfigs = [
                 ],
             },
         ],
-        initialValues: {
-            title: "",
-            description: "",
-            cards: [{ icon: "", title: "", description: "" }],
-        },
+        initialValues: getInitialValuesFromData("metaGateway", pageData),
         validationSchema: Yup.object({
             title: Yup.string().required("Title is required"),
             description: Yup.string().required("Description is required"),
@@ -123,7 +411,7 @@ const sectionConfigs = [
             { name: "title", label: "Title", type: "text" },
             { name: "description", label: "Description", type: "textarea" },
         ],
-        initialValues: { title: "", description: "" },
+        initialValues: getInitialValuesFromData("about", pageData),
         validationSchema: Yup.object({
             title: Yup.string().required("Title is required"),
             description: Yup.string().required("Description is required"),
@@ -146,11 +434,7 @@ const sectionConfigs = [
                 ],
             },
         ],
-        initialValues: {
-            title: "",
-            description: "",
-            cards: [{ icon: "", title: "", description: "" }],
-        },
+        initialValues: getInitialValuesFromData("weWorkWith", pageData),
         validationSchema: Yup.object({
             title: Yup.string().required("Title is required"),
             description: Yup.string().required("Description is required"),
@@ -181,11 +465,7 @@ const sectionConfigs = [
                 ],
             },
         ],
-        initialValues: {
-            title: "",
-            description: "",
-            cards: [{ title: "", description: "" }],
-        },
+        initialValues: getInitialValuesFromData("ourMission", pageData),
         validationSchema: Yup.object({
             title: Yup.string().required("Title is required"),
             description: Yup.string().required("Description is required"),
@@ -223,11 +503,7 @@ const sectionConfigs = [
                 ],
             },
         ],
-        initialValues: {
-            title: "",
-            description: "",
-            cards: [{ title: "", description: "" }],
-        },
+        initialValues: getInitialValuesFromData("howToGetStarted", pageData),
         validationSchema: Yup.object({
             title: Yup.string().required("Title is required"),
             description: Yup.string().required("Description is required"),
@@ -402,6 +678,28 @@ const EditHomePage = () => {
     const { theme } = useTheme();
     const [activeSection, setActiveSection] = useState<string | null>(null);
 
+    const [pageData, setPageData] = useState<any>(null)
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            try {
+                // getAllHomePageSections returns the data directly, not a tuple
+                const res = await getAllHomePageSections();
+                setPageData(res?.data);
+            } catch (error) {
+                // Optionally handle error
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchData();
+    }, []);
+
+    // Get section configs with fetched data
+    const sectionConfigs = getSectionConfigs(pageData);
+
     // Responsive container classes
     // const containerClass =
     //     "w-full max-w-3xl mx-auto py-8 px-2 sm:px-4 md:px-6 lg:px-8";
@@ -416,34 +714,135 @@ const EditHomePage = () => {
 
 
     // Handle form submission for the Home Page sections
+    // const handleSubmit = async (
+    //     values: any,
+    //     actions: { setSubmitting: (isSubmitting: boolean) => void; resetForm: () => void }
+    // ) => {
+    //     const { setSubmitting, resetForm } = actions;
+    //     try {
+
+
+
+
+    //         console.log("values", values)
+
+    //         // Optionally reset the form
+    //         // resetForm();
+    //     } catch (error) {
+    //         // Handle error (show toast, etc.)
+    //         alert("Failed to save section. Please try again.");
+    //         console.error(error);
+    //     } finally {
+    //         setSubmitting(false);
+    //     }
+    // }
+
     const handleSubmit = async (
         values: any,
-        actions: { setSubmitting: (isSubmitting: boolean) => void; resetForm: () => void }
+        actions: { setSubmitting: (isSubmitting: boolean) => void; resetForm: () => void },
+        sectionKey: string
     ) => {
         const { setSubmitting, resetForm } = actions;
         try {
-            // TODO: Replace with actual API call, e.g.:
-            // await updateHomePageSection(section.key, values);
+            let response = null;
 
-            // Simulate API call
-            await new Promise((resolve) => setTimeout(resolve, 500));
+            // Call the appropriate API based on the section
+            switch (sectionKey) {
+                case 'promote':
+                    response = await createOrUpdatePromoteYourBusiness({
+                        title: values.title,
+                        description: values.description
+                    });
+                    break;
 
-            // Show a success message (replace with your toast/notification if needed)
-            alert(`Saved section:\n${JSON.stringify(values, null, 2)}`);
+                case 'trusted':
+                    response = await createOrUpdateTrustedByLeading({
+                        title: values.title,
+                        description: values.description,
+                        adminQuote: values.adminQuotte
+                    });
+                    break;
 
-            console.log("values", values)
+                case 'multiPlatform':
+                    response = await createOrUpdateMultiPlatform({
+                        title: values.title,
+                        description: values.description,
+                        cards: values.cards
+                    });
+                    break;
 
-            // Optionally reset the form
-            // resetForm();
+                case 'metaGateway':
+                    response = await createOrUpdateMetaYourGateway({
+                        title: values.title,
+                        description: values.description,
+                        cards: values.cards
+                    });
+                    break;
+
+                case 'about':
+                    response = await createOrUpdateAboutBiggaponBd({
+                        title: values.title,
+                        description: values.description
+                    });
+                    break;
+
+                case 'weWorkWith':
+                    response = await createOrUpdateWeWorkWith({
+                        title: values.title,
+                        description: values.description,
+                        cards: values.cards
+                    });
+                    break;
+
+                case 'ourMission':
+                    response = await createOrUpdateOurMission({
+                        title: values.title,
+                        description: values.description,
+                        cards: values.cards
+                    });
+                    break;
+
+                case 'howToGetStarted':
+                    response = await createOrUpdateHowToGetStarted({
+                        title: values.title,
+                        description: values.description,
+                        cards: values.cards
+                    });
+                    break;
+
+                default:
+                    throw new Error(`Unknown section: ${sectionKey}`);
+            }
+
+            if (response) {
+                // Show success message
+                toast.success(`Successfully saved ${sectionKey} section!`)
+
+                // Optionally refresh the page data
+                // You can add logic here to refetch the data if needed
+            } else {
+                throw new Error("Failed to save section");
+            }
+
         } catch (error) {
-            // Handle error (show toast, etc.)
-            alert("Failed to save section. Please try again.");
-            console.error(error);
+            // Handle error
+            alert(`Failed to save ${sectionKey} section. Please try again.`);
+            console.error("Error saving section:", error);
         } finally {
             setSubmitting(false);
         }
     }
 
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center min-h-screen w-full">
+                <Loader className="animate-spin" />
+            </div>
+        )
+    }
+
+
+    console.log("pageData", pageData)
     return (
         <DashboardLayout>
             <div className={containerClass}>
@@ -489,7 +888,9 @@ const EditHomePage = () => {
                                         initialValues={section.initialValues}
                                         validationSchema={section.validationSchema}
                                         className={inputClass}
-                                        onSubmit={handleSubmit}
+                                        // onSubmit={handleSubmit}
+                                        onSubmit={(values, actions) => handleSubmit(values, actions, section.key)}
+
                                     >
                                         {({
                                             values,
@@ -511,15 +912,46 @@ const EditHomePage = () => {
                                                     <Button
                                                         type="submit"
                                                         disabled={isSubmitting}
-                                                        className="w-full sm:w-auto"
+                                                        className={`
+                                                            w-full sm:w-auto
+                                                            px-6 py-2
+                                                            rounded-md
+                                                            font-semibold
+                                                            transition-colors
+                                                            bg-blue-600 text-white
+                                                            hover:bg-blue-700
+                                                            dark:bg-blue-500 dark:text-white
+                                                            dark:hover:bg-blue-600
+                                                            shadow
+                                                            disabled:opacity-60
+                                                        `}
                                                     >
-                                                        {isSubmitting ? "Saving..." : "Save Section"}
+                                                        {isSubmitting ? (
+                                                            <span className="flex items-center gap-2">
+                                                                <Loader className="animate-spin w-4 h-4" />
+                                                                Saving...
+                                                            </span>
+                                                        ) : (
+                                                            "Save Section"
+                                                        )}
                                                     </Button>
                                                     <Button
                                                         type="reset"
                                                         variant="secondary"
                                                         disabled={isSubmitting}
-                                                        className="w-full sm:w-auto"
+                                                        className={`
+                                                            w-full sm:w-auto
+                                                            px-6 py-2
+                                                            rounded-md
+                                                            font-semibold
+                                                            transition-colors
+                                                            bg-gray-200 text-gray-800
+                                                            hover:bg-gray-300
+                                                            dark:bg-zinc-700 dark:text-gray-100
+                                                            dark:hover:bg-zinc-600
+                                                            shadow
+                                                            disabled:opacity-60
+                                                        `}
                                                     >
                                                         Reset
                                                     </Button>
