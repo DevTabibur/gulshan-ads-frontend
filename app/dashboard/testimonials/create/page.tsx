@@ -298,7 +298,7 @@ function CreateTestimonialContent() {
 
 export default function CreateTestimonialPage() {
   return (
-    <ProtectedRoute requiredRole="Admin">
+    <ProtectedRoute requiredRole="admin">
       <CreateTestimonialContent />
     </ProtectedRoute>
   )

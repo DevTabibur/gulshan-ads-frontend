@@ -26,185 +26,14 @@ import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Layout } from "@/components/Layout"
 import { getAllBlogCategories, getAllBlogs } from "../api/blog/blog.api"
+import Image from "next/image"
+import Link from "next/link"
 
-// Mock blog data
-const blogPosts = [
-  {
-    id: 1,
-    title: "The Future of AI-Powered Advertising: Trends to Watch in 2024",
-    excerpt:
-      "Discover how artificial intelligence is revolutionizing digital advertising with predictive analytics, automated bidding, and personalized content creation that drives unprecedented ROI.",
-    author: "Sarah Chen",
-    authorRole: "AI Marketing Specialist",
-    date: "2024-01-15",
-    readTime: "8 min read",
-    category: "AI & Technology",
-    tags: ["AI", "Machine Learning", "Advertising", "Trends"],
-    image: "/placeholder.svg?height=300&width=500&text=AI+Advertising",
-    views: 2847,
-    comments: 23,
-    featured: true,
-    trending: true,
-  },
-  {
-    id: 2,
-    title: "Meta Ads vs TikTok Ads: Complete Performance Comparison 2024",
-    excerpt:
-      "An in-depth analysis comparing Meta and TikTok advertising platforms, including cost-per-click, audience targeting, and conversion rates across different industries.",
-    author: "Marcus Rodriguez",
-    authorRole: "Performance Marketing Lead",
-    date: "2024-01-12",
-    readTime: "12 min read",
-    category: "Platform Comparison",
-    tags: ["Meta", "TikTok", "Performance", "ROI"],
-    image: "/placeholder.svg?height=300&width=500&text=Meta+vs+TikTok",
-    views: 4521,
-    comments: 67,
-    featured: true,
-    trending: false,
-  },
-  {
-    id: 3,
-    title: "Telegram Advertising: The Untapped Goldmine for B2B Marketers",
-    excerpt:
-      "Why Telegram is becoming the secret weapon for B2B marketers seeking high-quality leads and engaged audiences in niche markets with exceptional conversion rates.",
-    author: "Emma Thompson",
-    authorRole: "B2B Marketing Strategist",
-    date: "2024-01-10",
-    readTime: "6 min read",
-    category: "B2B Marketing",
-    tags: ["Telegram", "B2B", "Lead Generation", "Strategy"],
-    image: "/placeholder.svg?height=300&width=500&text=Telegram+B2B",
-    views: 1923,
-    comments: 34,
-    featured: false,
-    trending: true,
-  },
-  {
-    id: 4,
-    title: "Snapchat AR Ads: Creating Immersive Brand Experiences",
-    excerpt:
-      "Learn how to leverage Snapchat's AR technology to create memorable brand experiences that drive engagement and conversions through interactive storytelling.",
-    author: "David Kim",
-    authorRole: "Creative Director",
-    date: "2024-01-08",
-    readTime: "10 min read",
-    category: "Creative Strategy",
-    tags: ["Snapchat", "AR", "Creative", "Engagement"],
-    image: "/placeholder.svg?height=300&width=500&text=Snapchat+AR",
-    views: 3156,
-    comments: 45,
-    featured: false,
-    trending: false,
-  },
-  {
-    id: 5,
-    title: "Freelancer's Guide to Scaling Ad Campaigns on a Budget",
-    excerpt:
-      "Practical strategies for freelancers to maximize advertising ROI while working with limited budgets and resources, including automation tools and optimization techniques.",
-    author: "Lisa Park",
-    authorRole: "Freelance Marketing Consultant",
-    date: "2024-01-05",
-    readTime: "7 min read",
-    category: "Freelancing",
-    tags: ["Freelancing", "Budget", "ROI", "Strategy"],
-    image: "/placeholder.svg?height=300&width=500&text=Freelancer+Guide",
-    views: 2634,
-    comments: 56,
-    featured: false,
-    trending: false,
-  },
-  {
-    id: 6,
-    title: "The Psychology of Color in Digital Advertising",
-    excerpt:
-      "How color psychology influences consumer behavior and decision-making in digital advertising campaigns, with practical examples and case studies.",
-    author: "Rachel Green",
-    authorRole: "Brand Psychology Expert",
-    date: "2024-01-03",
-    readTime: "9 min read",
-    category: "Psychology",
-    tags: ["Psychology", "Design", "Branding", "Conversion"],
-    image: "/placeholder.svg?height=300&width=500&text=Color+Psychology",
-    views: 1876,
-    comments: 28,
-    featured: false,
-    trending: false,
-  },
-  {
-    id: 7,
-    title: "Advanced Google Ads Strategies for E-commerce Success",
-    excerpt:
-      "Master advanced Google Ads techniques including Smart Bidding, Performance Max campaigns, and audience optimization for maximum e-commerce ROI.",
-    author: "Michael Chen",
-    authorRole: "Google Ads Specialist",
-    date: "2024-01-01",
-    readTime: "11 min read",
-    category: "Google Ads",
-    tags: ["Google Ads", "E-commerce", "PPC", "Optimization"],
-    image: "/placeholder.svg?height=300&width=500&text=Google+Ads",
-    views: 3421,
-    comments: 42,
-    featured: false,
-    trending: true,
-  },
-  {
-    id: 8,
-    title: "Building High-Converting Landing Pages: A Complete Guide",
-    excerpt:
-      "Step-by-step guide to creating landing pages that convert, including design principles, copywriting techniques, and A/B testing strategies.",
-    author: "Jennifer Walsh",
-    authorRole: "Conversion Rate Specialist",
-    date: "2023-12-28",
-    readTime: "13 min read",
-    category: "Conversion Optimization",
-    tags: ["Landing Pages", "CRO", "Design", "Testing"],
-    image: "/placeholder.svg?height=300&width=500&text=Landing+Pages",
-    views: 2987,
-    comments: 38,
-    featured: false,
-    trending: false,
-  },
-  {
-    id: 9,
-    title: "Social Media Advertising Trends for 2024",
-    excerpt:
-      "Explore the latest social media advertising trends, including video-first strategies, influencer partnerships, and emerging platform opportunities.",
-    author: "Alex Johnson",
-    authorRole: "Social Media Strategist",
-    date: "2023-12-25",
-    readTime: "8 min read",
-    category: "Social Media",
-    tags: ["Social Media", "Trends", "Video", "Influencers"],
-    image: "/placeholder.svg?height=300&width=500&text=Social+Media+2024",
-    views: 4156,
-    comments: 61,
-    featured: false,
-    trending: false,
-  },
-  {
-    id: 10,
-    title: "Email Marketing Automation: Advanced Workflows",
-    excerpt:
-      "Create sophisticated email marketing workflows that nurture leads and drive conversions through personalized, behavior-triggered campaigns.",
-    author: "Sophie Martinez",
-    authorRole: "Email Marketing Expert",
-    date: "2023-12-22",
-    readTime: "10 min read",
-    category: "Email Marketing",
-    tags: ["Email", "Automation", "Workflows", "Personalization"],
-    image: "/placeholder.svg?height=300&width=500&text=Email+Automation",
-    views: 2543,
-    comments: 33,
-    featured: false,
-    trending: false,
-  },
-]
+
 
 // Custom hook for debounced search
 function useDebounce(value: string, delay: number) {
   const [debouncedValue, setDebouncedValue] = useState(value)
-
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedValue(value)
@@ -231,6 +60,9 @@ export default function BlogPage() {
   const [allBlogs, setAllBlogs] = useState<any[]>([])
   const [isLoadingBlogs, setIsLoadingBlogs] = useState(false)
 
+
+
+
   const postsPerPage = 6
   const debouncedSearchTerm = useDebounce(searchTerm, 300)
 
@@ -249,16 +81,23 @@ export default function BlogPage() {
   }, [debouncedSearchTerm, selectedCategory])
 
   const filteredPosts = useMemo(() => {
-    return blogPosts.filter((post) => {
+
+    const filtered = allBlogs.filter((post) => {
       const matchesSearch =
         post?.title?.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
-        post?.tags?.some((tag) => tag.toLowerCase().includes(debouncedSearchTerm.toLowerCase()))
+        post?.tags?.some((tag: any) => tag.toLowerCase().includes(debouncedSearchTerm.toLowerCase()));
 
-      const matchesCategory = selectedCategory === "All Categories" || post.category === selectedCategory
 
-      return matchesSearch && matchesCategory
-    })
-  }, [debouncedSearchTerm, selectedCategory])
+      const matchesCategory =
+        selectedCategory === "All Categories" ||
+        post.category === selectedCategory;
+
+      return matchesSearch && matchesCategory;
+    });
+
+
+    return filtered;
+  }, [debouncedSearchTerm, selectedCategory, allBlogs]);
 
   // Pagination logic
   const totalPages = Math.ceil(filteredPosts.length / postsPerPage)
@@ -266,15 +105,16 @@ export default function BlogPage() {
   const endIndex = startIndex + postsPerPage
   const currentPosts = filteredPosts.slice(startIndex, endIndex)
 
-  const featuredPosts = blogPosts.filter((post) => post.featured)
-  const trendingPosts = blogPosts.filter((post) => post.trending)
+  const featuredPosts = allBlogs?.filter((post) => post.featured)
+  const trendingPosts = allBlogs?.filter((post) => post.trending)
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page)
     window.scrollTo({ top: 0, behavior: "smooth" })
   }
 
- 
+
+  console.log("filteredPosts", filteredPosts)
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -295,8 +135,8 @@ export default function BlogPage() {
     fetchCategories()
   }, []) // Only run on mount
 
- 
- 
+
+
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -316,7 +156,7 @@ export default function BlogPage() {
     fetchBlogs()
   }, []) // Only run on mount
 
-console.log("fetch blogs", allBlogs)
+  console.log("allBlogs ==>", allBlogs)
 
 
   return (
@@ -463,11 +303,10 @@ console.log("fetch blogs", allBlogs)
                     <motion.button
                       key={category}
                       onClick={() => setSelectedCategory(category)}
-                      className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                        selectedCategory === category
-                          ? "bg-gradient-to-r from-green-500 to-cyan-500 text-white shadow-lg"
-                          : "bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:border-green-500 dark:hover:border-green-400 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
-                      }`}
+                      className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${selectedCategory === category
+                        ? "bg-gradient-to-r from-green-500 to-cyan-500 text-white shadow-lg"
+                        : "bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:border-green-500 dark:hover:border-green-400 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+                        }`}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
@@ -656,7 +495,7 @@ console.log("fetch blogs", allBlogs)
                 </motion.div>
 
                 <AnimatePresence mode="wait">
-                  {currentPosts.length > 0 ? (
+                  {filteredPosts?.length > 0 ? (
                     <motion.div
                       key={`${viewMode}-${selectedCategory}-${debouncedSearchTerm}-${currentPage}`}
                       className={viewMode === "grid" ? "grid md:grid-cols-2 gap-6" : "space-y-6"}
@@ -665,99 +504,116 @@ console.log("fetch blogs", allBlogs)
                       exit={{ opacity: 0 }}
                       transition={{ duration: 0.3 }}
                     >
-                      {currentPosts.map((post, index) => (
-                        <motion.article
-                          key={post.id}
-                          className={`group relative bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-500 ${viewMode === "list" ? "flex gap-6" : ""
-                            }`}
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.4, delay: index * 0.05 }}
-                          whileHover={{ y: -3 }}
+                      {currentPosts?.map((post, index) => (
+                        <Link
+                          key={post?.id}
+                          href={`/blog/${post?.slug}`}
+                          className="block"
+                          tabIndex={0}
                         >
-                          <div
-                            className={`relative overflow-hidden ${viewMode === "list" ? "w-64 flex-shrink-0" : ""}`}
+                          <motion.article
+                            className={`group relative bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-500 ${viewMode === "list" ? "flex gap-6" : ""
+                              }`}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.4, delay: index * 0.05 }}
+                            whileHover={{ y: -3 }}
                           >
-                            <img
-                              src={post.image || "/placeholder.svg"}
-                              alt={post.title}
-                              className={`object-cover transition-transform duration-500 group-hover:scale-105 ${viewMode === "list" ? "w-full h-full" : "w-full h-48"
-                                }`}
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-                            {post.trending && (
-                              <div className="absolute top-3 right-3">
-                                <Badge className="bg-gradient-to-r from-orange-500 to-red-500 text-white border-0 text-xs">
-                                  <TrendingUp className="w-3 h-3 mr-1" />
-                                  Trending
-                                </Badge>
-                              </div>
-                            )}
-                          </div>
-
-                          <div className="p-6 flex-1">
-                            <div className="flex items-center gap-3 mb-3 text-sm text-gray-500 dark:text-gray-400">
-                              <Badge
-                                variant="outline"
-                                className="text-xs border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400"
-                              >
-                                {post.category}
-                              </Badge>
-                              <div className="flex items-center gap-1">
-                                <Calendar className="w-3 h-3" />
-                                {new Date(post.date).toLocaleDateString()}
-                              </div>
-                              <div className="flex items-center gap-1">
-                                <Clock className="w-3 h-3" />
-                                {post.readTime}
-                              </div>
-                            </div>
-
-                            <h3
-                              className={`font-bold mb-3 text-gray-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors duration-300 ${viewMode === "list" ? "text-lg" : "text-xl"
-                                }`}
+                            <div
+                              className={`relative overflow-hidden ${viewMode === "list" ? "w-64 flex-shrink-0" : ""}`}
                             >
-                              {post.title}
-                            </h3>
+                              {post?.featuredImage ? (
+                                <Image
+                                  src={`${process.env.NEXT_PUBLIC_IMAGE_API}/${post?.featuredImage}`}
+                                  alt={post.title}
+                                  width={viewMode === "list" ? 256 : 600}
+                                  height={viewMode === "list" ? 256 : 192}
+                                  className={`object-cover transition-transform duration-500 group-hover:scale-105 ${viewMode === "list" ? "w-full h-full" : "w-full h-48"
+                                    }`}
+                                />
+                              ) : (
+                                <Image
+                                  src="/placeholder.svg"
+                                  alt="Placeholder"
+                                  width={viewMode === "list" ? 256 : 600}
+                                  height={viewMode === "list" ? 256 : 192}
+                                  className={`object-cover transition-transform duration-500 group-hover:scale-105 ${viewMode === "list" ? "w-full h-full" : "w-full h-48"
+                                    }`}
+                                />
+                              )}
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+                              {/* {post.trending && (
+                                <div className="absolute top-3 right-3">
+                                  <Badge className="bg-gradient-to-r from-orange-500 to-red-500 text-white border-0 text-xs">
+                                    <TrendingUp className="w-3 h-3 mr-1" />
+                                    Trending
+                                  </Badge>
+                                </div>
+                              )} */}
+                            </div>
 
-                            <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">{post.excerpt}</p>
-
-                            <div className="flex items-center gap-2 mb-3">
-                              {post.tags.slice(0, 3).map((tag) => (
+                            <div className="p-6 flex-1">
+                              <div className="flex items-center gap-3 mb-3 text-sm text-gray-500 dark:text-gray-400">
                                 <Badge
-                                  key={tag}
-                                  variant="secondary"
-                                  className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300"
+                                  variant="outline"
+                                  className="text-xs border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400"
                                 >
-                                  <Tag className="w-3 h-3 mr-1" />
-                                  {tag}
+                                  {post?.category?.name}
                                 </Badge>
-                              ))}
-                            </div>
-
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-2">
-                                <div className="w-6 h-6 bg-gradient-to-r from-green-500 to-cyan-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
-                                  <User className="w-3 h-3" />
+                                <div className="flex items-center gap-1">
+                                  <Calendar className="w-3 h-3" />
+                                  {new Date(post?.createdAt).toLocaleDateString()}
                                 </div>
-                                <div>
-                                  <div className="text-sm font-medium text-gray-900 dark:text-white">{post.author}</div>
+                                <div className="flex items-center gap-1">
+                                  <Clock className="w-3 h-3" />
+                                  {`${Math.floor(Math.random() * 8) + 2} min read`}
                                 </div>
                               </div>
 
-                              <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
-                                <div className="flex items-center gap-1">
-                                  <Eye className="w-3 h-3" />
-                                  {post.views.toLocaleString()}
+                              <h3
+                                className={`font-bold mb-3 text-gray-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors duration-300 ${viewMode === "list" ? "text-lg" : "text-xl"
+                                  }`}
+                              >
+                                {post?.title}
+                              </h3>
+
+                              <div className="flex items-center gap-2 mb-3">
+                                {post.tags.slice(0, 3).map((tag: any) => (
+                                  <Badge
+                                    key={tag}
+                                    variant="secondary"
+                                    className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300"
+                                  >
+                                    <Tag className="w-3 h-3 mr-1" />
+                                    {tag}
+                                  </Badge>
+                                ))}
+                              </div>
+
+                              <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-2">
+                                  <div className="w-6 h-6 bg-gradient-to-r from-green-500 to-cyan-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                                    <User className="w-3 h-3" />
+                                  </div>
+                                  <div>
+                                    <div className="text-sm font-medium text-gray-900 dark:text-white">{post?.author || "Admin"}</div>
+                                  </div>
                                 </div>
-                                <div className="flex items-center gap-1">
-                                  <MessageCircle className="w-3 h-3" />
-                                  {post.comments}
-                                </div>
+
+                                {/* <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
+                                  <div className="flex items-center gap-1">
+                                    <Eye className="w-3 h-3" />
+                                    {post?.views?.toLocaleString()}
+                                  </div>
+                                  <div className="flex items-center gap-1">
+                                    <MessageCircle className="w-3 h-3" />
+                                    {post?.comments}
+                                  </div>
+                                </div> */}
                               </div>
                             </div>
-                          </div>
-                        </motion.article>
+                          </motion.article>
+                        </Link>
                       ))}
                     </motion.div>
                   ) : (
@@ -896,16 +752,15 @@ console.log("fetch blogs", allBlogs)
                     <div className="space-y-2">
                       {categories
                         .map((category) => {
-                          const count = blogPosts.filter((post) => post.category === category).length
+                          const count = allBlogs?.filter((post) => post.category === category).length
                           return (
                             <motion.button
                               key={category}
                               onClick={() => setSelectedCategory(category)}
-                              className={`w-full text-left px-3 py-2 rounded-lg transition-all duration-300 ${
-                                selectedCategory === category
-                                  ? "bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 border border-green-200 dark:border-green-800"
-                                  : "hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
-                              }`}
+                              className={`w-full text-left px-3 py-2 rounded-lg transition-all duration-300 ${selectedCategory === category
+                                ? "bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 border border-green-200 dark:border-green-800"
+                                : "hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                                }`}
                               whileHover={{ x: 5 }}
                               transition={{ duration: 0.2 }}
                             >

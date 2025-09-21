@@ -70,6 +70,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
             await logoutApi()
         } catch (error) {
             // Optionally handle error
+            localStorage.removeItem("adsToken")
         } finally {
             localStorage.removeItem("adsToken")
             setUser(null)

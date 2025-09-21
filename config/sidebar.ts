@@ -134,6 +134,39 @@ export const sidebarConfig: SidebarItem[] = [
     //     ],
     // },
 
+    // New Page Management menu with submenus
+    {
+        id: "page-management",
+        title: "Page Management",
+        icon: "airplay",
+        children: [
+            {
+                id: "page-home",
+                title: "Home Page",
+                icon: "Home",
+                href: "/dashboard/pages/home",
+            },
+            {
+                id: "page-advertisers",
+                title: "Advertisers Page",
+                icon: "Home",
+                href: "/dashboard/pages/advertisers",
+            },
+            {
+                id: "page-tiktok",
+                title: "Tiktok Page",
+                icon: "PlaySquare",
+                href: "/dashboard/pages/tiktok",
+            },
+            {
+                id: "page-meta",
+                title: "Meta Page",
+                icon: "Globe",
+                href: "/dashboard/pages/meta",
+            },
+        ],
+    },
+
     {
         id: "homepage",
         title: "Home",
@@ -148,7 +181,4 @@ export const sidebarConfig: SidebarItem[] = [
             },
         ],
     },
-   
-
-
 ]

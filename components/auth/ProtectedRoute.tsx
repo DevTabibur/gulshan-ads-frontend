@@ -13,9 +13,9 @@ interface ProtectedRouteProps {
 export const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) => {
   const { loggedIn, isLoading, user } = useUserContext()
   const router = useRouter()
-  console.log("loggedIn", loggedIn)
-  console.log("isLoading", isLoading)
-  console.log("user", user)
+  // console.log("loggedIn", loggedIn)
+  // console.log("isLoading", isLoading)
+  // console.log("user", user)
 
   useEffect(() => {
     if (!isLoading) {
