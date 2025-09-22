@@ -13,7 +13,6 @@ import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { Breadcrumb } from "@/components/dashboard/Breadcrumb";
-import { createOrUpdateMetaYourGateway, createOrUpdateOurMission, createOrUpdatePromoteYourBusiness, createOrUpdateTrustedByLeading, createOrUpdateWeWorkWith,  } from "@/app/api/homepage/homepage.Api";
 import { Loader } from "lucide-react";
 import toast from "react-hot-toast";
 import { createOrUpdateChooseYourPlan, createOrUpdateHowWeGetYouStarted, createOrUpdateReadyToScaleYourBusiness, createOrUpdateScaleYourBusiness, createOrUpdateWhyAdvertisers, getAllAdvertisersPageSections } from "@/app/api/advertiserspage/advertisersPage.Api";
@@ -565,13 +564,13 @@ const EditAdvertisersPage = () => {
                     });
                     break;
 
-                case 'successStory':
-                    response = await createOrUpdateMetaYourGateway({
-                        title: values.title,
-                        description: values.description,
-                        cards: values.cards
-                    });
-                    break;
+                // case 'successStory':
+                //     response = await createOrUpdateMetaYourGateway({
+                //         title: values.title,
+                //         description: values.description,
+                //         cards: values.cards
+                //     });
+                //     break;
 
 
 

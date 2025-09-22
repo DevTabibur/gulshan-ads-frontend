@@ -4,8 +4,6 @@ import { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useFormik } from "formik"
 import * as Yup from "yup"
-import { useLanguage } from "@/hooks/useLanguage"
-import { translations } from "@/data/translations"
 import {
     Users,
     TrendingUp,
