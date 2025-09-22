@@ -1,5 +1,4 @@
 
-
 "use client"
 import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import {
@@ -18,239 +17,28 @@ import { createOrUpdateAboutBiggaponBd, createOrUpdateHowToGetStarted, createOrU
 import { Loader } from "lucide-react";
 import toast from "react-hot-toast";
 
-// // Section configs for all 9 sections
-// const sectionConfigs = [
-//     {
-//         key: "promote",
-//         label: "Promote Your Business Section",
-//         fields: [
-//             { name: "title", label: "Title", type: "text" },
-//             { name: "description", label: "Description", type: "textarea" },
-//         ],
-//         initialValues: { title: "abuld", description: "abuld" },
-//         validationSchema: Yup.object({
-//             title: Yup.string().required("Title is required"),
-//             description: Yup.string().required("Description is required"),
-//         }),
-//     },
-//     {
-//         key: "trusted",
-//         label: "Trusted By Leading Section",
-//         fields: [
-//             { name: "title", label: "Title", type: "text" },
-//             { name: "description", label: "Description", type: "textarea" },
-//             { name: "adminQuotte", label: "Admin Quote", type: "textarea" },
-//         ],
-//         initialValues: { title: "", description: "", adminQuotte: "" },
-//         validationSchema: Yup.object({
-//             title: Yup.string().required("Title is required"),
-//             description: Yup.string().required("Description is required"),
-//             adminQuotte: Yup.string().required("Admin Quote is required"),
-//         }),
-//     },
-//     {
-//         key: "multiPlatform",
-//         label: "Multi Platform Section",
-//         fields: [
-//             { name: "title", label: "Title", type: "text" },
-//             { name: "description", label: "Description", type: "textarea" },
-//             {
-//                 name: "cards",
-//                 label: "Cards",
-//                 type: "cards",
-//                 cardFields: [
-//                     { name: "icon", label: "Icon", type: "text" },
-//                     { name: "title", label: "Card Title", type: "text" },
-//                     { name: "description", label: "Card Description", type: "textarea" },
-//                 ],
-//             },
-//         ],
-//         initialValues: {
-//             title: "",
-//             description: "",
-//             cards: [{ icon: "", title: "", description: "" }],
-//         },
-//         validationSchema: Yup.object({
-//             title: Yup.string().required("Title is required"),
-//             description: Yup.string().required("Description is required"),
-//             cards: Yup.array()
-//                 .of(
-//                     Yup.object({
-//                         icon: Yup.string().required("Icon is required"),
-//                         title: Yup.string().required("Card title is required"),
-//                         description: Yup.string().required("Card description is required"),
-//                     })
-//                 )
-//                 .min(1, "At least one card is required"),
-//         }),
-//     },
-//     {
-//         key: "metaGateway",
-//         label: "Meta: Your Gateway Section",
-//         fields: [
-//             { name: "title", label: "Title", type: "text" },
-//             { name: "description", label: "Description", type: "textarea" },
-//             {
-//                 name: "cards",
-//                 label: "Cards",
-//                 type: "cards",
-//                 cardFields: [
-//                     { name: "icon", label: "Icon", type: "text" },
-//                     { name: "title", label: "Card Title", type: "text" },
-//                     { name: "description", label: "Card Description", type: "textarea" },
-//                 ],
-//             },
-//         ],
-//         initialValues: {
-//             title: "",
-//             description: "",
-//             cards: [{ icon: "", title: "", description: "" }],
-//         },
-//         validationSchema: Yup.object({
-//             title: Yup.string().required("Title is required"),
-//             description: Yup.string().required("Description is required"),
-//             cards: Yup.array()
-//                 .of(
-//                     Yup.object({
-//                         icon: Yup.string().required("Icon is required"),
-//                         title: Yup.string().required("Card title is required"),
-//                         description: Yup.string().required("Card description is required"),
-//                     })
-//                 )
-//                 .min(1, "At least one card is required"),
-//         }),
-//     },
-//     {
-//         key: "about",
-//         label: "About Biggapon Bd Section",
-//         fields: [
-//             { name: "title", label: "Title", type: "text" },
-//             { name: "description", label: "Description", type: "textarea" },
-//         ],
-//         initialValues: { title: "", description: "" },
-//         validationSchema: Yup.object({
-//             title: Yup.string().required("Title is required"),
-//             description: Yup.string().required("Description is required"),
-//         }),
-//     },
-//     {
-//         key: "weWorkWith",
-//         label: "We Work With Section",
-//         fields: [
-//             { name: "title", label: "Title", type: "text" },
-//             { name: "description", label: "Description", type: "textarea" },
-//             {
-//                 name: "cards",
-//                 label: "Cards",
-//                 type: "cards",
-//                 cardFields: [
-//                     { name: "icon", label: "Icon", type: "text" },
-//                     { name: "title", label: "Card Title", type: "text" },
-//                     { name: "description", label: "Card Description", type: "textarea" },
-//                 ],
-//             },
-//         ],
-//         initialValues: {
-//             title: "",
-//             description: "",
-//             cards: [{ icon: "", title: "", description: "" }],
-//         },
-//         validationSchema: Yup.object({
-//             title: Yup.string().required("Title is required"),
-//             description: Yup.string().required("Description is required"),
-//             cards: Yup.array()
-//                 .of(
-//                     Yup.object({
-//                         icon: Yup.string().required("Icon is required"),
-//                         title: Yup.string().required("Card title is required"),
-//                         description: Yup.string().required("Card description is required"),
-//                     })
-//                 )
-//                 .min(1, "At least one card is required"),
-//         }),
-//     },
-//     {
-//         key: "ourMission",
-//         label: "Our Mission Section",
-//         fields: [
-//             { name: "title", label: "Title", type: "text" },
-//             { name: "description", label: "Description", type: "textarea" },
-//             {
-//                 name: "cards",
-//                 label: "Cards",
-//                 type: "cards",
-//                 cardFields: [
-//                     { name: "title", label: "Card Title", type: "text" },
-//                     { name: "description", label: "Card Description", type: "textarea" },
-//                 ],
-//             },
-//         ],
-//         initialValues: {
-//             title: "",
-//             description: "",
-//             cards: [{ title: "", description: "" }],
-//         },
-//         validationSchema: Yup.object({
-//             title: Yup.string().required("Title is required"),
-//             description: Yup.string().required("Description is required"),
-//             cards: Yup.array()
-//                 .of(
-//                     Yup.object({
-//                         title: Yup.string().required("Card title is required"),
-//                         description: Yup.string().required("Card description is required"),
-//                     })
-//                 )
-//                 .min(1, "At least one card is required"),
-//         }),
-//     },
-//     {
-//         key: "clientSuccessStories",
-//         label: "Client Success Stories Section",
-//         fields: [],
-//         initialValues: {},
-//         validationSchema: Yup.object({}),
-//         noForm: true,
-//     },
-//     {
-//         key: "howToGetStarted",
-//         label: "How to Get Started Section",
-//         fields: [
-//             { name: "title", label: "Title", type: "text" },
-//             { name: "description", label: "Description", type: "textarea" },
-//             {
-//                 name: "cards",
-//                 label: "Cards",
-//                 type: "cards",
-//                 cardFields: [
-//                     { name: "title", label: "Card Title", type: "text" },
-//                     { name: "description", label: "Card Description", type: "textarea" },
-//                 ],
-//             },
-//         ],
-//         initialValues: {
-//             title: "",
-//             description: "",
-//             cards: [{ title: "", description: "" }],
-//         },
-//         validationSchema: Yup.object({
-//             title: Yup.string().required("Title is required"),
-//             description: Yup.string().required("Description is required"),
-//             cards: Yup.array()
-//                 .of(
-//                     Yup.object({
-//                         title: Yup.string().required("Card title is required"),
-//                         description: Yup.string().required("Card description is required"),
-//                     })
-//                 )
-//                 .min(1, "At least one card is required"),
-//         }),
-//     },
-// ];
-
 
 // Function to get initial values from fetched data
 const getInitialValuesFromData = (sectionKey: string, pageData: any) => {
-    if (!pageData) return {};
+    if (!pageData) {
+        // Return default values when no data is available
+        switch (sectionKey) {
+            case 'promote':
+            case 'about':
+                return { title: '', description: '' };
+            case 'trusted':
+                return { title: '', description: '', adminQuotte: '' };
+            case 'multiPlatform':
+            case 'metaGateway':
+            case 'weWorkWith':
+                return { title: '', description: '', cards: [{ icon: '', title: '', description: '' }] };
+            case 'ourMission':
+            case 'howToGetStarted':
+                return { title: '', description: '', cards: [{ title: '', description: '' }] };
+            default:
+                return {};
+        }
+    }
 
     const dataMapping: { [key: string]: string } = {
         promote: 'promoteYourBusiness',
@@ -264,7 +52,25 @@ const getInitialValuesFromData = (sectionKey: string, pageData: any) => {
     };
 
     const dataKey = dataMapping[sectionKey];
-    if (!dataKey || !pageData[dataKey]) return {};
+    // if (!dataKey || !pageData[dataKey]) {
+    //     // Return default values if section data doesn't exist
+    //     switch (sectionKey) {
+    //         case 'promote':
+    //         case 'about':
+    //             return { title: '', description: '' };
+    //         case 'trusted':
+    //             return { title: '', description: '', adminQuotte: '' };
+    //         case 'multiPlatform':
+    //         case 'metaGateway':
+    //         case 'weWorkWith':
+    //             return { title: '', description: '', cards: [{  title: '', description: '' }] };
+    //         case 'ourMission':
+    //         case 'howToGetStarted':
+    //             return { title: '', description: '', cards: [{ title: '', description: '' }] };
+    //         default:
+    //             return {};
+    //     }
+    // }
 
     const sectionData = pageData[dataKey];
 
@@ -273,51 +79,56 @@ const getInitialValuesFromData = (sectionKey: string, pageData: any) => {
         case 'promote':
         case 'about':
             return {
-                title: sectionData.title || '',
-                description: sectionData.description || ''
+                title: String(sectionData.title || ''),
+                description: String(sectionData.description || '')
             };
-
+        
         case 'trusted':
             return {
-                title: sectionData.title || '',
-                description: sectionData.description || '',
-                adminQuotte: sectionData.adminQuote || ''
+                title: String(sectionData.title || ''),
+                description: String(sectionData.description || ''),
+                adminQuotte: String(sectionData.adminQuote || '')
             };
-
+        
         case 'multiPlatform':
         case 'metaGateway':
         case 'weWorkWith':
             return {
-                title: sectionData.title || '',
-                description: sectionData.description || '',
-                cards: sectionData.cards && sectionData.cards.length > 0
-                    ? sectionData.cards
-                    : [{ icon: '', title: '', description: '' }]
+                title: String(sectionData.title || ''),
+                description: String(sectionData.description || ''),
+                cards: Array.isArray(sectionData.cards) && sectionData.cards.length > 0 
+                    ? sectionData.cards.map((card: any) => ({
+                        title: String(card.title || ''),
+                        description: String(card.description || '')
+                    }))
+                     : [{  title: '', description: '' }]
             };
-
+        
         case 'ourMission':
         case 'howToGetStarted':
             return {
-                title: sectionData.title || '',
-                description: sectionData.description || '',
-                cards: sectionData.cards && sectionData.cards.length > 0
-                    ? sectionData.cards
+                title: String(sectionData.title || ''),
+                description: String(sectionData.description || ''),
+                cards: Array.isArray(sectionData.cards) && sectionData.cards.length > 0 
+                    ? sectionData.cards.map((card: any) => ({
+                        title: String(card.title || ''),
+                        description: String(card.description || '')
+                    }))
                     : [{ title: '', description: '' }]
             };
-
+        
         default:
             return {};
     }
 };
-
 // Section configs for all 9 sections
 const getSectionConfigs = (pageData: any) => [
     {
         key: "promote",
         label: "Promote Your Business Section",
         fields: [
-            { name: "title", label: "Title", type: "text" },
-            { name: "description", label: "Description", type: "textarea" },
+            { name: "title", label: "Title *", type: "text" },
+            { name: "description", label: "Description *", type: "textarea" },
         ],
         initialValues: getInitialValuesFromData("promote", pageData),
         validationSchema: Yup.object({
@@ -329,9 +140,9 @@ const getSectionConfigs = (pageData: any) => [
         key: "trusted",
         label: "Trusted By Leading Section",
         fields: [
-            { name: "title", label: "Title", type: "text" },
-            { name: "description", label: "Description", type: "textarea" },
-            { name: "adminQuotte", label: "Admin Quote", type: "textarea" },
+            { name: "title", label: "Title *", type: "text" },
+            { name: "description", label: "Description *", type: "textarea" },
+            { name: "adminQuotte", label: "Admin Quote *", type: "textarea" },
         ],
         initialValues: getInitialValuesFromData("trusted", pageData),
         validationSchema: Yup.object({
@@ -344,16 +155,15 @@ const getSectionConfigs = (pageData: any) => [
         key: "multiPlatform",
         label: "Multi Platform Section",
         fields: [
-            { name: "title", label: "Title", type: "text" },
-            { name: "description", label: "Description", type: "textarea" },
+            { name: "title", label: "Title *", type: "text" },
+            { name: "description", label: "Description *", type: "textarea" },
             {
                 name: "cards",
                 label: "Cards",
                 type: "cards",
                 cardFields: [
-                    { name: "icon", label: "Icon", type: "text" },
-                    { name: "title", label: "Card Title", type: "text" },
-                    { name: "description", label: "Card Description", type: "textarea" },
+                    { name: "title", label: "Card Title *", type: "text" },
+                    { name: "description", label: "Card Description *", type: "textarea" },
                 ],
             },
         ],
@@ -361,31 +171,29 @@ const getSectionConfigs = (pageData: any) => [
         validationSchema: Yup.object({
             title: Yup.string().required("Title is required"),
             description: Yup.string().required("Description is required"),
-            cards: Yup.array()
-                .of(
-                    Yup.object({
-                        icon: Yup.string().required("Icon is required"),
-                        title: Yup.string().required("Card title is required"),
-                        description: Yup.string().required("Card description is required"),
-                    })
-                )
-                .min(1, "At least one card is required"),
+            // cards: Yup.array()
+            //     .of(
+            //         Yup.object({
+            //             title: Yup.string().required("Card title is required"),
+            //             description: Yup.string().required("Card description is required"),
+            //         })
+            //     )
+            //     .min(1, "At least one card is required"),
         }),
     },
     {
         key: "metaGateway",
         label: "Meta: Your Gateway Section",
         fields: [
-            { name: "title", label: "Title", type: "text" },
-            { name: "description", label: "Description", type: "textarea" },
+            { name: "title", label: "Title *", type: "text" },
+            { name: "description", label: "Description *", type: "textarea" },
             {
                 name: "cards",
                 label: "Cards",
                 type: "cards",
                 cardFields: [
-                    { name: "icon", label: "Icon", type: "text" },
-                    { name: "title", label: "Card Title", type: "text" },
-                    { name: "description", label: "Card Description", type: "textarea" },
+                    { name: "title", label: "Card Title *", type: "text" },
+                    { name: "description", label: "Card Description *", type: "textarea" },
                 ],
             },
         ],
@@ -393,23 +201,22 @@ const getSectionConfigs = (pageData: any) => [
         validationSchema: Yup.object({
             title: Yup.string().required("Title is required"),
             description: Yup.string().required("Description is required"),
-            cards: Yup.array()
-                .of(
-                    Yup.object({
-                        icon: Yup.string().required("Icon is required"),
-                        title: Yup.string().required("Card title is required"),
-                        description: Yup.string().required("Card description is required"),
-                    })
-                )
-                .min(1, "At least one card is required"),
+            // cards: Yup.array()
+            //     .of(
+            //         Yup.object({
+            //             title: Yup.string().required("Card title is required"),
+            //             description: Yup.string().required("Card description is required"),
+            //         })
+            //     )
+            //     .min(1, "At least one card is required"),
         }),
     },
     {
         key: "about",
         label: "About Biggapon Bd Section",
         fields: [
-            { name: "title", label: "Title", type: "text" },
-            { name: "description", label: "Description", type: "textarea" },
+            { name: "title", label: "Title *", type: "text" },
+            { name: "description", label: "Description *", type: "textarea" },
         ],
         initialValues: getInitialValuesFromData("about", pageData),
         validationSchema: Yup.object({
@@ -421,16 +228,15 @@ const getSectionConfigs = (pageData: any) => [
         key: "weWorkWith",
         label: "We Work With Section",
         fields: [
-            { name: "title", label: "Title", type: "text" },
-            { name: "description", label: "Description", type: "textarea" },
+            { name: "title", label: "Title *", type: "text" },
+            { name: "description", label: "Description *", type: "textarea" },
             {
                 name: "cards",
                 label: "Cards",
                 type: "cards",
                 cardFields: [
-                    { name: "icon", label: "Icon", type: "text" },
-                    { name: "title", label: "Card Title", type: "text" },
-                    { name: "description", label: "Card Description", type: "textarea" },
+                    { name: "title", label: "Card Title *", type: "text" },
+                    { name: "description", label: "Card Description *", type: "textarea" },
                 ],
             },
         ],
@@ -438,30 +244,29 @@ const getSectionConfigs = (pageData: any) => [
         validationSchema: Yup.object({
             title: Yup.string().required("Title is required"),
             description: Yup.string().required("Description is required"),
-            cards: Yup.array()
-                .of(
-                    Yup.object({
-                        icon: Yup.string().required("Icon is required"),
-                        title: Yup.string().required("Card title is required"),
-                        description: Yup.string().required("Card description is required"),
-                    })
-                )
-                .min(1, "At least one card is required"),
+            // cards: Yup.array()
+            //     .of(
+            //         Yup.object({
+            //             title: Yup.string().required("Card title is required"),
+            //             description: Yup.string().required("Card description is required"),
+            //         })
+            //     )
+            //     .min(1, "At least one card is required"),
         }),
     },
     {
         key: "ourMission",
         label: "Our Mission Section",
         fields: [
-            { name: "title", label: "Title", type: "text" },
-            { name: "description", label: "Description", type: "textarea" },
+            { name: "title", label: "Title *", type: "text" },
+            { name: "description", label: "Description *", type: "textarea" },
             {
                 name: "cards",
                 label: "Cards",
                 type: "cards",
                 cardFields: [
-                    { name: "title", label: "Card Title", type: "text" },
-                    { name: "description", label: "Card Description", type: "textarea" },
+                    { name: "title", label: "Card Title *", type: "text" },
+                    { name: "description", label: "Card Description *", type: "textarea" },
                 ],
             },
         ],
@@ -469,14 +274,14 @@ const getSectionConfigs = (pageData: any) => [
         validationSchema: Yup.object({
             title: Yup.string().required("Title is required"),
             description: Yup.string().required("Description is required"),
-            cards: Yup.array()
-                .of(
-                    Yup.object({
-                        title: Yup.string().required("Card title is required"),
-                        description: Yup.string().required("Card description is required"),
-                    })
-                )
-                .min(1, "At least one card is required"),
+            // cards: Yup.array()
+            //     .of(
+            //         Yup.object({
+            //             title: Yup.string().required("Card title is required"),
+            //             description: Yup.string().required("Card description is required"),
+            //         })
+            //     )
+            //     .min(1, "At least one card is required"),
         }),
     },
     {
@@ -491,15 +296,15 @@ const getSectionConfigs = (pageData: any) => [
         key: "howToGetStarted",
         label: "How to Get Started Section",
         fields: [
-            { name: "title", label: "Title", type: "text" },
-            { name: "description", label: "Description", type: "textarea" },
+            { name: "title", label: "Title *", type: "text" },
+            { name: "description", label: "Description *", type: "textarea" },
             {
                 name: "cards",
                 label: "Cards",
                 type: "cards",
                 cardFields: [
-                    { name: "title", label: "Card Title", type: "text" },
-                    { name: "description", label: "Card Description", type: "textarea" },
+                    { name: "title", label: "Card Title *", type: "text" },
+                    { name: "description", label: "Card Description *", type: "textarea" },
                 ],
             },
         ],
@@ -507,14 +312,14 @@ const getSectionConfigs = (pageData: any) => [
         validationSchema: Yup.object({
             title: Yup.string().required("Title is required"),
             description: Yup.string().required("Description is required"),
-            cards: Yup.array()
-                .of(
-                    Yup.object({
-                        title: Yup.string().required("Card title is required"),
-                        description: Yup.string().required("Card description is required"),
-                    })
-                )
-                .min(1, "At least one card is required"),
+            // cards: Yup.array()
+            //     .of(
+            //         Yup.object({
+            //             title: Yup.string().required("Card title is required"),
+            //             description: Yup.string().required("Card description is required"),
+            //         })
+            //     )
+            //     .min(1, "At least one card is required"),
         }),
     },
 ];
@@ -527,14 +332,7 @@ type FieldType = {
     cardFields?: FieldType[];
 };
 
-type SectionConfig = {
-    key: string;
-    label: string;
-    fields: FieldType[];
-    initialValues: any;
-    validationSchema: any;
-    noForm?: boolean;
-};
+
 
 function renderField(
     field: FieldType,
@@ -543,6 +341,7 @@ function renderField(
     touched: any,
     arrayHelpers?: any
 ) {
+   
     if (field.type === "text") {
         return (
             <div key={field.name} className="mb-4">
@@ -630,9 +429,16 @@ function renderField(
                                         ))}
                                         <Button
                                             type="button"
-                                            variant="destructive"
                                             size="sm"
-                                            className="mt-1"
+                                            className={`
+                                                mt-1
+                                                bg-red-100 text-red-700
+                                                hover:bg-red-200
+                                                dark:bg-red-900 dark:text-red-200
+                                                dark:hover:bg-red-800
+                                                border border-red-200 dark:border-red-800
+                                                transition-colors
+                                            `}
                                             onClick={() => arrayHelpers.remove(idx)}
                                         >
                                             Remove Card
@@ -647,9 +453,18 @@ function renderField(
                         )}
                         <Button
                             type="button"
-                            variant="secondary"
                             size="sm"
-                            className="mb-2"
+                            className={`
+                                mb-2
+                                bg-gradient-to-r from-green-500 to-cyan-500
+                                text-white
+                                hover:from-green-600 hover:to-cyan-600
+                                dark:from-green-400 dark:to-cyan-400
+                                dark:hover:from-green-500 dark:hover:to-cyan-500
+                                border-0
+                                shadow
+                                transition-colors
+                            `}
                             onClick={() =>
                                 arrayHelpers.push(
                                     field.cardFields!.reduce(
@@ -700,12 +515,9 @@ const EditHomePage = () => {
     // Get section configs with fetched data
     const sectionConfigs = getSectionConfigs(pageData);
 
-    // Responsive container classes
-    // const containerClass =
-    //     "w-full max-w-3xl mx-auto py-8 px-2 sm:px-4 md:px-6 lg:px-8";
+   
     const containerClass =
         "space-y-6 ";
-    // Custom classes for dark mode input and textarea
     const darkInputClass =
         "dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-400 border-gray-300 dark:border-gray-700 focus:border-green-500 dark:focus:border-cyan-400"
     const lightInputClass =
@@ -713,29 +525,7 @@ const EditHomePage = () => {
     const inputClass = `${lightInputClass} ${darkInputClass} dark:bg-gray-700`
 
 
-    // Handle form submission for the Home Page sections
-    // const handleSubmit = async (
-    //     values: any,
-    //     actions: { setSubmitting: (isSubmitting: boolean) => void; resetForm: () => void }
-    // ) => {
-    //     const { setSubmitting, resetForm } = actions;
-    //     try {
-
-
-
-
-    //         console.log("values", values)
-
-    //         // Optionally reset the form
-    //         // resetForm();
-    //     } catch (error) {
-    //         // Handle error (show toast, etc.)
-    //         alert("Failed to save section. Please try again.");
-    //         console.error(error);
-    //     } finally {
-    //         setSubmitting(false);
-    //     }
-    // }
+   
 
     const handleSubmit = async (
         values: any,
@@ -746,7 +536,6 @@ const EditHomePage = () => {
         try {
             let response = null;
 
-            // Call the appropriate API based on the section
             switch (sectionKey) {
                 case 'promote':
                     response = await createOrUpdatePromoteYourBusiness({
@@ -817,16 +606,13 @@ const EditHomePage = () => {
             if (response) {
                 // Show success message
                 toast.success(`Successfully saved ${sectionKey} section!`)
-
-                // Optionally refresh the page data
-                // You can add logic here to refetch the data if needed
             } else {
                 throw new Error("Failed to save section");
             }
 
         } catch (error) {
             // Handle error
-            alert(`Failed to save ${sectionKey} section. Please try again.`);
+            toast.error(`Failed to save ${sectionKey} section. Please try again.`)
             console.error("Error saving section:", error);
         } finally {
             setSubmitting(false);

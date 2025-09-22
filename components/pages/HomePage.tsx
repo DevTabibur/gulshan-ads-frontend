@@ -41,13 +41,13 @@ const HomePage = () => {
         fetchData()
     }, [])
 
-    if (loading) {
-        return (
-            <div className="flex items-center justify-center min-h-screen w-full">
-                <Loader className="animate-spin" />
-            </div>
-        )
-    }
+    // if (loading) {
+    //     return (
+    //         <div className="flex items-center justify-center min-h-screen w-full">
+    //             <Loader className="animate-spin" />
+    //         </div>
+    //     )
+    // }
 
     // console.log("pageData", pageData)
     return (
