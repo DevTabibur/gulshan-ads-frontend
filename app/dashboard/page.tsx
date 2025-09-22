@@ -121,13 +121,13 @@ export default function DashboardPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: index * 0.1 }}
             >
-              <Card>
+              <Card className="text-gray-600">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">{stat.title}</CardTitle>
+                  <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400">{stat.title}</CardTitle>
                   <stat.icon className="h-4 w-4 text-gray-600 dark:text-gray-400" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">{stat.value}</div>
+                  <div className="text-2xl font-bold text-black dark:text-white">{stat.value}</div>
                   <p className={`text-xs ${stat.changeType === "positive" ? "text-green-600" : "text-red-600"}`}>
                     {stat.change} from last month
                   </p>
@@ -142,10 +142,11 @@ export default function DashboardPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.4 }}
+          className=""
         >
-          <Card>
+          <Card className="text-gray-600 dark:text-gray-400">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
+              <CardTitle className="flex items-center gap-2 text-black dark:text-white">
                 <BarChart3 className="h-5 w-5" />
                 Recent Campaigns
               </CardTitle>

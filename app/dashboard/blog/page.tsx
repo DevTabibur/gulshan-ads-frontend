@@ -90,7 +90,17 @@ function EditBlogModal({ open, onClose, post, onUpdated }: { open: boolean, onCl
         }
       }
       setTags(tagArr)
-      setFeaturedImagePreview(post?.featuredImage || null)
+      
+      // Set featured image preview with proper URL construction
+      if (post?.featuredImage) {
+        const imageUrl = post.featuredImage.startsWith('http') 
+          ? post.featuredImage 
+          : `${process.env.NEXT_PUBLIC_IMAGE_API || 'https://adsserver.boostersbd.com'}/${post.featuredImage}`
+        setFeaturedImagePreview(imageUrl)
+      } else {
+        setFeaturedImagePreview(null)
+      }
+      
       setFeaturedImage(null)
       setTagsError(null)
       setCategoryError(null)
@@ -133,6 +143,7 @@ function EditBlogModal({ open, onClose, post, onUpdated }: { open: boolean, onCl
 
   if (!open || !post) return null
 
+  console.log("post=========>", post)
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
       <motion.div
@@ -161,8 +172,10 @@ function EditBlogModal({ open, onClose, post, onUpdated }: { open: boolean, onCl
                   ? post.category
                   : "",
               tags: tags,
-              featuredImage: post.featuredImage
-                ? `https://adsserver.boostersbd.com/${post?.featuredImage}`
+              featuredImage: post?.featuredImage
+                ? (post.featuredImage.startsWith('http') 
+                    ? post.featuredImage 
+                    : `${process.env.NEXT_PUBLIC_IMAGE_API || 'https://adsserver.boostersbd.com'}/${post.featuredImage}`)
                 : null,
             }}
             enableReinitialize
