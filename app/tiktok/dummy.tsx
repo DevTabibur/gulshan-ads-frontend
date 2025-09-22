@@ -1,29 +1,10 @@
 "use client"
-
+ 
 import { motion } from "framer-motion"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Layout } from "../../components/Layout"
-import { getAllTikTokPageSections } from "../api/tiktokPage/tiktokpage.Api"
 
 export default function TikTokPage() {
-
-  const [tiktokPageData, setTikTokPageData] = useState<any>(null)
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true)
-      try {
-        const res = await getAllTikTokPageSections()
-        setTikTokPageData(res?.data)
-      } catch (error) {
-        // Optionally handle error
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchData()
-  }, [])
   const [activeTestimonial, setActiveTestimonial] = useState(0)
 
   const tiktokStats = [
@@ -122,17 +103,6 @@ export default function TikTokPage() {
     },
   ]
 
-  // if (loading) {
-  //     return (
-  //         <div className="flex items-center justify-center min-h-screen w-full">
-  //             <Loader className="animate-spin" />
-  //         </div>
-  //     )
-  // }
-
-
-  // console.log("tiktokPageData", tiktokPageData)
-
   return (
     <Layout>
       {/* Hero Section */}
@@ -160,11 +130,10 @@ export default function TikTokPage() {
                   className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white leading-tight"
                 >
                   <span className="bg-gradient-to-r from-green-500 to-cyan-500 bg-clip-text text-transparent">
-                    {
-                      tiktokPageData?.accessToNewAudience?.title
-                    }
+                    Access to new audiences
                   </span>
-
+                  <br />
+                  <span className="text-gray-700 dark:text-gray-300">on favorable terms</span>
                 </motion.h1>
 
                 <motion.p
@@ -173,9 +142,8 @@ export default function TikTokPage() {
                   transition={{ duration: 0.6, delay: 0.4 }}
                   className="text-xl text-gray-600 dark:text-gray-400 leading-relaxed max-w-2xl"
                 >
-                  {
-                    tiktokPageData?.accessToNewAudience?.description
-                  }
+                  Advertising on TikTok with a reliable account and qualified support for those who want to avoid bans
+                  and get maximum results.
                 </motion.p>
               </div>
 
@@ -250,7 +218,7 @@ export default function TikTokPage() {
                         transition={{ duration: 0.5, delay: 0.8 }}
                         className="absolute top-20 left-4 w-12 h-12 bg-gradient-to-r from-green-500 to-cyan-500 rounded-full flex items-center justify-center"
                       >
-                        <span className="text-white font-bold">B</span>
+                        <span className="text-white font-bold">AH</span>
                       </motion.div>
 
                       {/* TikTok Logo */}
@@ -331,7 +299,7 @@ export default function TikTokPage() {
                         className="absolute bottom-8 left-4 right-16"
                       >
                         <div className="text-white">
-                          <h3 className="font-bold mb-2">@ads_agency</h3>
+                          <h3 className="font-bold mb-2">@gulshanads_agency</h3>
                           <p className="text-sm opacity-90 mb-3">
                             Boost your business with TikTok advertising! 🚀 #TikTokAds #Marketing
                           </p>
@@ -399,16 +367,17 @@ export default function TikTokPage() {
           >
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
               <span className="bg-gradient-to-r from-green-500 to-cyan-500 bg-clip-text text-transparent">
-                {tiktokPageData?.tikTokAudienceActively?.title
-                }
+                TikTok audience actively
               </span>
+              <br />
+              <span className="text-gray-700 dark:text-gray-300">interacts with advertising</span>
             </h2>
           </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left Side - Stats */}
             <div className="space-y-8">
-              {tiktokPageData?.tikTokAudienceActively?.cards?.map((stat: any, index: any) => (
+              {tiktokStats.map((stat, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, x: -50 }}
@@ -418,9 +387,9 @@ export default function TikTokPage() {
                   className="flex items-center space-x-6"
                 >
                   <div
-                    className="w-24 h-24 bg-gradient-to-tr from-green-400 via-cyan-400 to-blue-400 rounded-2xl flex items-center justify-center shadow-lg"
+                    className={`w-24 h-24 bg-gradient-to-r ${stat.color} rounded-2xl flex items-center justify-center shadow-lg`}
                   >
-                    <span className="text-xl font-bold text-white">{stat.percentage} %</span>
+                    <span className="text-3xl font-bold text-white">{stat.percentage}</span>
                   </div>
                   <div className="flex-1">
                     <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">{stat.description}</p>
@@ -495,35 +464,46 @@ export default function TikTokPage() {
               <div className="space-y-6">
                 <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
                   <span className="bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text text-transparent">
-                    {tiktokPageData?.tikTokVideoAdvertising?.title}
+                    TikTok: video advertising
                   </span>
-
+                  <br />
+                  <span className="text-gray-300">with a minimum budget</span>
                 </h2>
 
                 <p className="text-xl text-gray-300 leading-relaxed">
-                  {tiktokPageData?.tikTokVideoAdvertising?.description}
+                  TikTok offers essential advertising options. Choose the format that suits your business goals.
                 </p>
               </div>
 
               <div className="space-y-4">
-                {
-                  tiktokPageData?.tikTokVideoAdvertising?.cards?.map((card: any, index: number, arr: any[]) => {
-                    const isLast = index === arr.length - 1;
-                    return (
-                      <div
-                        key={index}
-                        className={
-                          isLast
-                            ? "bg-gradient-to-r from-green-500/20 to-cyan-500/20 rounded-xl p-6 border border-green-500/30"
-                            : "bg-gray-800/50 rounded-xl p-4 border border-gray-700"
-                        }
-                      >
-                        <h3 className="text-white font-semibold mb-2">{card.title}</h3>
-                        <p className="text-gray-400 text-sm">{card.description}</p>
-                      </div>
-                    );
-                  })
-                }
+                <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
+                  <h3 className="text-white font-semibold mb-2">In-Feed Ads</h3>
+                  <p className="text-gray-400 text-sm">
+                    Native ads that appear in users' For You feed with full-screen vertical video format.
+                  </p>
+                </div>
+
+                <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
+                  <h3 className="text-white font-semibold mb-2">Brand Takeover</h3>
+                  <p className="text-gray-400 text-sm">
+                    Full-screen ads that appear when users open TikTok, ensuring maximum visibility.
+                  </p>
+                </div>
+
+                <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
+                  <h3 className="text-white font-semibold mb-2">Hashtag Challenge</h3>
+                  <p className="text-gray-400 text-sm">
+                    Encourage user-generated content with branded hashtag challenges that go viral.
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-r from-green-500/20 to-cyan-500/20 rounded-xl p-6 border border-green-500/30">
+                <h3 className="text-white font-bold mb-2">Minimum Budget</h3>
+                <p className="text-gray-300 text-sm">
+                  Start advertising on TikTok with as little as $20 per day. Scale up as you see results and optimize
+                  your campaigns for better performance.
+                </p>
               </div>
             </motion.div>
 
@@ -557,7 +537,7 @@ export default function TikTokPage() {
                       <div className="bg-black/50 rounded-xl p-4">
                         <div className="flex items-center space-x-3 mb-2">
                           <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-cyan-500 rounded-full"></div>
-                          <span className="text-white font-medium">@ads_official</span>
+                          <span className="text-white font-medium">@gulshanads_official</span>
                         </div>
                         <p className="text-white text-sm">
                           Transform your business with TikTok advertising! 🚀 #BusinessGrowth #TikTokAds
@@ -625,9 +605,10 @@ export default function TikTokPage() {
           >
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-8">
               <span className="bg-gradient-to-r from-green-500 to-cyan-500 bg-clip-text text-transparent">
-                {tiktokPageData?.convenientPayment?.title}
+                Convenient payment,
               </span>
-
+              <br />
+              <span className="text-gray-700 dark:text-gray-300">with automation from Biggapon BD</span>
             </h2>
 
             {/* Payment Badges */}
@@ -664,140 +645,28 @@ export default function TikTokPage() {
 
           {/* Services Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {tiktokPageData?.convenientPayment?.cards?.map((service: any, index: number) => {
-              // Icon SVGs with both light and dark mode support
-              const icons = [
-                // Icon 1: Settings (gear)
-                {
-                  light: (
-                    <svg className="w-8 h-8" fill="none" stroke="#222" strokeWidth={2} viewBox="0 0 24 24">
-                      <circle cx="12" cy="12" r="3" className="stroke-gray-900" />
-                      <path
-                        className="stroke-gray-900"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.09A1.65 1.65 0 0 0 9 3.09V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h.09a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.09c.36.36.58.86.58 1.41s-.22 1.05-.58 1.41z"
-                      />
-                    </svg>
-                  ),
-                  dark: (
-                    <svg className="w-8 h-8" fill="none" stroke="#fff" strokeWidth={2} viewBox="0 0 24 24">
-                      <circle cx="12" cy="12" r="3" className="stroke-white" />
-                      <path
-                        className="stroke-white"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.09A1.65 1.65 0 0 0 9 3.09V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h.09a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.09c.36.36.58.86.58 1.41s-.22 1.05-.58 1.41z"
-                      />
-                    </svg>
-                  ),
-                },
-                // Icon 2: Support (headset)
-                {
-                  light: (
-                    <svg className="w-8 h-8" fill="none" stroke="#222" strokeWidth={2} viewBox="0 0 24 24">
-                      <path
-                        className="stroke-gray-900"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M12 1a10 10 0 0 0-10 10v4a4 4 0 0 0 4 4h1a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H5v-1a7 7 0 0 1 14 0v1h-1a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h1a4 4 0 0 0 4-4v-4A10 10 0 0 0 12 1z"
-                      />
-                    </svg>
-                  ),
-                  dark: (
-                    <svg className="w-8 h-8" fill="none" stroke="#fff" strokeWidth={2} viewBox="0 0 24 24">
-                      <path
-                        className="stroke-white"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M12 1a10 10 0 0 0-10 10v4a4 4 0 0 0 4 4h1a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H5v-1a7 7 0 0 1 14 0v1h-1a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h1a4 4 0 0 0 4-4v-4A10 10 0 0 0 12 1z"
-                      />
-                    </svg>
-                  ),
-                },
-                // Icon 3: Lightning (launch/management)
-                {
-                  light: (
-                    <svg className="w-8 h-8" fill="none" stroke="#222" strokeWidth={2} viewBox="0 0 24 24">
-                      <path
-                        className="stroke-gray-900"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M13 2L3 14h9l-1 8L21 10h-9l1-8z"
-                      />
-                    </svg>
-                  ),
-                  dark: (
-                    <svg className="w-8 h-8" fill="none" stroke="#fff" strokeWidth={2} viewBox="0 0 24 24">
-                      <path
-                        className="stroke-white"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M13 2L3 14h9l-1 8L21 10h-9l1-8z"
-                      />
-                    </svg>
-                  ),
-                },
-              ];
-
-              // Default icon for extra cards
-              const defaultIcon = {
-                light: (
-                  <svg className="w-8 h-8" fill="none" stroke="#222" strokeWidth={2} viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="10" className="stroke-gray-900" />
-                    <path
-                      className="stroke-gray-900"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M8 12h8M12 8v8"
-                    />
-                  </svg>
-                ),
-                dark: (
-                  <svg className="w-8 h-8" fill="none" stroke="#fff" strokeWidth={2} viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="10" className="stroke-white" />
-                    <path
-                      className="stroke-white"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M8 12h8M12 8v8"
-                    />
-                  </svg>
-                ),
-              };
-
-              const iconObj = icons[index] || defaultIcon;
-
-
-              const iconBgGradient =
-                service.color && service.color.includes("from-") && service.color.includes("to-")
-                  ? `bg-gradient-to-r ${service.color}`
-                  : "bg-gradient-to-r from-green-500 to-cyan-500";
-
-              return (
-                <motion.div
-                  key={service.title || index}
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.2 }}
-                  viewport={{ once: true }}
-                  className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-2xl transition-all duration-500 group"
-                >
-                  <div className="text-center">
-                    <div
-                      className={`w-16 h-16 ${iconBgGradient} rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300`}
-                    >
-                      <span className="block  text-white">{iconObj.light}</span>
-                      {service.icon}
-                    </div>
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors duration-300">
-                      {service.title}
-                    </h3>
-                    <p className="text-gray-600 dark:text-gray-400 leading-relaxed">{service.description}</p>
+            {services.map((service, index) => (
+              <motion.div
+                key={service.title}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                viewport={{ once: true }}
+                className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-2xl transition-all duration-500 group"
+              >
+                <div className="text-center">
+                  <div
+                    className={`w-16 h-16 bg-gradient-to-r ${service.color} rounded-2xl flex items-center justify-center mx-auto mb-6 text-white group-hover:scale-110 transition-transform duration-300`}
+                  >
+                    {service.icon}
                   </div>
-                </motion.div>
-              );
-            })}
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors duration-300">
+                    {service.title}
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-400 leading-relaxed">{service.description}</p>
+                </div>
+              </motion.div>
+            ))}
           </div>
 
           {/* Additional Info */}
@@ -809,7 +678,8 @@ export default function TikTokPage() {
             className="text-center mt-16"
           >
             <p className="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-3xl mx-auto">
-              {tiktokPageData?.convenientPayment?.description}
+              If you manage 10 clients with $500 each, and we charge 15% commission, you can achieve better ROI and ROAS
+              with Biggapon BD.
             </p>
             <motion.button
               whileHover={{ scale: 1.05 }}
@@ -839,7 +709,7 @@ export default function TikTokPage() {
           >
             <div className="flex items-center justify-center space-x-4 mb-8">
               <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center">
-                <span className="text-white font-bold text-xl">B</span>
+                <span className="text-white font-bold text-xl">A</span>
               </div>
               <div className="text-4xl font-bold text-white">×</div>
               <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center">
@@ -849,21 +719,25 @@ export default function TikTokPage() {
               </div>
             </div>
 
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">{tiktokPageData?.tikTokPartner?.title}</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Biggapon BD is a TikTok partner</h2>
             <p className="text-xl text-white/90 mb-8 max-w-3xl mx-auto leading-relaxed">
-              {tiktokPageData?.tikTokPartner?.description}
+              Start working with Biggapon BD and get the opportunity to create TikTok advertising campaigns. Join thousands
+              of successful businesses and agencies that trust Biggapon BD for their advertising needs.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-              {
-                tiktokPageData?.tikTokPartner?.cards?.map((card: any, index: any) => (
-                  <div className="text-center">
-                    <div className="text-3xl font-bold text-white mb-2">{card.title}</div>
-                    <div className="text-white/80">{card.description}</div>
-                  </div>
-                ))
-              }
-
+              <div className="text-center">
+                <div className="text-3xl font-bold text-white mb-2">Official Partner</div>
+                <div className="text-white/80">Certified TikTok advertising partner</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-white mb-2">Premium Access</div>
+                <div className="text-white/80">Direct access to TikTok's latest features</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-white mb-2">Expert Support</div>
+                <div className="text-white/80">Dedicated TikTok specialists available 24/7</div>
+              </div>
             </div>
 
             <motion.button
@@ -894,11 +768,11 @@ export default function TikTokPage() {
           >
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
               <span className="bg-gradient-to-r from-green-500 to-cyan-500 bg-clip-text text-transparent">
-                {tiktokPageData?.clientAboutUs?.title}
+                Clients about us
               </span>
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-              {tiktokPageData?.clientAboutUs?.description}
+              Real feedback from businesses that have transformed their advertising with Biggapon BD's TikTok solutions.
             </p>
           </motion.div>
 
@@ -941,61 +815,46 @@ export default function TikTokPage() {
               transition={{ duration: 0.5 }}
               className="bg-gray-50 dark:bg-gray-800 rounded-3xl p-8 md:p-12 shadow-lg border border-gray-200 dark:border-gray-700"
             >
-              {tiktokPageData?.clientAboutUs?.cards && tiktokPageData.clientAboutUs.cards.length > 0 && (
-                <>
-                  <div className="flex items-center space-x-6 mb-8">
-                    <div
-                      className={`w-20 h-20 bg-gradient-to-r from-green-500 to-cyan-500 rounded-2xl flex items-center justify-center shadow-lg`}
-                    >
-                      <span className="text-white font-bold text-2xl">
-                        {tiktokPageData.clientAboutUs.cards[activeTestimonial]?.companyName
-                          ? tiktokPageData.clientAboutUs.cards[activeTestimonial].companyName
-                            .split(" ")
-                            .map((n: string) => n[0])
-                            .join("")
-                          : ""}
-                      </span>
-                    </div>
-                    <div>
-                      <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
-                        {tiktokPageData.clientAboutUs.cards[activeTestimonial]?.companyName}
-                      </h3>
-                      <div className="flex space-x-1 mt-2">
-                        {[...Array(Number(tiktokPageData.clientAboutUs.cards[activeTestimonial]?.rating || 0))].map((_, i) => (
-                          <svg key={i} className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                          </svg>
-                        ))}
-                      </div>
-                    </div>
+              <div className="flex items-center space-x-6 mb-8">
+                <div
+                  className={`w-20 h-20 bg-gradient-to-r ${testimonials[activeTestimonial].logoColor} rounded-2xl flex items-center justify-center shadow-lg`}
+                >
+                  <span className="text-white font-bold text-2xl">{testimonials[activeTestimonial].logo}</span>
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                    {testimonials[activeTestimonial].company}
+                  </h3>
+                  <div className="flex space-x-1 mt-2">
+                    {[...Array(testimonials[activeTestimonial].rating)].map((_, i) => (
+                      <svg key={i} className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    ))}
                   </div>
+                </div>
+              </div>
 
-                  <blockquote className="text-xl md:text-2xl text-gray-900 dark:text-white leading-relaxed mb-8 italic">
-                    "{tiktokPageData.clientAboutUs.cards[activeTestimonial]?.review}"
-                  </blockquote>
+              <blockquote className="text-xl md:text-2xl text-gray-900 dark:text-white leading-relaxed mb-8 italic">
+                "{testimonials[activeTestimonial].testimonial}"
+              </blockquote>
 
-                  <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-cyan-500 rounded-full flex items-center justify-center">
-                      <span className="text-white font-bold">
-                        {tiktokPageData.clientAboutUs.cards[activeTestimonial]?.authorName
-                          ? tiktokPageData.clientAboutUs.cards[activeTestimonial].authorName
-                            .split(" ")
-                            .map((n: string) => n[0])
-                            .join("")
-                          : ""}
-                      </span>
-                    </div>
-                    <div>
-                      <div className="font-semibold text-gray-900 dark:text-white">
-                        {tiktokPageData.clientAboutUs.cards[activeTestimonial]?.authorName}
-                      </div>
-                      <div className="text-gray-600 dark:text-gray-400">
-                        {tiktokPageData.clientAboutUs.cards[activeTestimonial]?.authorRole}
-                      </div>
-                    </div>
+              <div className="flex items-center space-x-4">
+                <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-cyan-500 rounded-full flex items-center justify-center">
+                  <span className="text-white font-bold">
+                    {testimonials[activeTestimonial].author
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")}
+                  </span>
+                </div>
+                <div>
+                  <div className="font-semibold text-gray-900 dark:text-white">
+                    {testimonials[activeTestimonial].author}
                   </div>
-                </>
-              )}
+                  <div className="text-gray-600 dark:text-gray-400">{testimonials[activeTestimonial].position}</div>
+                </div>
+              </div>
             </motion.div>
 
             {/* Dots Indicator */}
@@ -1004,10 +863,11 @@ export default function TikTokPage() {
                 <button
                   key={index}
                   onClick={() => setActiveTestimonial(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${index === activeTestimonial
-                    ? "bg-gradient-to-r from-green-500 to-cyan-500 w-8"
-                    : "bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500"
-                    }`}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    index === activeTestimonial
+                      ? "bg-gradient-to-r from-green-500 to-cyan-500 w-8"
+                      : "bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500"
+                  }`}
                 />
               ))}
             </div>
@@ -1041,9 +901,10 @@ export default function TikTokPage() {
               </svg>
             </div>
 
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">{tiktokPageData?.joinTheMailingList?.title}</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Join the Biggapon BD mailing list</h2>
             <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-              {tiktokPageData?.joinTheMailingList?.description}
+              No spam, just client case studies, automation tips and best practices for TikTok advertising delivered to
+              your inbox.
             </p>
 
             <form className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
