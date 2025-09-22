@@ -13,10 +13,10 @@ import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { Breadcrumb } from "@/components/dashboard/Breadcrumb";
-import { createOrUpdateMetaYourGateway, createOrUpdateOurMission, createOrUpdatePromoteYourBusiness, createOrUpdateTrustedByLeading, createOrUpdateWeWorkWith,  } from "@/app/api/homepage/homepage.Api";
+import { createOrUpdateAboutBiggaponBd, createOrUpdateHowToGetStarted, createOrUpdateMetaYourGateway, createOrUpdateMultiPlatform, createOrUpdateOurMission, createOrUpdatePromoteYourBusiness, createOrUpdateTrustedByLeading, createOrUpdateWeWorkWith, getAllHomePageSections } from "@/app/api/homepage/homepage.Api";
 import { Loader } from "lucide-react";
 import toast from "react-hot-toast";
-import { createOrUpdateChooseYourPlan, createOrUpdateHowWeGetYouStarted, createOrUpdateReadyToScaleYourBusiness, createOrUpdateScaleYourBusiness, createOrUpdateWhyAdvertisers, getAllAdvertisersPageSections } from "@/app/api/advertiserspage/advertisersPage.Api";
+import { createOrUpdateChooseYourPlan, createOrUpdateScaleYourBusiness, createOrUpdateWhyAdvertisers, getAllAdvertisersPageSections } from "@/app/api/advertiserspage/advertisersPage.Api";
 
 
 // Function to get initial values from fetched data
@@ -31,12 +31,6 @@ const getInitialValuesFromData = (sectionKey: string, pageData: any) => {
 
             case 'plan':
                 return { title: '', description: '', cards: [{ title: '', subTitle: "", description: '', points: [] }] };
-            case 'getStarted':
-                return { title: '', description: '', cards: [{ title: '', subTitle: "", description: '' }] };
-            // case 'successStory':
-            // case 'weWorkWith':
-            //     return { title: '', description: '', cards: [{ title: '', description: '' }] };
-
             default:
                 return {};
         }
@@ -46,35 +40,9 @@ const getInitialValuesFromData = (sectionKey: string, pageData: any) => {
         scale: 'scaleYourBusiness',
         why: 'whyAdvertisers',
         plan: 'chooseYourPlan',
-        getStarted: 'howWeGetYouStarted',
-        readyToScale:'readyToScaleYourBusiness'
-        // successStory: 'successStory',
-        // about: 'aboutBiggaponBd',
-
-       
-
     };
 
     const dataKey = dataMapping[sectionKey];
-    // if (!dataKey || !pageData[dataKey]) {
-    //     // Return default values if section data doesn't exist
-    //     switch (sectionKey) {
-    //         case 'promote':
-    //         case 'scale':
-    //             return { title: '', description: '' };
-    //         case 'trusted':
-    //             return { title: '', description: '', adminQuotte: '' };
-    //         case 'multiPlatform':
-    //         case 'successStory':
-    //         case 'weWorkWith':
-    //             return { title: '', description: '', cards: [{  title: '', description: '' }] };
-    //         case 'getStarted':
-    //         case 'howToGetStarted':
-    //             return { title: '', description: '', cards: [{ title: '', description: '' }] };
-    //         default:
-    //             return {};
-    //     }
-    // }
 
     const sectionData = pageData[dataKey];
 
@@ -114,58 +82,6 @@ const getInitialValuesFromData = (sectionKey: string, pageData: any) => {
                     }))
                     : [{ title: '', description: '', points: [] }]
             };
-
-        case 'getStarted':
-            return {
-                title: String(sectionData?.title || ''),
-                description: String(sectionData?.description || ''),
-                cards: Array.isArray(sectionData?.cards) && sectionData?.cards.length > 0
-                    ? sectionData.cards.map((card: any) => ({
-                        title: String(card?.title || ''),
-                        subTitle: String(card?.subTitle || ''),
-                        description: String(card?.description || '')
-                    }))
-                    : [{ title: '', subTitle: "", description: '' }]
-            };
-        case 'readyToScale':
-            return {
-                title: String(sectionData?.title || ''),
-                description: String(sectionData?.description || ''),
-               
-            };
-
-
-        // case 'trusted':
-        //     return {
-        //         title: String(sectionData.title || ''),
-        //         description: String(sectionData.description || ''),
-        //         cards: Array.isArray(sectionData.cards) && sectionData.cards.length > 0
-        //             ? sectionData.cards.map((card: any) => ({
-        //                 title: String(card.title || ''),
-        //                 description: String(card.description || '')
-        //             }))
-        //             : [{ title: '', description: '' }]
-        //     };
-
-        // case 'multiPlatform':
-        // case 'metaGateway':
-        // case 'successStory':
-        // case 'plan':
-        // case 'weWorkWith':
-        //     return {
-        //         title: String(sectionData.title || ''),
-        //         description: String(sectionData.description || ''),
-        //         cards: Array.isArray(sectionData.cards) && sectionData.cards.length > 0
-        //             ? sectionData.cards.map((card: any) => ({
-        //                 title: String(card.title || ''),
-        //                 description: String(card.description || '')
-        //             }))
-        //             : [{ title: '', description: '' }]
-        //     };
-
-        // case 'ourMission':
-
-
         default:
             return {};
     }
@@ -238,78 +154,6 @@ const getSectionConfigs = (pageData: any) => [
             description: Yup.string().required("Description is required"),
         }),
     },
-
-    {
-        key: "getStarted",
-        label: "How we get you started Section",
-        fields: [
-            { name: "title", label: "Title *", type: "text" },
-            { name: "description", label: "Description *", type: "textarea" },
-            {
-                name: "cards",
-                label: "Cards",
-                type: "cards",
-                cardFields: [
-                    { name: "title", label: "Card Title *", type: "text" },
-                    { name: "subTitle", label: "Card Sub Title *", type: "text" },
-                    { name: "description", label: "Card Description *", type: "textarea" },
-                ],
-            },
-        ],
-        initialValues: getInitialValuesFromData("getStarted", pageData),
-        validationSchema: Yup.object({
-            title: Yup.string().required("Title is required"),
-            description: Yup.string().required("Description is required"),
-        }),
-    },
-    {
-        key: "readyToScale",
-        label: "Ready to Scale your business Section",
-        fields: [
-            { name: "title", label: "Title *", type: "text" },
-            { name: "description", label: "Description *", type: "textarea" },
-
-        ],
-        initialValues: getInitialValuesFromData("readyToScale", pageData),
-        validationSchema: Yup.object({
-            title: Yup.string().required("Title is required"),
-            description: Yup.string().required("Description is required"),
-        }),
-    },
-
-
-    // {
-    //     key: "successStory",
-    //     label: "Success Story Section",
-    //     fields: [
-    //         { name: "title", label: "Title *", type: "text" },
-    //         { name: "description", label: "Description *", type: "textarea" },
-    //         {
-    //             name: "cards",
-    //             label: "Cards",
-    //             type: "cards",
-    //             cardFields: [
-    //                 { name: "title", label: "Card Title *", type: "text" },
-    //                 { name: "description", label: "Card Description *", type: "textarea" },
-    //             ],
-    //         },
-    //     ],
-    //     initialValues: getInitialValuesFromData("successStory", pageData),
-    //     validationSchema: Yup.object({
-    //         title: Yup.string().required("Title is required"),
-    //         description: Yup.string().required("Description is required"),
-    //         // cards: Yup.array()
-    //         //     .of(
-    //         //         Yup.object({
-    //         //             title: Yup.string().required("Card title is required"),
-    //         //             description: Yup.string().required("Card description is required"),
-    //         //         })
-    //         //     )
-    //         //     .min(1, "At least one card is required"),
-    //     }),
-    // },
-
-    
     {
         key: "clientSuccessStories",
         label: "Client Success Stories Section",
@@ -529,7 +373,23 @@ const EditAdvertisersPage = () => {
     ) => {
         const { setSubmitting, resetForm } = actions;
 
-        console.log('values', values)
+        // Fix: For the "plan" section, ensure all card.points is always an array of strings
+        let submitValues = { ...values };
+        if (sectionKey === "plan" && Array.isArray(values.cards)) {
+            submitValues = {
+                ...values,
+                cards: values.cards.map((card: any) => ({
+                    ...card,
+                    points: Array.isArray(card.points)
+                        ? card.points
+                        : typeof card.points === "string"
+                            ? [card.points]
+                            : []
+                }))
+            };
+        }
+
+        console.log('values', submitValues)
         console.log('sectionKey', sectionKey)
         try {
             let response = null;
@@ -537,60 +397,65 @@ const EditAdvertisersPage = () => {
             switch (sectionKey) {
                 case 'scale':
                     response = await createOrUpdateScaleYourBusiness({
-                        title: values.title,
-                        description: values.description
+                        title: submitValues.title,
+                        description: submitValues.description
                     });
                     break;
 
                 case 'why':
                     response = await createOrUpdateWhyAdvertisers({
-                        title: values.title,
-                        description: values.description,
-                        cards: values.cards
+                        title: submitValues.title,
+                        description: submitValues.description,
+                        cards: submitValues.cards
                     });
                     break;
 
                 case 'plan':
                     response = await createOrUpdateChooseYourPlan({
-                        title: values.title,
-                        description: values.description,
-                        cards: values.cards
-                    });
-                    break;
-                case 'getStarted':
-                    response = await createOrUpdateHowWeGetYouStarted({
-                        title: values.title,
-                        description: values.description,
-                        cards: values.cards
+                        title: submitValues.title,
+                        description: submitValues.description,
+                        cards: submitValues.cards
                     });
                     break;
 
                 case 'successStory':
                     response = await createOrUpdateMetaYourGateway({
-                        title: values.title,
-                        description: values.description,
-                        cards: values.cards
+                        title: submitValues.title,
+                        description: submitValues.description,
+                        cards: submitValues.cards
                     });
                     break;
 
-
+                case 'getStarted':
+                    response = await createOrUpdateAboutBiggaponBd({
+                        title: submitValues.title,
+                        description: submitValues.description
+                    });
+                    break;
 
                 case 'readyToScale':
-                    response = await createOrUpdateReadyToScaleYourBusiness({
-                        title: values.title,
-                        description: values.description,
+                    response = await createOrUpdateWeWorkWith({
+                        title: submitValues.title,
+                        description: submitValues.description,
+                        cards: submitValues.cards
                     });
                     break;
 
-                // case 'clientSuccessStories':
-                //     response = await createOrUpdateOurMission({
-                //         title: values.title,
-                //         description: values.description,
-                //         cards: values.cards
-                //     });
-                //     break;
+                case 'clientSuccessStories':
+                    response = await createOrUpdateOurMission({
+                        title: submitValues.title,
+                        description: submitValues.description,
+                        cards: submitValues.cards
+                    });
+                    break;
 
-
+                case 'howWeGetYouStarted':
+                    response = await createOrUpdateHowToGetStarted({
+                        title: submitValues.title,
+                        description: submitValues.description,
+                        cards: submitValues.cards
+                    });
+                    break;
 
                 default:
                     throw new Error(`Unknown section: ${sectionKey}`);
