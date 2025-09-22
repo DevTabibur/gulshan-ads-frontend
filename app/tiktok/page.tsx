@@ -23,7 +23,7 @@ export default function TikTokPage() {
       }
     }
     fetchData()
-  }, [])
+  }, [tiktokPageData])
   const [activeTestimonial, setActiveTestimonial] = useState(0)
 
   const tiktokStats = [

@@ -128,7 +128,7 @@ const AdvertisersPage = () => {
             }
         }
         fetchData()
-    }, [])
+    }, [advertisersPageData])
 
 
 

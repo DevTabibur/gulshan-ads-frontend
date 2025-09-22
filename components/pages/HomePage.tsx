@@ -39,7 +39,7 @@ const HomePage = () => {
             }
         }
         fetchData()
-    }, [])
+    }, [pageData])
 
     // if (loading) {
     //     return (
