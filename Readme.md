@@ -6,7 +6,8 @@
     "build": "next build",
     "dev": "next dev",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+     "export": "next build && next export"
   },
   "dependencies": {
     "@emotion/is-prop-valid": "latest",
@@ -78,3 +79,22 @@
     "typescript": "^5"
   }
 }
+
+
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  output: 'export',          
+  images: { unoptimized: true }, 
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  images: {
+    unoptimized: true,
+  },
+}
+
+export default nextConfig
