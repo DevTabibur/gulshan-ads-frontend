@@ -533,7 +533,7 @@ const AdvertisersPage = () => {
                                                 </ul>
 
                                                 <motion.a
-                                                    href="#"
+                                                    href="https://wa.link/izw72x"
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                     className={`w-full inline-block text-center py-4 rounded-xl font-semibold transition-all duration-300 ${index === 1

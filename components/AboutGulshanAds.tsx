@@ -155,7 +155,9 @@ export const AboutGulshanAds = () => {
       {/* Background Text */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <h1 className="text-[12rem] md:text-[16rem] lg:text-[20rem] font-bold text-gray-200/30 dark:text-gray-700/30 select-none">
-          AdHand
+         Biggapon
+         <br />
+         BD
         </h1>
       </div>
 

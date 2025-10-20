@@ -3,9 +3,26 @@
 import { motion } from "framer-motion"
 import { useState } from "react"
 import { Layout } from "../../components/Layout"
+import Link from "next/link";
+
+// Minimal toast for feedback
+function Toast({ message, onClose }: { message: string; onClose: () => void }) {
+  // Auto-close after 3.5secs
+  setTimeout(onClose, 3500)
+  return (
+    <div className="fixed bottom-8 left-1/2 z-50 transform -translate-x-1/2 bg-green-500 text-white px-6 py-4 rounded-xl shadow-xl text-base font-semibold">
+      {message}
+    </div>
+  )
+}
 
 export default function MetaPage() {
   const [activeTab, setActiveTab] = useState("recommended")
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [modalBiz, setModalBiz] = useState<string>("")
+  const [modalWhatsapp, setModalWhatsapp] = useState<string>("")
+  const [sending, setSending] = useState(false)
+  const [toast, setToast] = useState<string | null>(null)
 
   const floatingElements = [
     {
@@ -187,11 +204,15 @@ export default function MetaPage() {
       answer:
         "Yes, our Enterprise plan includes multi-account management capabilities. You can manage multiple brands or client accounts from a single dashboard with consolidated reporting.",
     },
-    
+
   ]
+
+
 
   return (
     <Layout>
+
+
       {/* Hero Section */}
       <section className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-cyan-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 relative overflow-hidden">
         {/* Background decoration */}
@@ -417,7 +438,7 @@ export default function MetaPage() {
 
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
               <span className="bg-gradient-to-r from-green-500 to-cyan-500 bg-clip-text text-transparent">
-              Biggapon BD simplifies working
+                Biggapon BD simplifies working
               </span>
               <br />
               <span className="text-gray-700 dark:text-gray-300">with Meta at every stage</span>
@@ -751,7 +772,7 @@ export default function MetaPage() {
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">Support in Difficult Times</h3>
                 <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                Biggapon BD experts are available in chat to answer questions or provide quick assistance when needed.
+                  Biggapon BD experts are available in chat to answer questions or provide quick assistance when needed.
                 </p>
               </div>
 
@@ -815,21 +836,19 @@ export default function MetaPage() {
                 <div className="flex space-x-4 mb-6">
                   <button
                     onClick={() => setActiveTab("recommended")}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                      activeTab === "recommended"
-                        ? "bg-gradient-to-r from-green-500 to-cyan-500 text-white"
-                        : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
-                    }`}
+                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === "recommended"
+                      ? "bg-gradient-to-r from-green-500 to-cyan-500 text-white"
+                      : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                      }`}
                   >
                     Recommended (235)
                   </button>
                   <button
                     onClick={() => setActiveTab("current")}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                      activeTab === "current"
-                        ? "bg-gradient-to-r from-green-500 to-cyan-500 text-white"
-                        : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
-                    }`}
+                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === "current"
+                      ? "bg-gradient-to-r from-green-500 to-cyan-500 text-white"
+                      : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                      }`}
                   >
                     Currently used (6)
                   </button>
@@ -856,9 +875,8 @@ export default function MetaPage() {
                           {[...Array(5)].map((_, i) => (
                             <svg
                               key={i}
-                              className={`w-4 h-4 ${
-                                i < Math.floor(service.rating) ? "text-yellow-400" : "text-gray-300 dark:text-gray-600"
-                              }`}
+                              className={`w-4 h-4 ${i < Math.floor(service.rating) ? "text-yellow-400" : "text-gray-300 dark:text-gray-600"
+                                }`}
                               fill="currentColor"
                               viewBox="0 0 20 20"
                             >
@@ -912,11 +930,10 @@ export default function MetaPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className={`relative bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-lg border-2 ${
-                  tier.popular
-                    ? "border-green-500 dark:border-green-400 scale-105"
-                    : "border-gray-200 dark:border-gray-700"
-                }`}
+                className={`relative bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-lg border-2 ${tier.popular
+                  ? "border-green-500 dark:border-green-400 scale-105"
+                  : "border-gray-200 dark:border-gray-700"
+                  }`}
               >
                 {tier.popular && (
                   <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
@@ -961,15 +978,17 @@ export default function MetaPage() {
                 </div>
 
                 <motion.button
+                  // onClick={handleModalOpen}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className={`w-full py-4 rounded-xl font-semibold text-lg transition-all duration-300 ${
-                    tier.popular
-                      ? "bg-gradient-to-r from-green-500 to-cyan-500 text-white hover:from-green-600 hover:to-cyan-600"
-                      : "border-2 border-green-500 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20"
-                  }`}
+                  className={`w-full py-4 rounded-xl font-semibold text-lg transition-all duration-300 ${tier.popular
+                    ? "bg-gradient-to-r from-green-500 to-cyan-500 text-white hover:from-green-600 hover:to-cyan-600"
+                    : "border-2 border-green-500 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20"
+                    }`}
                 >
-                  Get Started
+                  <Link href="https://wa.link/izw72x" target="_blank" rel="noopener noreferrer">
+                    Get Started
+                  </Link>
                 </motion.button>
               </motion.div>
             ))}
@@ -1318,6 +1337,8 @@ export default function MetaPage() {
           </motion.div>
         </div>
       </section>
+
+      
     </Layout>
   )
 }

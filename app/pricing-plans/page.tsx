@@ -1,5 +1,6 @@
 import { Layout } from "@/components/Layout"
 import { CheckCircle } from "lucide-react"
+import Link from "next/link"
 
 const packages = [
   {
@@ -93,19 +94,18 @@ const PricingPlans = () => {
                     </li>
                   ))}
                 </ul>
-                <a
+                <Link
                   href="https://wa.link/izw72x"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`w-full inline-block text-center py-4 rounded-xl font-semibold transition-all duration-300 ${
-                    pkg.popular
+                  className={`w-full inline-block text-center py-4 rounded-xl font-semibold transition-all duration-300 ${pkg.popular
                       ? "bg-gradient-to-r from-emerald-600 to-cyan-600 text-white shadow-lg hover:shadow-xl"
                       : "border-2 border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700"
-                  }`}
+                    }`}
                   style={{ marginTop: "-0.5rem" }}
                 >
                   Start Now
-                </a>
+                </Link>
               </div>
             ))}
           </div>
